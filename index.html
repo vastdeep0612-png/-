@@ -118,12 +118,31 @@
         }
 
         .logo {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 150px;
+            line-height: 1.1;
         }
 
-        .logo span {
+        .logo-sub {
+            margin-bottom: 3px;
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0;
+            white-space: nowrap;
+        }
+
+        .logo-main {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0;
+            white-space: nowrap;
+        }
+
+        .logo-main span {
             color: #ff2a5f;
         }
 
@@ -1914,7 +1933,10 @@
 
     <!-- 1. 상단 네비게이션 헤더 바 -->
     <header>
-        <div class="logo">발로란트 <span>백현팀</span></div>
+        <div class="logo">
+            <div class="logo-sub">발로란트 신속대리 백현팀</div>
+            <div class="logo-main">VLRT <span>1oohyun</span></div>
+        </div>
         <nav>
             <ul>
                 <li><a href="#">공지사항</a></li>
