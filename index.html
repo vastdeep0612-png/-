@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>백현팀</title>
-    <meta name="description" content="발로란트 대리, 발로 대리, 배치고사, 승당제와 승급제 가격표, 기사 소개, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다.">
+    <meta name="description" content="발로란트 대리, 발로 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다.">
     <link rel="canonical" href="https://vastdeep0612-png.github.io/-/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="백현팀">
     <meta property="og:url" content="https://vastdeep0612-png.github.io/-/">
     <meta property="og:title" content="백현팀">
-    <meta property="og:description" content="발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 소개, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다.">
+    <meta property="og:description" content="발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다.">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="백현팀">
-    <meta name="twitter:description" content="발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 소개, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다.">
+    <meta name="twitter:description" content="발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다.">
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
@@ -32,7 +32,7 @@
             "발로 대리 백현팀"
         ],
         "url": "https://vastdeep0612-png.github.io/-/",
-        "description": "발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 소개, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다."
+        "description": "발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다."
     }
     </script>
     <style>
@@ -129,12 +129,17 @@
 
         nav ul {
             display: flex;
+            align-items: center;
             list-style: none;
             gap: 35px;
+            height: 70px;
         }
 
         nav ul li {
             position: relative;
+            display: flex;
+            align-items: center;
+            height: 70px;
         }
 
         nav ul li a {
@@ -151,6 +156,7 @@
         .nav-price-menu {
             display: flex;
             align-items: center;
+            height: 70px;
         }
 
         .nav-price-trigger {
@@ -172,7 +178,7 @@
 
         .price-dropdown {
             position: absolute;
-            top: calc(100% + 18px);
+            top: calc(100% - 2px);
             left: 50%;
             min-width: 210px;
             padding: 10px;
@@ -195,8 +201,8 @@
             position: absolute;
             left: 0;
             right: 0;
-            top: -18px;
-            height: 18px;
+            top: -12px;
+            height: 12px;
         }
 
         .price-dropdown::after {
@@ -582,6 +588,7 @@
 
         /* 3. 신뢰도 카드 */
         .section-trust {
+            display: none;
             width: auto;
             margin-left: calc(50% - 50vw);
             margin-right: calc(50% - 50vw);
@@ -874,6 +881,7 @@
 
         /* 6. 주요 서비스 섹션 */
         .section-services {
+            display: none;
             padding: 44px 0 36px;
             text-align: center;
         }
@@ -992,16 +1000,15 @@
         }
 
         .reviews-cta-layout {
-            display: grid;
-            grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.9fr);
-            gap: 20px;
-            align-items: stretch;
+            display: block;
         }
 
         .reviews-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .review-card {
@@ -1325,10 +1332,16 @@
             word-break: keep-all;
         }
 
-        /* 4. 기사 소개 섹션 */
+        /* 4. 기사 라인업 섹션 */
         .section-drivers {
+            display: none;
             padding: 100px 0 52px 0;
             text-align: center;
+            scroll-margin-top: 86px;
+        }
+
+        .section-drivers.drivers-open {
+            display: block;
         }
 
         .section-drivers h2 {
@@ -1553,6 +1566,7 @@
 
         /* 6. 마지막 상담 CTA */
         .section-final-cta {
+            display: none;
             padding: 34px 0 88px;
         }
 
@@ -1913,10 +1927,10 @@
                     </div>
                 </li>
                 <li class="nav-price-menu nav-driver-menu">
-                    <a href="#drivers" class="nav-price-trigger nav-driver-trigger">기사소개</a>
-                    <div class="price-dropdown driver-dropdown" aria-label="기사소개 세부 메뉴">
-                        <a href="#drivers-low" onclick="setDriverTier('low')">저티어</a>
-                        <a href="#drivers-high" onclick="setDriverTier('high')">고티어</a>
+                    <a href="#drivers" class="nav-price-trigger nav-driver-trigger" onclick="showDriverLineup('low'); return false;">기사 라인업</a>
+                    <div class="price-dropdown driver-dropdown" aria-label="기사 라인업 세부 메뉴">
+                        <a href="#drivers-low" data-driver-tier="low" onclick="showDriverLineup('low'); return false;">저티어</a>
+                        <a href="#drivers-high" data-driver-tier="high" onclick="showDriverLineup('high'); return false;">고티어</a>
                     </div>
                 </li>
                 <li><a href="#">작업현황</a></li>
@@ -2080,16 +2094,6 @@
                         <div class="review-stars">★★★★★</div>
                         <p>듀오하면서 피드백도 받아서 도움이 많이 됐습니다.</p>
                         <div class="review-name">박○○</div>
-                    </div>
-                </div>
-                <div class="price-cta-card">
-                    <h3>가격이 궁금하신가요?</h3>
-                    <p>서비스별 가격은 공개된 가격표에서 바로 확인할 수 있습니다.</p>
-                    <a class="price-cta-button" href="#price" onclick="showPricePanel('per-win'); return false;">가격 바로보기 →</a>
-                    <div class="price-line-art" aria-hidden="true">
-                        <span></span>
-                        <span></span>
-                        <span></span>
                     </div>
                 </div>
             </div>
@@ -2293,9 +2297,9 @@
             </div>
         </section>
 
-        <!-- 4. 기사 소개 섹션 -->
+        <!-- 4. 기사 라인업 섹션 -->
         <section class="section-drivers" id="drivers">
-            <h2>기사소개</h2>
+            <h2>기사 라인업</h2>
             <p class="subtitle">티어 구간에 맞는 기사 정보를 확인하고 상담 시 원하는 진행 방식을 말해주세요.</p>
 
             <div class="driver-tabs" role="tablist" aria-label="기사 티어 선택">
@@ -2592,6 +2596,27 @@
             document.querySelectorAll('.driver-panel').forEach(panel => {
                 panel.classList.toggle('active', panel.dataset.tier === tier);
             });
+
+            document.querySelectorAll('[data-driver-tier]').forEach(link => {
+                link.classList.toggle('active', link.dataset.driverTier === tier);
+            });
+        }
+
+        function showDriverLineup(tier, shouldScroll = true) {
+            const section = document.getElementById('drivers');
+            if (!section) return;
+
+            section.classList.add('drivers-open');
+            setDriverTier(tier);
+
+            const targetHash = tier === 'high' ? '#drivers-high' : '#drivers-low';
+            if (window.location.hash !== targetHash) {
+                history.replaceState(null, '', targetHash);
+            }
+
+            if (shouldScroll) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         const initialPricePanel = hashToPricePanel[window.location.hash];
@@ -2599,8 +2624,12 @@
             showPricePanel(initialPricePanel, false);
         }
 
-        const initialDriverTier = window.location.hash === '#drivers-high' ? 'high' : 'low';
-        setDriverTier(initialDriverTier);
+        const initialDriverTier = window.location.hash === '#drivers-high' ? 'high' : (window.location.hash === '#drivers-low' || window.location.hash === '#drivers' ? 'low' : null);
+        if (initialDriverTier) {
+            showDriverLineup(initialDriverTier, false);
+        } else {
+            setDriverTier('low');
+        }
 
         window.addEventListener('hashchange', () => {
             const pricePanel = hashToPricePanel[window.location.hash];
@@ -2609,11 +2638,15 @@
             }
 
             if (window.location.hash === '#drivers-low') {
-                setDriverTier('low');
+                showDriverLineup('low', false);
+            }
+
+            if (window.location.hash === '#drivers') {
+                showDriverLineup('low', false);
             }
 
             if (window.location.hash === '#drivers-high') {
-                setDriverTier('high');
+                showDriverLineup('high', false);
             }
         });
 
