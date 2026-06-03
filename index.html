@@ -50,6 +50,13 @@
             font-display: swap;
         }
 
+        @font-face {
+            font-family: 'Waguri';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/WAGURITTF.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
         /* 기본 스타일 초기화 */
         * {
             margin: 0;
@@ -119,6 +126,10 @@
             gap: 35px;
         }
 
+        nav ul li {
+            position: relative;
+        }
+
         nav ul li a {
             font-size: 15px;
             font-weight: 800;
@@ -128,6 +139,119 @@
 
         nav ul li a:hover {
             color: #ffffff;
+        }
+
+        .nav-price-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-price-trigger {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-price-trigger::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(45deg) translateY(-2px);
+            opacity: 0.75;
+            transition: transform 0.22s ease, opacity 0.22s ease;
+        }
+
+        .price-dropdown {
+            position: absolute;
+            top: calc(100% + 18px);
+            left: 50%;
+            min-width: 210px;
+            padding: 10px;
+            transform: translateX(-50%) translateY(10px);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            border: 1px solid rgba(255, 42, 95, 0.3);
+            border-radius: 12px;
+            background:
+                linear-gradient(145deg, rgba(13, 13, 24, 0.96), rgba(24, 10, 24, 0.96)),
+                rgba(6, 6, 12, 0.96);
+            box-shadow: 0 20px 42px rgba(0, 0, 0, 0.46), 0 0 24px rgba(255, 42, 95, 0.14);
+            backdrop-filter: blur(14px);
+            transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+        }
+
+        .price-dropdown::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -18px;
+            height: 18px;
+        }
+
+        .price-dropdown::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            transform: translateX(-50%) rotate(45deg);
+            border-left: 1px solid rgba(255, 42, 95, 0.24);
+            border-top: 1px solid rgba(255, 42, 95, 0.24);
+            background: rgba(13, 13, 24, 0.98);
+        }
+
+        .price-dropdown a {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 42px;
+            padding: 0 12px;
+            color: #e5e7eb;
+            border-radius: 8px;
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-size: 16px;
+            font-weight: normal;
+            letter-spacing: 0;
+            transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+        }
+
+        .price-dropdown a::after {
+            content: '›';
+            color: #ff2a5f;
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        .price-dropdown a:hover {
+            color: #ffffff;
+            background-color: rgba(255, 42, 95, 0.13);
+            transform: translateX(2px);
+        }
+
+        .nav-price-menu:hover .nav-price-trigger,
+        .nav-price-menu:focus-within .nav-price-trigger {
+            color: #ffffff;
+        }
+
+        .nav-price-menu:hover .nav-price-trigger::after,
+        .nav-price-menu:focus-within .nav-price-trigger::after {
+            transform: rotate(225deg) translate(-1px, -1px);
+            opacity: 1;
+        }
+
+        .nav-price-menu:hover .price-dropdown,
+        .nav-price-menu:focus-within .price-dropdown {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
         }
 
         .btn-customer {
@@ -744,8 +868,10 @@
 
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 20px;
+            max-width: 780px;
+            margin: 0 auto;
         }
 
         .service-card {
@@ -989,6 +1115,7 @@
             border: 1px solid #1e1e30;
             border-radius: 16px;
             padding: 40px 30px;
+            scroll-margin-top: 96px;
         }
 
         .price-box h3 {
@@ -1066,6 +1193,41 @@
             background-color: #ff2a5f;
             color: #ffffff;
             border-color: #ff2a5f;
+        }
+
+        .price-guide-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+            margin-top: 28px;
+        }
+
+        .price-guide-card {
+            min-height: 168px;
+            padding: 28px;
+            text-align: left;
+            border: 1px solid rgba(255, 42, 95, 0.22);
+            border-radius: 14px;
+            background:
+                radial-gradient(circle at top right, rgba(255, 42, 95, 0.18), transparent 38%),
+                linear-gradient(145deg, rgba(12, 12, 22, 0.96), rgba(7, 7, 14, 0.98));
+            scroll-margin-top: 96px;
+        }
+
+        .price-guide-card h3 {
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.32;
+        }
+
+        .price-guide-card p {
+            color: #cbd5e1;
+            font-size: 15px;
+            font-weight: 800;
+            line-height: 1.62;
+            word-break: keep-all;
         }
 
         /* 4. 기사 소개 섹션 */
@@ -1528,6 +1690,7 @@
             .final-cta-card { grid-template-columns: 1fr; text-align: center; }
             .cta-line-graphic { display: none; }
             .price-container { grid-template-columns: 1fr; gap: 30px; }
+            .price-guide-grid { grid-template-columns: 1fr; }
             .driver-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
@@ -1599,7 +1762,15 @@
         <nav>
             <ul>
                 <li><a href="#">공지사항</a></li>
-                <li><a href="#price">가격표</a></li>
+                <li class="nav-price-menu">
+                    <a href="#price" class="nav-price-trigger">가격표</a>
+                    <div class="price-dropdown" aria-label="가격표 세부 메뉴">
+                        <a href="#price-per-win">승당제</a>
+                        <a href="#price-promotion">승급제</a>
+                        <a href="#duo-price">듀오제</a>
+                        <a href="#boost-terms">대리 약관</a>
+                    </div>
+                </li>
                 <li><a href="#drivers">기사소개</a></li>
                 <li><a href="#">작업현황</a></li>
                 <li><a href="#faq">자주 묻는 질문</a></li>
@@ -1615,10 +1786,9 @@
         <section class="hero-section" id="home">
             <div class="hero-text-box">
                 <h1>발로란트 대리 백현팀</h1>
-                <p>발로 대리, 배치고사, 승당제와 승급제 가격표를 한눈에 확인하고 상담할 수 있습니다.</p>
+                <p>발로 대리, 배치고사, 듀오 상담을 빠르고 정확하게 안내받을 수 있습니다.</p>
                 <div class="hero-buttons">
                     <button class="btn-main-action" onclick="openChat()">상담 및 신청하기</button>
-                    <a class="btn-sub-action" href="#price">가격표 보기</a>
                 </div>
                 <div class="hero-note">
                     <span class="hero-note-mark">톡</span>
@@ -1735,17 +1905,11 @@
                     <p>원하는 구간까지 빠르고 안정적으로 진행</p>
                     <button class="service-button" onclick="openChat()">자세히 보기 →</button>
                 </div>
-                <div class="service-card">
+                <div class="service-card" id="duo-service">
                     <div class="service-kicker">02 SERVICE</div>
                     <h3>듀오</h3>
                     <p>함께 플레이하며 티어 상승 도움</p>
                     <button class="service-button" onclick="openChat()">자세히 보기 →</button>
-                </div>
-                <div class="service-card">
-                    <div class="service-kicker">03 SERVICE</div>
-                    <h3>가격표</h3>
-                    <p>구간별 가격을 한눈에 확인</p>
-                    <a class="service-button" href="#price">자세히 보기 →</a>
                 </div>
             </div>
         </section>
@@ -1790,7 +1954,7 @@
 
             <div class="price-container">
                 <!-- 승당제 카드 (image_5822fc.png 기준 가격 100% 동일화) -->
-                <div class="price-box">
+                <div class="price-box" id="price-per-win">
                     <h3>발로란트 대리 승당제</h3>
                     <span class="price-desc">2승 1패 = 1승</span>
 
@@ -1859,7 +2023,7 @@
                 </div>
 
                 <!-- 승급제 카드 (image_5822c3.png 기준 가격 100% 동일화) -->
-                <div class="price-box">
+                <div class="price-box" id="price-promotion">
                     <h3>발로란트 대리 승급제</h3>
                     <span class="price-desc">기본 MMR 승당 20점 기준 / 한티어 승급</span>
 
@@ -1925,6 +2089,17 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <div class="price-guide-grid">
+                <div class="price-guide-card" id="duo-price">
+                    <h3>발로란트 듀오제</h3>
+                    <p>듀오는 현재 티어, 목표 티어, 진행 시간대에 따라 상담 후 안내됩니다. 같이 플레이하며 피드백과 티어 상승을 함께 진행합니다.</p>
+                </div>
+                <div class="price-guide-card" id="boost-terms">
+                    <h3>대리 약관</h3>
+                    <p>진행 전 보안 안내, 진행 범위, 환불 가능 조건을 먼저 확인합니다. 계정 정보와 진행 내용은 비밀 유지 기준으로 관리합니다.</p>
                 </div>
             </div>
         </section>
