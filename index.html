@@ -43,6 +43,13 @@
             font-display: swap;
         }
 
+        @font-face {
+            font-family: 'Ria';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/RiaSans-ExtraBold.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
         /* 기본 스타일 초기화 */
         * {
             margin: 0;
@@ -603,7 +610,124 @@
             pointer-events: none;
         }
 
-        /* 5. 주요 서비스 섹션 */
+        /* 5. 백현팀 이용 TIP */
+        .section-tips {
+            padding: 56px 0 48px;
+            position: relative;
+        }
+
+        .section-tips::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 12px;
+            width: min(900px, 86vw);
+            height: 1px;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, transparent, rgba(255, 42, 95, 0.72), transparent);
+            box-shadow: 0 0 24px rgba(255, 42, 95, 0.24);
+        }
+
+        .tips-heading {
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .tips-heading h2 {
+            font-family: 'Ria', 'Paperlogy', sans-serif;
+            font-size: 42px;
+            font-weight: normal;
+            letter-spacing: 0;
+            line-height: 1.16;
+            color: #ffffff;
+        }
+
+        .tips-heading p {
+            margin-top: 10px;
+            color: #cbd5e1;
+            font-family: 'Ria', 'Paperlogy', sans-serif;
+            font-size: 17px;
+            font-weight: normal;
+            line-height: 1.55;
+            word-break: keep-all;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .tip-card {
+            position: relative;
+            min-height: 190px;
+            padding: 28px 26px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 42, 95, 0.2);
+            border-radius: 12px;
+            background:
+                radial-gradient(circle at top right, rgba(255, 42, 95, 0.18), transparent 38%),
+                linear-gradient(145deg, rgba(14, 14, 25, 0.96), rgba(7, 7, 14, 0.98));
+            transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+        }
+
+        .tip-card::before {
+            content: attr(data-tip);
+            position: absolute;
+            right: 20px;
+            bottom: 12px;
+            color: rgba(255, 255, 255, 0.045);
+            font-family: 'Ria', 'Paperlogy', sans-serif;
+            font-size: 72px;
+            font-weight: normal;
+            line-height: 1;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 42, 95, 0.46);
+            box-shadow: 0 20px 40px rgba(255, 42, 95, 0.12);
+        }
+
+        .tip-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            padding: 7px 12px;
+            color: #ff2a5f;
+            border: 1px solid rgba(255, 42, 95, 0.36);
+            border-radius: 999px;
+            background: rgba(255, 42, 95, 0.08);
+            font-family: 'Ria', 'Paperlogy', sans-serif;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .tip-card h3 {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 12px;
+            color: #ffffff;
+            font-family: 'Ria', 'Paperlogy', sans-serif;
+            font-size: 24px;
+            font-weight: normal;
+            line-height: 1.28;
+            word-break: keep-all;
+        }
+
+        .tip-card p {
+            position: relative;
+            z-index: 1;
+            color: #cbd5e1;
+            font-family: 'Ria', 'Paperlogy', sans-serif;
+            font-size: 15px;
+            font-weight: normal;
+            line-height: 1.65;
+            word-break: keep-all;
+        }
+
+        /* 6. 주요 서비스 섹션 */
         .section-services {
             padding: 44px 0 36px;
             text-align: center;
@@ -1395,6 +1519,7 @@
             }
             .events-layout { grid-template-columns: 1fr; }
             .events-visual { min-height: 300px; }
+            .tips-grid { grid-template-columns: repeat(2, 1fr); }
             .service-grid { grid-template-columns: 1fr; }
             .service-card { min-height: 180px; text-align: center; align-items: center; }
             .reviews-cta-layout { grid-template-columns: 1fr; }
@@ -1428,10 +1553,17 @@
             }
             .trust-grid { grid-template-columns: 1fr; }
             .events-title,
+            .tips-heading h2,
             .section-services h2,
             .section-reviews h2,
             .section-price h2,
             .section-drivers h2 { font-size: 30px; }
+            .section-tips { padding: 46px 0 38px; }
+            .tips-grid { grid-template-columns: 1fr; }
+            .tip-card {
+                min-height: 170px;
+                padding: 24px 22px;
+            }
             .events-list li {
                 grid-template-columns: 30px 1fr;
                 font-size: 15px;
@@ -1553,7 +1685,47 @@
             </div>
         </section>
 
-        <!-- 5. 주요 서비스 섹션 -->
+        <!-- 5. 백현팀 이용 TIP -->
+        <section class="section-tips" aria-label="백현팀 이용 TIP">
+            <div class="tips-heading">
+                <h2>백현팀 이용 TIP</h2>
+                <p>상담 전에 확인하면 더 빠르고 정확하게 진행할 수 있습니다.</p>
+            </div>
+            <div class="tips-grid">
+                <article class="tip-card" data-tip="01">
+                    <div class="tip-label">대리 도움말</div>
+                    <h3>목표 구간을 먼저 정하세요</h3>
+                    <p>현재 티어와 목표 티어, 원하는 진행 속도를 알려주면 예상 금액과 일정 안내가 더 정확해집니다.</p>
+                </article>
+                <article class="tip-card" data-tip="02">
+                    <div class="tip-label">듀오 도움말</div>
+                    <h3>가능한 시간대를 알려주세요</h3>
+                    <p>듀오는 기사와 함께 플레이하기 때문에 접속 가능한 시간대를 미리 말해주면 매칭이 빨라집니다.</p>
+                </article>
+                <article class="tip-card" data-tip="03">
+                    <div class="tip-label">백현팀 차이점</div>
+                    <h3>상담부터 진행까지 투명하게</h3>
+                    <p>가격, 진행 방식, 예상 소요 시간을 먼저 안내하고 진행 상황을 확인할 수 있게 도와드립니다.</p>
+                </article>
+                <article class="tip-card" data-tip="04">
+                    <div class="tip-label">보안 중요성</div>
+                    <h3>계정 정보는 필요한 만큼만</h3>
+                    <p>불필요한 정보 요구를 줄이고, 진행 중 비밀 유지와 보안 절차를 우선으로 관리합니다.</p>
+                </article>
+                <article class="tip-card" data-tip="05">
+                    <div class="tip-label">가격 확인</div>
+                    <h3>구간과 방식에 따라 달라집니다</h3>
+                    <p>승당제, 승급제, 배치고사, 듀오 여부에 따라 가격이 달라지니 상담 전에 가격표를 함께 확인하세요.</p>
+                </article>
+                <article class="tip-card" data-tip="06">
+                    <div class="tip-label">진행 확인</div>
+                    <h3>작업 현황은 바로 확인</h3>
+                    <p>진행 상황이 궁금할 때는 상담 채널로 문의하면 현재 상태와 남은 진행 내용을 안내받을 수 있습니다.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- 6. 주요 서비스 섹션 -->
         <section class="section-services" id="services">
             <h2>주요 서비스</h2>
             <div class="service-grid">
