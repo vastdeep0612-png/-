@@ -437,6 +437,375 @@
             box-shadow: 0 16px 34px rgba(255, 31, 103, 0.24);
         }
 
+        .package-showcase {
+            position: relative;
+            z-index: 2;
+            max-width: 1220px;
+            margin: 10px auto 34px;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 18% 8%, rgba(255, 31, 103, 0.12), transparent 34%),
+                radial-gradient(circle at 92% 18%, rgba(216, 181, 114, 0.08), transparent 28%),
+                linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+                rgba(5, 6, 12, 0.76);
+            box-shadow: 0 34px 90px rgba(0, 0, 0, 0.36);
+            backdrop-filter: blur(18px);
+            overflow: hidden;
+        }
+
+        .package-showcase::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+            background-size: 74px 74px;
+            opacity: 0.24;
+            mask-image: radial-gradient(circle at center, black, transparent 76%);
+            -webkit-mask-image: radial-gradient(circle at center, black, transparent 76%);
+        }
+
+        .package-showcase-head {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 28px;
+            margin-bottom: 22px;
+        }
+
+        .package-showcase-kicker {
+            display: inline-flex;
+            margin-bottom: 9px;
+            color: #ff5d8f;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+        }
+
+        .package-showcase h2 {
+            font-family: 'NanumSquare', 'Paperlogy', sans-serif;
+            font-size: clamp(30px, 4.5vw, 54px);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .package-showcase-head p {
+            max-width: 440px;
+            color: rgba(203, 213, 225, 0.74);
+            font-size: 14px;
+            line-height: 1.75;
+            text-align: right;
+            word-break: keep-all;
+        }
+
+        .package-layout {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 360px;
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .package-stage {
+            position: relative;
+            min-height: 410px;
+            border-radius: 24px;
+            perspective: 1200px;
+            cursor: grab;
+            overflow: hidden;
+        }
+
+        .package-stage.dragging {
+            cursor: grabbing;
+        }
+
+        .package-card-premium {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 24px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.068), rgba(255, 255, 255, 0.022)),
+                radial-gradient(circle at 0 0, rgba(255, 31, 103, 0.13), transparent 34%),
+                rgba(8, 10, 18, 0.9);
+            box-shadow: 0 34px 78px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translate3d(0, 18px, -120px) scale(0.92) rotateY(0deg);
+            transition: opacity 520ms cubic-bezier(0.22, 1, 0.36, 1), visibility 520ms, transform 520ms cubic-bezier(0.22, 1, 0.36, 1), filter 520ms;
+            transform-style: preserve-3d;
+        }
+
+        .package-card-premium.is-active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translate3d(0, 0, 0) scale(1) rotateY(0deg);
+            filter: none;
+        }
+
+        .package-card-premium.is-prev {
+            opacity: 0.26;
+            visibility: visible;
+            transform: translate3d(-56%, 18px, -180px) scale(0.84) rotateY(12deg);
+            filter: blur(1px);
+        }
+
+        .package-card-premium.is-next {
+            opacity: 0.26;
+            visibility: visible;
+            transform: translate3d(56%, 18px, -180px) scale(0.84) rotateY(-12deg);
+            filter: blur(1px);
+        }
+
+        .package-card-premium::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            right: 28px;
+            top: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d8b572, #ff1f67, transparent);
+            opacity: 0.8;
+        }
+
+        .package-card-top {
+            position: relative;
+            z-index: 1;
+        }
+
+        .package-chip {
+            display: inline-flex;
+            padding: 8px 13px;
+            border: 1px solid rgba(255, 31, 103, 0.28);
+            border-radius: 999px;
+            color: #ff6f99;
+            background: rgba(255, 31, 103, 0.07);
+            font-size: 12px;
+        }
+
+        .package-card-premium h3 {
+            margin-top: 18px;
+            font-family: 'NanumSquare', 'Paperlogy', sans-serif;
+            font-size: clamp(34px, 4.8vw, 58px);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+
+        .package-card-premium p {
+            max-width: 620px;
+            margin-top: 14px;
+            color: rgba(226, 232, 240, 0.74);
+            font-size: 15px;
+            line-height: 1.8;
+            word-break: keep-all;
+        }
+
+        .package-summary-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .package-summary {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.032);
+        }
+
+        .package-summary span {
+            display: block;
+            margin-bottom: 7px;
+            color: rgba(148, 163, 184, 0.84);
+            font-size: 11px;
+        }
+
+        .package-summary strong {
+            color: #fff;
+            font-size: 17px;
+            line-height: 1.35;
+        }
+
+        .package-card-bottom {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .package-services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .package-services span {
+            padding: 8px 11px;
+            border: 1px solid rgba(216, 181, 114, 0.18);
+            border-radius: 999px;
+            color: rgba(255, 235, 205, 0.88);
+            background: rgba(216, 181, 114, 0.06);
+            font-size: 12px;
+        }
+
+        .package-jump {
+            flex: 0 0 auto;
+            padding: 12px 17px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 999px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.055);
+            cursor: pointer;
+            transition: border-color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+        }
+
+        .package-jump:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 31, 103, 0.48);
+            background: rgba(255, 31, 103, 0.12);
+        }
+
+        .package-dots {
+            display: flex;
+            justify-content: center;
+            gap: 9px;
+            margin-top: 16px;
+        }
+
+        .package-dot {
+            width: 34px;
+            height: 7px;
+            border: 0;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.18);
+            cursor: pointer;
+            transition: width 0.24s ease, background 0.24s ease;
+        }
+
+        .package-dot.active {
+            width: 58px;
+            background: linear-gradient(90deg, #d8b572, #ff1f67);
+        }
+
+        .package-calculator {
+            position: relative;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 100% 0, rgba(216, 181, 114, 0.1), transparent 34%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+                rgba(8, 10, 18, 0.86);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .package-calculator h3 {
+            font-family: 'NanumSquare', 'Paperlogy', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            line-height: 1.15;
+        }
+
+        .package-calculator p {
+            margin: 10px 0 18px;
+            color: rgba(203, 213, 225, 0.72);
+            font-size: 13px;
+            line-height: 1.7;
+            word-break: keep-all;
+        }
+
+        .calc-type-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .calc-type-tab {
+            min-height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 12px;
+            color: rgba(226, 232, 240, 0.74);
+            background: rgba(255, 255, 255, 0.035);
+            cursor: pointer;
+        }
+
+        .calc-type-tab.active {
+            color: #fff;
+            border-color: rgba(255, 31, 103, 0.48);
+            background: rgba(255, 31, 103, 0.16);
+        }
+
+        .calc-field {
+            display: grid;
+            gap: 7px;
+            margin-top: 12px;
+        }
+
+        .calc-field label {
+            color: rgba(148, 163, 184, 0.92);
+            font-size: 12px;
+        }
+
+        .calc-field select {
+            width: 100%;
+            min-height: 44px;
+            padding: 0 13px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: #fff;
+            background: rgba(3, 4, 10, 0.72);
+            outline: none;
+        }
+
+        .calc-result {
+            margin-top: 18px;
+            padding: 18px;
+            border: 1px solid rgba(255, 31, 103, 0.18);
+            border-radius: 18px;
+            background: rgba(255, 31, 103, 0.065);
+        }
+
+        .calc-result span {
+            display: block;
+            color: rgba(203, 213, 225, 0.76);
+            font-size: 12px;
+        }
+
+        .calc-result strong {
+            display: block;
+            margin-top: 6px;
+            color: #ff1f67;
+            font-size: 30px;
+            line-height: 1.15;
+        }
+
+        .calc-result p {
+            margin: 8px 0 0;
+            color: rgba(226, 232, 240, 0.76);
+            font-size: 12px;
+            line-height: 1.65;
+        }
+
         .floating-banner {
             position: fixed;
             right: 26px;
@@ -479,6 +848,52 @@
 
             .price-tab {
                 flex: 0 0 auto;
+            }
+
+            .package-showcase {
+                margin: 8px 14px 28px;
+                padding: 20px;
+                border-radius: 22px;
+            }
+
+            .package-showcase-head {
+                display: block;
+            }
+
+            .package-showcase-head p {
+                margin-top: 12px;
+                text-align: left;
+            }
+
+            .package-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .package-stage {
+                min-height: 500px;
+            }
+
+            .package-card-premium {
+                padding: 22px;
+            }
+
+            .package-card-premium.is-prev,
+            .package-card-premium.is-next {
+                opacity: 0;
+                visibility: hidden;
+                transform: translate3d(0, 18px, -120px) scale(0.92);
+            }
+
+            .package-summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .package-card-bottom {
+                display: grid;
+            }
+
+            .package-calculator {
+                padding: 20px;
             }
 
             .panel-head {
@@ -556,6 +971,112 @@
             <span class="page-kicker">PRICE TABLE</span>
             <h1>백현팀 가격표</h1>
             <p>원하는 진행 방식에 맞춰 승당제, 승급제, 듀오제 가격을 따로 확인하세요.</p>
+        </section>
+
+        <section class="package-showcase" aria-label="가격 패키지 쇼케이스">
+            <div class="package-showcase-head">
+                <div>
+                    <span class="package-showcase-kicker">PREMIUM PACKAGE</span>
+                    <h2>패키지별 가격 안내</h2>
+                </div>
+                <p>승당제, 승급제, 듀오제를 한눈에 비교하고 오른쪽 계산기로 예상 금액을 빠르게 확인하세요.</p>
+            </div>
+
+            <div class="package-layout">
+                <div>
+                    <div class="package-stage" id="packageStage" aria-label="가격 패키지 카드">
+                        <article class="package-card-premium is-active" data-package-card data-tab="per-win">
+                            <div class="package-card-top">
+                                <span class="package-chip">PER WIN PACKAGE</span>
+                                <h3>승당제</h3>
+                                <p>2승 1패를 1승 기준으로 안내하는 단기 진행 패키지입니다. 필요한 구간만 빠르게 확인하고 신청하기 좋습니다.</p>
+                                <div class="package-summary-grid">
+                                    <div class="package-summary"><span>시작가</span><strong>3,000원</strong></div>
+                                    <div class="package-summary"><span>고티어</span><strong>14,000원부터</strong></div>
+                                    <div class="package-summary"><span>레디언트</span><strong>문의</strong></div>
+                                </div>
+                            </div>
+                            <div class="package-card-bottom">
+                                <div class="package-services">
+                                    <span>빠른 진행</span>
+                                    <span>1승 기준</span>
+                                    <span>구간별 안내</span>
+                                </div>
+                                <button class="package-jump" type="button" data-jump-tab="per-win">승당제 표 보기</button>
+                            </div>
+                        </article>
+
+                        <article class="package-card-premium is-next" data-package-card data-tab="promotion">
+                            <div class="package-card-top">
+                                <span class="package-chip">PROMOTION PACKAGE</span>
+                                <h3>승급제</h3>
+                                <p>기본 MMR 승당 20점 기준으로 한 티어 승급 단위 안내입니다. 목표 티어까지 안정적으로 맡기고 싶을 때 적합합니다.</p>
+                                <div class="package-summary-grid">
+                                    <div class="package-summary"><span>시작가</span><strong>9,000원</strong></div>
+                                    <div class="package-summary"><span>고티어</span><strong>42,000원부터</strong></div>
+                                    <div class="package-summary"><span>레디언트</span><strong>문의</strong></div>
+                                </div>
+                            </div>
+                            <div class="package-card-bottom">
+                                <div class="package-services">
+                                    <span>목표 티어</span>
+                                    <span>승급 단위</span>
+                                    <span>예약 가능</span>
+                                </div>
+                                <button class="package-jump" type="button" data-jump-tab="promotion">승급제 표 보기</button>
+                            </div>
+                        </article>
+
+                        <article class="package-card-premium is-prev" data-package-card data-tab="duo">
+                            <div class="package-card-top">
+                                <span class="package-chip">DUO PACKAGE</span>
+                                <h3>듀오제</h3>
+                                <p>기사와 함께 플레이하며 피드백과 구간 진행을 같이 받는 방식입니다. 현재 티어, 목표 티어, 시간대에 따라 상담 후 안내합니다.</p>
+                                <div class="package-summary-grid">
+                                    <div class="package-summary"><span>진행</span><strong>동행 플레이</strong></div>
+                                    <div class="package-summary"><span>가격</span><strong>상담 안내</strong></div>
+                                    <div class="package-summary"><span>추천</span><strong>피드백 희망</strong></div>
+                                </div>
+                            </div>
+                            <div class="package-card-bottom">
+                                <div class="package-services">
+                                    <span>실시간 동행</span>
+                                    <span>피드백 가능</span>
+                                    <span>화면공유</span>
+                                </div>
+                                <button class="package-jump" type="button" data-jump-tab="duo">듀오제 보기</button>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="package-dots" id="packageDots" aria-label="패키지 이동">
+                        <button class="package-dot active" type="button" data-package-go="0" aria-label="승당제"></button>
+                        <button class="package-dot" type="button" data-package-go="1" aria-label="승급제"></button>
+                        <button class="package-dot" type="button" data-package-go="2" aria-label="듀오제"></button>
+                    </div>
+                </div>
+
+                <aside class="package-calculator" aria-label="예상 가격 계산기">
+                    <h3>예상 금액 계산</h3>
+                    <p>현재 티어와 목표 티어만 선택하면 승당제/승급제 기준 예상 금액을 보여드립니다. 레디언트 포함 구간은 상담이 필요합니다.</p>
+                    <div class="calc-type-tabs" role="tablist" aria-label="계산 방식">
+                        <button class="calc-type-tab active" type="button" data-calc-type="win">승당제</button>
+                        <button class="calc-type-tab" type="button" data-calc-type="promotion">승급제</button>
+                    </div>
+                    <div class="calc-field">
+                        <label for="calcFromTier">현재 티어</label>
+                        <select id="calcFromTier"></select>
+                    </div>
+                    <div class="calc-field">
+                        <label for="calcToTier">목표 티어</label>
+                        <select id="calcToTier"></select>
+                    </div>
+                    <div class="calc-result">
+                        <span id="calcResultLabel">예상 안내</span>
+                        <strong id="calcResultAmount">계산 중</strong>
+                        <p id="calcResultNote">구간을 선택하면 예상 금액이 표시됩니다.</p>
+                    </div>
+                </aside>
+            </div>
         </section>
 
         <div class="tab-bar" role="tablist" aria-label="가격표 종류">
@@ -692,6 +1213,160 @@
         function openChat() {
             window.open('https://open.kakao.com/o/sJdWuGxi', '_blank');
         }
+
+        const packageCards = Array.from(document.querySelectorAll('[data-package-card]'));
+        const packageDots = Array.from(document.querySelectorAll('[data-package-go]'));
+        const packageStage = document.getElementById('packageStage');
+        let packageIndex = 0;
+        let packageTimer = 0;
+        let packageDragStart = 0;
+        let packageDragging = false;
+
+        function renderPackageShowcase() {
+            packageCards.forEach((card, index) => {
+                const offset = (index - packageIndex + packageCards.length) % packageCards.length;
+                card.classList.toggle('is-active', index === packageIndex);
+                card.classList.toggle('is-next', offset === 1);
+                card.classList.toggle('is-prev', offset === packageCards.length - 1);
+            });
+
+            packageDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === packageIndex);
+            });
+        }
+
+        function setPackageIndex(nextIndex) {
+            if (!packageCards.length) return;
+            packageIndex = (nextIndex + packageCards.length) % packageCards.length;
+            renderPackageShowcase();
+        }
+
+        function resetPackageTimer() {
+            if (packageTimer) {
+                window.clearInterval(packageTimer);
+            }
+            packageTimer = window.setInterval(() => setPackageIndex(packageIndex + 1), 5200);
+        }
+
+        packageDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                setPackageIndex(Number(dot.dataset.packageGo || 0));
+                resetPackageTimer();
+            });
+        });
+
+        document.querySelectorAll('[data-jump-tab]').forEach(button => {
+            button.addEventListener('click', () => {
+                setPriceTab(button.dataset.jumpTab);
+                document.querySelector('.tab-bar')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+
+        if (packageStage) {
+            packageStage.addEventListener('pointerdown', event => {
+                packageDragging = true;
+                packageDragStart = event.clientX;
+                packageStage.classList.add('dragging');
+                packageStage.setPointerCapture?.(event.pointerId);
+            });
+
+            packageStage.addEventListener('pointerup', event => {
+                if (!packageDragging) return;
+                const diff = event.clientX - packageDragStart;
+                packageDragging = false;
+                packageStage.classList.remove('dragging');
+                packageStage.releasePointerCapture?.(event.pointerId);
+
+                if (Math.abs(diff) > 48) {
+                    setPackageIndex(packageIndex + (diff < 0 ? 1 : -1));
+                    resetPackageTimer();
+                }
+            });
+
+            packageStage.addEventListener('pointercancel', () => {
+                packageDragging = false;
+                packageStage.classList.remove('dragging');
+            });
+        }
+
+        const tierRows = [
+            { name: 'IRON 아이언', win: 3000, promotion: 9000 },
+            { name: 'BRONZE 브론즈', win: 4000, promotion: 12000 },
+            { name: 'SILVER 실버', win: 5000, promotion: 15000 },
+            { name: 'GOLD 골드', win: 6000, promotion: 18000 },
+            { name: 'PLATINUM 플래티넘', win: 8000, promotion: 24000 },
+            { name: 'DIAMOND 다이아', win: 10000, promotion: 30000 },
+            { name: 'ASCENDANT 초월자 1', win: 14000, promotion: 42000 },
+            { name: 'ASCENDANT 초월자 2', win: 16000, promotion: 48000 },
+            { name: 'ASCENDANT 초월자 3', win: 18000, promotion: 54000 },
+            { name: 'IMMORTAL 불멸 1', win: 25000, promotion: 75000 },
+            { name: 'IMMORTAL 불멸 2', win: 30000, promotion: 85000 },
+            { name: 'IMMORTAL 불멸 3', win: 35000, promotion: 95000 },
+            { name: 'RADIANT 레디언트', win: null, promotion: null }
+        ];
+
+        const calcFromTier = document.getElementById('calcFromTier');
+        const calcToTier = document.getElementById('calcToTier');
+        const calcResultAmount = document.getElementById('calcResultAmount');
+        const calcResultNote = document.getElementById('calcResultNote');
+        let calcType = 'win';
+
+        function formatWon(value) {
+            return `${value.toLocaleString('ko-KR')}원`;
+        }
+
+        function setupCalculatorOptions() {
+            if (!calcFromTier || !calcToTier) return;
+
+            calcFromTier.innerHTML = tierRows.slice(0, -1).map((row, index) => `<option value="${index}">${row.name}</option>`).join('');
+            calcToTier.innerHTML = tierRows.map((row, index) => `<option value="${index}">${row.name}</option>`).join('');
+            calcFromTier.value = '0';
+            calcToTier.value = '1';
+        }
+
+        function updateCalculator() {
+            if (!calcFromTier || !calcToTier || !calcResultAmount || !calcResultNote) return;
+
+            const from = Number(calcFromTier.value);
+            let to = Number(calcToTier.value);
+            if (to <= from) {
+                to = Math.min(from + 1, tierRows.length - 1);
+                calcToTier.value = String(to);
+            }
+
+            const selectedRows = tierRows.slice(from, to);
+            const hasInquiry = selectedRows.some(row => row[calcType] === null) || tierRows[to]?.[calcType] === null;
+            const modeLabel = calcType === 'win' ? '승당제' : '승급제';
+
+            if (hasInquiry) {
+                calcResultAmount.textContent = '상담 필요';
+                calcResultNote.textContent = `${tierRows[from].name}에서 ${tierRows[to].name} 구간은 ${modeLabel} 기준 상담 후 정확히 안내드립니다.`;
+                return;
+            }
+
+            const multiplier = calcType === 'win' ? 3 : 1;
+            const total = selectedRows.reduce((sum, row) => sum + row[calcType] * multiplier, 0);
+            calcResultAmount.textContent = formatWon(total);
+            calcResultNote.textContent = `${tierRows[from].name} → ${tierRows[to].name} 기준 예상 ${modeLabel} 금액입니다. 실제 MMR, 시간대, 진행 방식에 따라 상담 후 조정될 수 있습니다.`;
+        }
+
+        document.querySelectorAll('[data-calc-type]').forEach(tab => {
+            tab.addEventListener('click', () => {
+                calcType = tab.dataset.calcType === 'promotion' ? 'promotion' : 'win';
+                document.querySelectorAll('[data-calc-type]').forEach(item => {
+                    item.classList.toggle('active', item === tab);
+                });
+                updateCalculator();
+            });
+        });
+
+        calcFromTier?.addEventListener('change', updateCalculator);
+        calcToTier?.addEventListener('change', updateCalculator);
+
+        renderPackageShowcase();
+        resetPackageTimer();
+        setupCalculatorOptions();
+        updateCalculator();
 
         const validTabs = ['per-win', 'promotion', 'duo'];
 
