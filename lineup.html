@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기사 라인업 | 백현팀</title>
+    <meta name="description" content="발로란트 대리 백현팀의 Low Ranked, High Ranked 기사 라인업과 진행 가능 구간, 서비스 정보를 확인하세요.">
+    <link rel="canonical" href="https://vastdeep0612-png.github.io/-/lineup.html">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <style>
+        @font-face {
+            font-family: 'Paperlogy';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+            font-weight: 800;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Hamlet';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/Hahmlet-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Waguri';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/WAGURITTF.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'JoseonPalace';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGs.woff') format('woff');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            min-height: 100%;
+            overflow-x: hidden;
+            background: #05060a;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #f8fafc;
+            font-family: 'Paperlogy', system-ui, sans-serif;
+            font-weight: 800;
+            overflow-x: hidden;
+            background:
+                linear-gradient(180deg, rgba(5, 6, 10, 0.92), rgba(5, 6, 10, 0.72) 45%, #05060a 100%),
+                radial-gradient(circle at 50% 18%, rgba(193, 58, 92, 0.16), transparent 35%),
+                radial-gradient(circle at 14% 76%, rgba(216, 181, 114, 0.08), transparent 28%),
+                #05060a;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            height: 82px;
+            padding: 0 56px;
+            display: grid;
+            grid-template-columns: minmax(240px, 1fr) auto minmax(240px, 1fr);
+            align-items: center;
+            background: rgba(3, 4, 10, 0.88);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+        }
+
+        .logo {
+            justify-self: start;
+            line-height: 1.08;
+        }
+
+        .logo-sub {
+            margin-bottom: 5px;
+            color: #8d97ad;
+            font-size: 10px;
+            letter-spacing: 0;
+            white-space: nowrap;
+        }
+
+        .logo-main {
+            color: #fff;
+            font-family: 'JoseonPalace', 'Paperlogy', sans-serif;
+            font-size: 24px;
+            font-weight: normal;
+            letter-spacing: 0;
+            white-space: nowrap;
+        }
+
+        .logo-main span {
+            color: #ff1f67;
+            font-family: inherit;
+        }
+
+        nav {
+            justify-self: center;
+        }
+
+        nav ul {
+            height: 70px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 38px;
+        }
+
+        nav li {
+            position: relative;
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            color: #cbd5e1;
+            font-size: 15px;
+            transition: color 0.2s ease;
+            white-space: nowrap;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #fff;
+        }
+
+        .nav-menu-trigger::after {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            margin-left: 8px;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(45deg) translateY(-3px);
+        }
+
+        .nav-dropdown {
+            position: absolute;
+            top: calc(100% - 2px);
+            left: 50%;
+            width: 210px;
+            padding: 18px;
+            display: grid;
+            gap: 6px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, 10px);
+            border: 1px solid rgba(255, 31, 103, 0.44);
+            border-radius: 14px;
+            background: rgba(12, 8, 18, 0.96);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        }
+
+        .nav-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 0;
+            right: 0;
+            height: 12px;
+        }
+
+        .nav-dropdown a {
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6px;
+            color: #f5f7fb;
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-size: 18px;
+        }
+
+        .nav-dropdown a::after {
+            content: '›';
+            color: #ff1f67;
+        }
+
+        .nav-menu:hover .nav-dropdown,
+        .nav-menu:focus-within .nav-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+
+        .btn-customer {
+            justify-self: end;
+            padding: 12px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 12px;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+        }
+
+        .lineup-page {
+            width: min(1180px, calc(100% - 56px));
+            min-height: calc(100vh - 82px);
+            margin: 0 auto;
+            padding: 74px 0 82px;
+            display: flex;
+            align-items: center;
+        }
+
+        .roster-shell {
+            position: relative;
+            width: 100%;
+            padding: 42px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+                radial-gradient(circle at 50% 0, rgba(193, 58, 92, 0.14), transparent 35%),
+                rgba(8, 10, 18, 0.78);
+            box-shadow: 0 36px 96px rgba(0, 0, 0, 0.42);
+            backdrop-filter: blur(18px);
+            overflow: hidden;
+        }
+
+        .roster-shell::before {
+            content: 'ROSTER';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            color: rgba(255, 255, 255, 0.028);
+            font-size: clamp(92px, 17vw, 220px);
+            line-height: 1;
+            letter-spacing: 0.02em;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .roster-heading {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .roster-label {
+            display: inline-flex;
+            margin-bottom: 12px;
+            color: rgba(255, 93, 143, 0.86);
+            font-size: 12px;
+            letter-spacing: 0.18em;
+        }
+
+        .roster-heading h1 {
+            color: #fff;
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-size: clamp(38px, 5vw, 64px);
+            font-weight: normal;
+            letter-spacing: 0;
+            line-height: 1;
+        }
+
+        .roster-heading p {
+            max-width: 660px;
+            margin: 16px auto 0;
+            color: rgba(203, 213, 225, 0.78);
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-size: 15px;
+            line-height: 1.8;
+            word-break: keep-all;
+        }
+
+        .roster-tabs {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .roster-tab {
+            min-width: 160px;
+            min-height: 46px;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 999px;
+            color: rgba(226, 232, 240, 0.72);
+            background: rgba(255, 255, 255, 0.035);
+            cursor: pointer;
+            transition: color 0.24s ease, border-color 0.24s ease, background 0.24s ease, transform 0.24s ease;
+        }
+
+        .roster-tab:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            border-color: rgba(193, 58, 92, 0.32);
+        }
+
+        .roster-tab.active {
+            color: #fff;
+            border-color: rgba(193, 58, 92, 0.52);
+            background: rgba(193, 58, 92, 0.18);
+        }
+
+        .roster-stage {
+            position: relative;
+            z-index: 1;
+            min-height: 520px;
+            perspective: 1300px;
+        }
+
+        .roster-panel {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateZ(-180px) translateY(24px) scale(0.92);
+            transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .roster-panel.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateZ(0) translateY(0) scale(1);
+        }
+
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 26px;
+        }
+
+        .driver-card {
+            position: relative;
+            min-height: 470px;
+            padding: 30px 28px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 22px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.056), rgba(255, 255, 255, 0.022)),
+                radial-gradient(circle at 0 0, rgba(193, 58, 92, 0.1), transparent 32%),
+                rgba(9, 12, 20, 0.82);
+            box-shadow: 0 30px 76px rgba(0, 0, 0, 0.34);
+            backdrop-filter: blur(16px);
+            transition: border-color 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+            transform-style: preserve-3d;
+        }
+
+        .driver-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 28px;
+            width: 48px;
+            height: 2px;
+            background: rgba(193, 58, 92, 0.7);
+        }
+
+        .driver-card::after {
+            content: attr(data-code);
+            position: absolute;
+            right: 24px;
+            bottom: 16px;
+            color: rgba(255, 255, 255, 0.03);
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-size: 92px;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .driver-card:hover {
+            transform: translateY(-7px) translateZ(24px);
+            border-color: rgba(193, 58, 92, 0.36);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.064), rgba(255, 255, 255, 0.028)),
+                rgba(10, 13, 22, 0.88);
+            box-shadow: 0 36px 88px rgba(0, 0, 0, 0.42);
+        }
+
+        .driver-badge {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            margin-bottom: 18px;
+            padding: 8px 13px;
+            border: 1px solid rgba(193, 58, 92, 0.36);
+            border-radius: 999px;
+            color: rgba(255, 93, 143, 0.95);
+            background: rgba(193, 58, 92, 0.08);
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .driver-name {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 22px;
+            color: #fff;
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-size: 32px;
+            font-weight: normal;
+            line-height: 1.2;
+        }
+
+        .driver-info-list {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px 22px;
+        }
+
+        .driver-info-item {
+            padding-bottom: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .info-label {
+            margin-bottom: 7px;
+            color: #c13a5c;
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-size: 18px;
+            font-weight: normal;
+            line-height: 1.35;
+        }
+
+        .info-value {
+            color: rgba(226, 232, 240, 0.92);
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-size: 15px;
+            font-weight: normal;
+            line-height: 1.62;
+            word-break: keep-all;
+        }
+
+        .floating-banner {
+            position: fixed;
+            right: 26px;
+            bottom: 24px;
+            z-index: 60;
+            padding: 14px 24px;
+            border-radius: 999px;
+            color: #111827;
+            background: #fff;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.36);
+            cursor: pointer;
+        }
+
+        @media (max-width: 980px) {
+            header {
+                height: auto;
+                min-height: 82px;
+                padding: 18px 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+
+            nav ul {
+                height: auto;
+                flex-wrap: wrap;
+                gap: 18px;
+            }
+
+            nav li {
+                height: 42px;
+            }
+
+            .btn-customer {
+                display: none;
+            }
+
+            .lineup-page {
+                width: min(100% - 28px, 760px);
+                min-height: auto;
+                padding: 28px 0 80px;
+                display: block;
+            }
+
+            .roster-shell {
+                padding: 24px;
+                border-radius: 24px;
+            }
+
+            .roster-tabs {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            .roster-stage {
+                min-height: 1010px;
+            }
+
+            .roster-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .roster-panel {
+                transform: translateY(18px);
+            }
+
+            .roster-panel.active {
+                transform: translateY(0);
+            }
+
+            .driver-card {
+                min-height: auto;
+            }
+
+            .driver-info-list {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-banner {
+                right: 14px;
+                left: 14px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a class="logo" href="index.html">
+            <div class="logo-sub">발로란트 신속대리 백현팀</div>
+            <div class="logo-main">VLRT <span>1oohyun</span></div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">공지사항</a></li>
+                <li class="nav-menu">
+                    <a href="price.html" class="nav-menu-trigger">가격표</a>
+                    <div class="nav-dropdown" aria-label="가격표 세부 메뉴">
+                        <a href="price.html#per-win">승당제</a>
+                        <a href="price.html#promotion">승급제</a>
+                        <a href="price.html#duo">듀오제</a>
+                        <a href="terms.html">대리 약관</a>
+                    </div>
+                </li>
+                <li class="nav-menu">
+                    <a href="lineup.html" class="nav-menu-trigger active">기사 라인업</a>
+                    <div class="nav-dropdown" aria-label="기사 라인업 세부 메뉴">
+                        <a href="lineup.html#low">Low Ranked</a>
+                        <a href="lineup.html#high">High Ranked</a>
+                    </div>
+                </li>
+                <li><a href="index.html#status">작업현황</a></li>
+                <li><a href="index.html#faq">자주 묻는 질문</a></li>
+            </ul>
+        </nav>
+        <button class="btn-customer" type="button" onclick="openChat()">고객센터</button>
+    </header>
+
+    <main class="lineup-page">
+        <section class="roster-shell" aria-label="기사 라인업">
+            <div class="roster-heading">
+                <span class="roster-label">PREMIUM ROSTER</span>
+                <h1>기사 라인업</h1>
+                <p>검증된 기사 라인업을 구간별로 확인하세요. Low Ranked는 빠른 진행 중심, High Ranked는 고티어 예약 진행 중심으로 운영합니다.</p>
+            </div>
+
+            <div class="roster-tabs" role="tablist" aria-label="기사 구간 선택">
+                <button class="roster-tab active" type="button" role="tab" aria-selected="true" data-tier="low">Low Ranked</button>
+                <button class="roster-tab" type="button" role="tab" aria-selected="false" data-tier="high">High Ranked</button>
+            </div>
+
+            <div class="roster-stage">
+                <div class="roster-panel active" id="low" data-panel="low" role="tabpanel">
+                    <div class="roster-grid">
+                        <article class="driver-card" data-code="JS">
+                            <div class="driver-badge">저티어 기사</div>
+                            <h2 class="driver-name">JS기사</h2>
+                            <div class="driver-info-list">
+                                <div class="driver-info-item"><div class="info-label">최고티어</div><div class="info-value">한국서버 레디언트 350rr</div></div>
+                                <div class="driver-info-item"><div class="info-label">화면공유</div><div class="info-value">불가능</div></div>
+                                <div class="driver-info-item"><div class="info-label">진행 가능 구간</div><div class="info-value">브론즈부터 다이아까지 가능</div></div>
+                                <div class="driver-info-item"><div class="info-label">모스트</div><div class="info-value">오멘, 믹스, 아스트라</div></div>
+                                <div class="driver-info-item"><div class="info-label">진행가능여부</div><div class="info-value">즉시 진행</div></div>
+                                <div class="driver-info-item"><div class="info-label">서비스</div><div class="info-value">대리, 듀오제</div></div>
+                            </div>
+                        </article>
+
+                        <article class="driver-card" data-code="SW">
+                            <div class="driver-badge">저티어 기사</div>
+                            <h2 class="driver-name">세원기사</h2>
+                            <div class="driver-info-list">
+                                <div class="driver-info-item"><div class="info-label">최고티어</div><div class="info-value">한국서버 레디언트 320rr</div></div>
+                                <div class="driver-info-item"><div class="info-label">화면공유</div><div class="info-value">가능</div></div>
+                                <div class="driver-info-item"><div class="info-label">진행 가능 구간</div><div class="info-value">브론즈부터 초월자까지 가능</div></div>
+                                <div class="driver-info-item"><div class="info-label">모스트</div><div class="info-value">레이나, 제트, 체임버</div></div>
+                                <div class="driver-info-item"><div class="info-label">진행가능여부</div><div class="info-value">즉시 진행</div></div>
+                                <div class="driver-info-item"><div class="info-label">서비스</div><div class="info-value">대리</div></div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="roster-panel" id="high" data-panel="high" role="tabpanel">
+                    <div class="roster-grid">
+                        <article class="driver-card" data-code="BH">
+                            <div class="driver-badge">고티어 기사</div>
+                            <h2 class="driver-name">백현 기사</h2>
+                            <div class="driver-info-list">
+                                <div class="driver-info-item"><div class="info-label">최고티어</div><div class="info-value">아시아서버 레디언트 800rr</div></div>
+                                <div class="driver-info-item"><div class="info-label">화면공유</div><div class="info-value">가능</div></div>
+                                <div class="driver-info-item"><div class="info-label">진행 가능 구간</div><div class="info-value">초월자부터 레디언트까지 가능</div></div>
+                                <div class="driver-info-item"><div class="info-label">모스트</div><div class="info-value">레이나, 클로브, 소바</div></div>
+                                <div class="driver-info-item"><div class="info-label">진행가능여부</div><div class="info-value">예약제 진행</div></div>
+                                <div class="driver-info-item"><div class="info-label">서비스</div><div class="info-value">대리, 강의</div></div>
+                            </div>
+                        </article>
+
+                        <article class="driver-card" data-code="BR">
+                            <div class="driver-badge">고티어 기사</div>
+                            <h2 class="driver-name">Bera기사</h2>
+                            <div class="driver-info-list">
+                                <div class="driver-info-item"><div class="info-label">최고티어</div><div class="info-value">아시아서버 레디언트 1000rr 전 프로게이머</div></div>
+                                <div class="driver-info-item"><div class="info-label">화면공유</div><div class="info-value">가능</div></div>
+                                <div class="driver-info-item"><div class="info-label">진행 가능 구간</div><div class="info-value">초월자부터 레디언트까지 가능</div></div>
+                                <div class="driver-info-item"><div class="info-label">모스트</div><div class="info-value">사이퍼, 데드록, 바이퍼</div></div>
+                                <div class="driver-info-item"><div class="info-label">진행가능여부</div><div class="info-value">예약제 진행</div></div>
+                                <div class="driver-info-item"><div class="info-label">서비스</div><div class="info-value">대리, 강의</div></div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="floating-banner" onclick="openChat()">⚡ 24시간 365일 편하게 상담주세요</div>
+
+    <script>
+        const tabs = Array.from(document.querySelectorAll('.roster-tab'));
+        const panels = Array.from(document.querySelectorAll('.roster-panel'));
+
+        function openChat() {
+            window.open('https://open.kakao.com/o/sJdWuGxi', '_blank');
+        }
+
+        function setRosterTier(tier, updateHash = true) {
+            const nextTier = tier === 'high' ? 'high' : 'low';
+            tabs.forEach(tab => {
+                const active = tab.dataset.tier === nextTier;
+                tab.classList.toggle('active', active);
+                tab.setAttribute('aria-selected', active ? 'true' : 'false');
+            });
+            panels.forEach(panel => {
+                panel.classList.toggle('active', panel.dataset.panel === nextTier);
+            });
+            if (updateHash && window.location.hash !== `#${nextTier}`) {
+                history.replaceState(null, '', `#${nextTier}`);
+            }
+        }
+
+        function syncRosterFromHash() {
+            setRosterTier(window.location.hash === '#high' ? 'high' : 'low', false);
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => setRosterTier(tab.dataset.tier));
+        });
+
+        window.addEventListener('hashchange', syncRosterFromHash);
+        syncRosterFromHash();
+    </script>
+</body>
+</html>

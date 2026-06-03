@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>백현팀 가격표</title>
-    <meta name="description" content="백현팀 발로란트 대리 승당제, 승급제, 듀오제 가격표를 확인할 수 있는 전용 페이지입니다.">
+    <title>가격표 | 백현팀</title>
+    <meta name="description" content="발로란트 대리 백현팀의 승당제, 승급제, 듀오제 패키지 가격과 예상 금액 계산기를 확인하세요.">
     <link rel="canonical" href="https://vastdeep0612-png.github.io/-/price.html">
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="shortcut icon" href="favicon.ico">
@@ -13,6 +13,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="preconnect" href="https://media.valorant-api.com">
     <style>
         @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
@@ -41,11 +42,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Paperlogy', sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
         html {
+            min-height: 100%;
             overflow-x: hidden;
             background: #03040a;
         }
@@ -53,10 +54,12 @@
         body {
             min-height: 100vh;
             color: #f8fafc;
-            background-attachment: fixed;
+            font-family: 'Paperlogy', system-ui, sans-serif;
+            font-weight: 800;
+            overflow-x: hidden;
             background:
-                linear-gradient(180deg, rgba(3, 4, 10, 0.84), rgba(3, 4, 10, 0.72) 34%, #03040a 100%),
-                linear-gradient(90deg, rgba(3, 4, 10, 0.92), rgba(3, 4, 10, 0.48) 48%, rgba(3, 4, 10, 0.76)),
+                linear-gradient(180deg, rgba(3, 4, 10, 0.86), rgba(3, 4, 10, 0.7) 36%, #03040a 100%),
+                linear-gradient(90deg, rgba(3, 4, 10, 0.94), rgba(3, 4, 10, 0.54) 48%, rgba(3, 4, 10, 0.8)),
                 url('assets/baekhyeon-price-bg.jpg') center top / cover no-repeat fixed,
                 #03040a;
         }
@@ -66,7 +69,8 @@
             text-decoration: none;
         }
 
-        button {
+        button,
+        select {
             font: inherit;
         }
 
@@ -79,34 +83,36 @@
             display: grid;
             grid-template-columns: minmax(240px, 1fr) auto minmax(240px, 1fr);
             align-items: center;
-            background: rgba(3, 4, 10, 0.86);
+            background: rgba(3, 4, 10, 0.88);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(18px);
         }
 
         .logo {
             justify-self: start;
+            line-height: 1.08;
         }
 
         .logo-sub {
             margin-bottom: 5px;
-            font-size: 10px;
             color: #8d97ad;
+            font-size: 10px;
             letter-spacing: 0;
+            white-space: nowrap;
         }
 
         .logo-main {
+            color: #fff;
             font-family: 'JoseonPalace', 'Paperlogy', sans-serif;
             font-size: 24px;
-            line-height: 1;
-            letter-spacing: 0;
-            color: #fff;
             font-weight: normal;
+            letter-spacing: 0;
+            white-space: nowrap;
         }
 
         .logo-main span {
-            font-family: inherit;
             color: #ff1f67;
+            font-family: inherit;
         }
 
         nav {
@@ -118,7 +124,7 @@
             list-style: none;
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 38px;
         }
 
         nav li {
@@ -129,9 +135,10 @@
         }
 
         nav a {
-            font-size: 15px;
             color: #cbd5e1;
+            font-size: 15px;
             transition: color 0.2s ease;
+            white-space: nowrap;
         }
 
         nav a:hover,
@@ -139,7 +146,7 @@
             color: #fff;
         }
 
-        .nav-price-trigger::after {
+        .nav-menu-trigger::after {
             content: '';
             display: inline-block;
             width: 7px;
@@ -150,7 +157,7 @@
             transform: rotate(45deg) translateY(-3px);
         }
 
-        .price-dropdown {
+        .nav-dropdown {
             position: absolute;
             top: calc(100% - 2px);
             left: 50%;
@@ -168,7 +175,7 @@
             transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
         }
 
-        .price-dropdown::before {
+        .nav-dropdown::before {
             content: '';
             position: absolute;
             top: -12px;
@@ -177,280 +184,60 @@
             height: 12px;
         }
 
-        .nav-price-menu:hover .price-dropdown,
-        .nav-price-menu:focus-within .price-dropdown {
+        .nav-dropdown a {
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6px;
+            color: #f5f7fb;
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-size: 18px;
+        }
+
+        .nav-dropdown a::after {
+            content: '›';
+            color: #ff1f67;
+        }
+
+        .nav-menu:hover .nav-dropdown,
+        .nav-menu:focus-within .nav-dropdown {
             opacity: 1;
             visibility: visible;
             transform: translate(-50%, 0);
         }
 
-        .price-dropdown a {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-height: 38px;
-            padding: 0 6px;
-            font-family: 'Waguri', 'Paperlogy', sans-serif;
-            font-size: 18px;
-            color: #f5f7fb;
-        }
-
-        .price-dropdown a::after {
-            content: '›';
-            color: #ff1f67;
-        }
-
-        .page-wrap {
-            width: min(1080px, calc(100% - 56px));
-            margin: 0 auto;
-            padding: 18px 0 86px;
-        }
-
-        .page-hero {
-            display: none;
-            padding: 34px 0 24px;
-            text-align: center;
-        }
-
-        .page-kicker {
-            display: inline-flex;
-            align-items: center;
-            min-height: 30px;
-            padding: 0 14px;
-            border: 1px solid rgba(255, 31, 103, 0.45);
-            border-radius: 999px;
-            color: #ff4f87;
-            font-size: 13px;
-        }
-
-        h1 {
-            margin-top: 22px;
-            font-family: 'Waguri', 'Paperlogy', sans-serif;
-            font-size: clamp(42px, 6vw, 74px);
-            letter-spacing: 0;
-        }
-
-        .page-hero p {
-            margin-top: 14px;
-            color: #aab3c4;
-            font-size: 17px;
-            line-height: 1.8;
-        }
-
-        .tab-bar {
-            position: relative;
-            z-index: 30;
-            margin: 8px auto 16px;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            width: fit-content;
-            max-width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            background: rgba(7, 8, 17, 0.84);
-            backdrop-filter: blur(16px);
-        }
-
-        .price-tab {
-            min-width: 132px;
-            min-height: 48px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .btn-customer {
+            justify-self: end;
+            padding: 12px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
             border-radius: 12px;
-            color: #b9c2d4;
+            color: #ffffff;
             background: rgba(255, 255, 255, 0.04);
             cursor: pointer;
-            transition: transform 0.2s ease, color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
         }
 
-        .price-tab:hover {
-            transform: translateY(-2px);
-            color: #fff;
-            border-color: rgba(255, 31, 103, 0.4);
-        }
-
-        .price-tab.active {
-            color: #fff;
-            border-color: rgba(255, 31, 103, 0.72);
-            background: linear-gradient(135deg, rgba(255, 31, 103, 0.92), rgba(138, 27, 77, 0.72));
-            box-shadow: 0 16px 38px rgba(255, 31, 103, 0.2);
-        }
-
-        .price-panel {
-            display: none;
-            max-width: 1080px;
+        .price-page {
+            width: min(1280px, calc(100% - 56px));
+            min-height: calc(100vh - 82px);
             margin: 0 auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 22px;
-            background:
-                linear-gradient(145deg, rgba(255, 31, 103, 0.12), rgba(255, 255, 255, 0.025) 34%, rgba(3, 4, 10, 0.92)),
-                rgba(9, 10, 19, 0.86);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.34);
-            overflow: hidden;
-        }
-
-        .price-panel.active {
-            display: block;
-        }
-
-        .panel-head {
-            padding: 28px 42px 20px;
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            align-items: flex-end;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .panel-head h2 {
-            font-family: 'NanumSquare', 'Paperlogy', sans-serif;
-            font-weight: 900;
-            font-size: clamp(28px, 4vw, 42px);
-            letter-spacing: 0;
-        }
-
-        .panel-head p {
-            margin-top: 10px;
-            color: #aab3c4;
-            line-height: 1.7;
-        }
-
-        .tier-groups {
-            display: grid;
-            gap: 18px;
-            padding: 22px;
-        }
-
-        .tier-group {
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            background: rgba(5, 6, 12, 0.56);
-        }
-
-        .tier-group-head {
+            padding: 34px 0 48px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 14px;
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-            background:
-                linear-gradient(90deg, rgba(255, 31, 103, 0.16), rgba(255, 255, 255, 0.02)),
-                rgba(8, 9, 18, 0.72);
-        }
-
-        .tier-group-title {
-            color: #ffffff;
-            font-family: 'NanumSquare', 'Paperlogy', sans-serif;
-            font-size: 20px;
-            font-weight: 900;
-        }
-
-        .tier-group-range {
-            color: #9aa7bd;
-            font-size: 13px;
-            text-align: right;
-            word-break: keep-all;
-        }
-
-        .price-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .price-table th,
-        .price-table td {
-            padding: 10px 42px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .price-table tbody tr {
-            background: rgba(255, 255, 255, 0.012);
-        }
-
-        .price-table tbody tr:nth-child(even) {
-            background: rgba(255, 255, 255, 0.025);
-        }
-
-        .price-table th {
-            color: #768198;
-            font-size: 13px;
-            text-align: left;
-        }
-
-        .tier-name {
-            font-size: 15px;
-            color: #f7f8fb;
-        }
-
-        .tier-price {
-            min-width: 210px;
-            text-align: right;
-            color: #ff1f67;
-            font-size: 16px;
-            white-space: nowrap;
-        }
-
-        .btn-table-order,
-        .btn-action {
-            margin-left: 16px;
-            padding: 7px 13px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 8px;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.06);
-            cursor: pointer;
-            font-size: 13px;
-            transition: border-color 0.2s ease, background 0.2s ease;
-        }
-
-        .btn-table-order:hover,
-        .btn-action:hover {
-            border-color: rgba(255, 31, 103, 0.55);
-            background: rgba(255, 31, 103, 0.14);
-        }
-
-        .duo-card {
-            padding: 44px;
-        }
-
-        .duo-card h2 {
-            font-family: 'Waguri', 'Paperlogy', sans-serif;
-            font-size: clamp(30px, 5vw, 52px);
-        }
-
-        .duo-card p {
-            max-width: 720px;
-            margin-top: 18px;
-            color: #cbd5e1;
-            font-size: 18px;
-            line-height: 1.9;
-        }
-
-        .duo-card .btn-action {
-            margin: 30px 0 0;
-            padding: 15px 24px;
-            border-color: rgba(255, 31, 103, 0.66);
-            background: #ff1f67;
-            box-shadow: 0 16px 34px rgba(255, 31, 103, 0.24);
         }
 
         .package-showcase {
             position: relative;
-            z-index: 2;
-            max-width: 1220px;
-            margin: 10px auto 34px;
-            padding: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 28px;
+            width: 100%;
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
             background:
-                radial-gradient(circle at 18% 8%, rgba(255, 31, 103, 0.12), transparent 34%),
-                radial-gradient(circle at 92% 18%, rgba(216, 181, 114, 0.08), transparent 28%),
-                linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
-                rgba(5, 6, 12, 0.76);
-            box-shadow: 0 34px 90px rgba(0, 0, 0, 0.36);
+                radial-gradient(circle at 18% 8%, rgba(255, 31, 103, 0.13), transparent 34%),
+                radial-gradient(circle at 92% 18%, rgba(216, 181, 114, 0.09), transparent 28%),
+                linear-gradient(145deg, rgba(255, 255, 255, 0.058), rgba(255, 255, 255, 0.018)),
+                rgba(5, 6, 12, 0.78);
+            box-shadow: 0 36px 94px rgba(0, 0, 0, 0.38);
             backdrop-filter: blur(18px);
             overflow: hidden;
         }
@@ -461,10 +248,10 @@
             inset: 0;
             pointer-events: none;
             background:
-                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px),
                 linear-gradient(180deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
             background-size: 74px 74px;
-            opacity: 0.24;
+            opacity: 0.22;
             mask-image: radial-gradient(circle at center, black, transparent 76%);
             -webkit-mask-image: radial-gradient(circle at center, black, transparent 76%);
         }
@@ -476,28 +263,29 @@
             justify-content: space-between;
             align-items: flex-end;
             gap: 28px;
-            margin-bottom: 22px;
+            margin-bottom: 24px;
         }
 
-        .package-showcase-kicker {
+        .package-kicker {
             display: inline-flex;
-            margin-bottom: 9px;
+            margin-bottom: 10px;
             color: #ff5d8f;
             font-size: 12px;
             letter-spacing: 0.12em;
         }
 
-        .package-showcase h2 {
+        .package-showcase h1 {
+            color: #fff;
             font-family: 'NanumSquare', 'Paperlogy', sans-serif;
-            font-size: clamp(30px, 4.5vw, 54px);
+            font-size: clamp(34px, 4.8vw, 60px);
             font-weight: 900;
             line-height: 1;
             letter-spacing: -0.02em;
         }
 
         .package-showcase-head p {
-            max-width: 440px;
-            color: rgba(203, 213, 225, 0.74);
+            max-width: 470px;
+            color: rgba(203, 213, 225, 0.76);
             font-size: 14px;
             line-height: 1.75;
             text-align: right;
@@ -508,14 +296,14 @@
             position: relative;
             z-index: 1;
             display: grid;
-            grid-template-columns: minmax(0, 1fr) 360px;
+            grid-template-columns: minmax(0, 1fr) 370px;
             gap: 24px;
             align-items: stretch;
         }
 
         .package-stage {
             position: relative;
-            min-height: 410px;
+            min-height: 520px;
             border-radius: 24px;
             perspective: 1200px;
             cursor: grab;
@@ -526,7 +314,7 @@
             cursor: grabbing;
         }
 
-        .package-card-premium {
+        .package-card {
             position: absolute;
             inset: 0;
             display: flex;
@@ -536,41 +324,41 @@
             border: 1px solid rgba(255, 255, 255, 0.11);
             border-radius: 24px;
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.068), rgba(255, 255, 255, 0.022)),
-                radial-gradient(circle at 0 0, rgba(255, 31, 103, 0.13), transparent 34%),
-                rgba(8, 10, 18, 0.9);
+                linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.022)),
+                radial-gradient(circle at 0 0, rgba(255, 31, 103, 0.14), transparent 34%),
+                rgba(8, 10, 18, 0.91);
             box-shadow: 0 34px 78px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transform: translate3d(0, 18px, -120px) scale(0.92) rotateY(0deg);
+            transform: translate3d(0, 18px, -120px) scale(0.92);
             transition: opacity 520ms cubic-bezier(0.22, 1, 0.36, 1), visibility 520ms, transform 520ms cubic-bezier(0.22, 1, 0.36, 1), filter 520ms;
             transform-style: preserve-3d;
         }
 
-        .package-card-premium.is-active {
+        .package-card.is-active {
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
-            transform: translate3d(0, 0, 0) scale(1) rotateY(0deg);
+            transform: translate3d(0, 0, 0) scale(1);
             filter: none;
         }
 
-        .package-card-premium.is-prev {
-            opacity: 0.26;
+        .package-card.is-prev {
+            opacity: 0.1;
             visibility: visible;
-            transform: translate3d(-56%, 18px, -180px) scale(0.84) rotateY(12deg);
-            filter: blur(1px);
+            transform: translate3d(-116%, 18px, -220px) scale(0.68) rotateY(10deg);
+            filter: blur(1.5px);
         }
 
-        .package-card-premium.is-next {
-            opacity: 0.26;
+        .package-card.is-next {
+            opacity: 0.1;
             visibility: visible;
-            transform: translate3d(56%, 18px, -180px) scale(0.84) rotateY(-12deg);
-            filter: blur(1px);
+            transform: translate3d(116%, 18px, -220px) scale(0.68) rotateY(-10deg);
+            filter: blur(1.5px);
         }
 
-        .package-card-premium::before {
+        .package-card::before {
             content: '';
             position: absolute;
             left: 28px;
@@ -581,13 +369,9 @@
             opacity: 0.8;
         }
 
-        .package-card-top {
-            position: relative;
-            z-index: 1;
-        }
-
         .package-chip {
             display: inline-flex;
+            width: fit-content;
             padding: 8px 13px;
             border: 1px solid rgba(255, 31, 103, 0.28);
             border-radius: 999px;
@@ -596,17 +380,17 @@
             font-size: 12px;
         }
 
-        .package-card-premium h3 {
+        .package-card h2 {
             margin-top: 18px;
             font-family: 'NanumSquare', 'Paperlogy', sans-serif;
-            font-size: clamp(34px, 4.8vw, 58px);
+            font-size: clamp(36px, 5vw, 62px);
             font-weight: 900;
             line-height: 1;
             letter-spacing: -0.03em;
         }
 
-        .package-card-premium p {
-            max-width: 620px;
+        .package-card p {
+            max-width: 640px;
             margin-top: 14px;
             color: rgba(226, 232, 240, 0.74);
             font-size: 15px;
@@ -615,12 +399,10 @@
         }
 
         .package-summary-grid {
-            position: relative;
-            z-index: 1;
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 12px;
-            margin: 24px 0;
+            margin: 22px 0;
         }
 
         .package-summary {
@@ -643,13 +425,51 @@
             line-height: 1.35;
         }
 
+        .rank-preview {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .rank-preview-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 74px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.075);
+            border-radius: 16px;
+            background: rgba(3, 4, 10, 0.38);
+        }
+
+        .rank-preview-item img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.38));
+        }
+
+        .rank-preview-item span {
+            display: block;
+            color: rgba(226, 232, 240, 0.72);
+            font-size: 11px;
+        }
+
+        .rank-preview-item strong {
+            display: block;
+            margin-top: 4px;
+            color: #fff;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+
         .package-card-bottom {
-            position: relative;
-            z-index: 1;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 18px;
+            margin-top: 20px;
         }
 
         .package-services {
@@ -667,7 +487,7 @@
             font-size: 12px;
         }
 
-        .package-jump {
+        .package-action {
             flex: 0 0 auto;
             padding: 12px 17px;
             border: 1px solid rgba(255, 255, 255, 0.14);
@@ -678,7 +498,7 @@
             transition: border-color 0.22s ease, background 0.22s ease, transform 0.22s ease;
         }
 
-        .package-jump:hover {
+        .package-action:hover {
             transform: translateY(-2px);
             border-color: rgba(255, 31, 103, 0.48);
             background: rgba(255, 31, 103, 0.12);
@@ -706,7 +526,7 @@
             background: linear-gradient(90deg, #d8b572, #ff1f67);
         }
 
-        .package-calculator {
+        .calculator {
             position: relative;
             padding: 24px;
             border: 1px solid rgba(255, 255, 255, 0.11);
@@ -714,18 +534,18 @@
             background:
                 radial-gradient(circle at 100% 0, rgba(216, 181, 114, 0.1), transparent 34%),
                 linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
-                rgba(8, 10, 18, 0.86);
+                rgba(8, 10, 18, 0.88);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
-        .package-calculator h3 {
+        .calculator h2 {
             font-family: 'NanumSquare', 'Paperlogy', sans-serif;
             font-size: 28px;
             font-weight: 900;
             line-height: 1.15;
         }
 
-        .package-calculator p {
+        .calculator > p {
             margin: 10px 0 18px;
             color: rgba(203, 213, 225, 0.72);
             font-size: 13px;
@@ -777,6 +597,42 @@
             outline: none;
         }
 
+        .tier-preview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .tier-preview-card {
+            min-height: 96px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tier-preview-card span {
+            display: block;
+            color: rgba(148, 163, 184, 0.86);
+            font-size: 11px;
+        }
+
+        .tier-preview-card img {
+            width: 46px;
+            height: 46px;
+            margin: 8px 0 6px;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.36));
+        }
+
+        .tier-preview-card strong {
+            display: block;
+            color: #fff;
+            font-size: 12px;
+            line-height: 1.25;
+        }
+
         .calc-result {
             margin-top: 18px;
             padding: 18px;
@@ -800,10 +656,11 @@
         }
 
         .calc-result p {
-            margin: 8px 0 0;
+            margin-top: 8px;
             color: rgba(226, 232, 240, 0.76);
             font-size: 12px;
             line-height: 1.65;
+            word-break: keep-all;
         }
 
         .floating-banner {
@@ -819,39 +676,38 @@
             cursor: pointer;
         }
 
-        @media (max-width: 860px) {
+        @media (max-width: 1040px) {
             header {
                 height: auto;
                 min-height: 82px;
                 padding: 18px 20px;
-                gap: 18px;
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 14px;
             }
 
             nav ul {
                 height: auto;
-                gap: 20px;
                 flex-wrap: wrap;
+                gap: 18px;
             }
 
             nav li {
                 height: 42px;
             }
 
-            .tab-bar {
-                width: 100%;
-                overflow-x: auto;
-                justify-content: flex-start;
+            .btn-customer {
+                display: none;
             }
 
-            .price-tab {
-                flex: 0 0 auto;
+            .price-page {
+                width: min(100% - 28px, 760px);
+                min-height: auto;
+                padding: 22px 0 40px;
             }
 
             .package-showcase {
-                margin: 8px 14px 28px;
                 padding: 20px;
                 border-radius: 22px;
             }
@@ -870,21 +726,22 @@
             }
 
             .package-stage {
-                min-height: 500px;
+                min-height: 620px;
             }
 
-            .package-card-premium {
+            .package-card {
                 padding: 22px;
             }
 
-            .package-card-premium.is-prev,
-            .package-card-premium.is-next {
+            .package-card.is-prev,
+            .package-card.is-next {
                 opacity: 0;
                 visibility: hidden;
                 transform: translate3d(0, 18px, -120px) scale(0.92);
             }
 
-            .package-summary-grid {
+            .package-summary-grid,
+            .rank-preview {
                 grid-template-columns: 1fr;
             }
 
@@ -892,46 +749,10 @@
                 display: grid;
             }
 
-            .package-calculator {
-                padding: 20px;
-            }
-
-            .panel-head {
-                padding: 24px 20px;
-                display: block;
-            }
-
-            .tier-groups {
-                padding: 16px;
-            }
-
-            .tier-group-head {
-                display: block;
-            }
-
-            .tier-group-range {
-                margin-top: 6px;
-                text-align: left;
-            }
-
-            .price-table th,
-            .price-table td {
-                padding: 16px 18px;
-            }
-
-            .tier-name,
-            .tier-price {
-                font-size: 14px;
-            }
-
-            .tier-price {
-                min-width: 150px;
-            }
-
-            .btn-table-order {
-                margin-left: 8px;
-                padding: 8px 10px;
-                font-size: 12px;
+            .floating-banner {
+                right: 14px;
+                left: 14px;
+                text-align: center;
             }
         }
     </style>
@@ -945,56 +766,53 @@
         <nav>
             <ul>
                 <li><a href="index.html">공지사항</a></li>
-                <li class="nav-price-menu">
-                    <a href="price.html" class="nav-price-trigger active">가격표</a>
-                    <div class="price-dropdown" aria-label="가격표 세부 메뉴">
+                <li class="nav-menu">
+                    <a href="price.html" class="nav-menu-trigger active">가격표</a>
+                    <div class="nav-dropdown" aria-label="가격표 세부 메뉴">
                         <a href="price.html#per-win">승당제</a>
                         <a href="price.html#promotion">승급제</a>
                         <a href="price.html#duo">듀오제</a>
                         <a href="terms.html">대리 약관</a>
                     </div>
                 </li>
-                <li class="nav-price-menu">
-                    <a href="drivers.html" class="nav-price-trigger">기사 라인업</a>
-                    <div class="price-dropdown" aria-label="기사 라인업 세부 메뉴">
-                        <a href="drivers.html#drivers-low">저티어</a>
-                        <a href="drivers.html#drivers-high">고티어</a>
+                <li class="nav-menu">
+                    <a href="lineup.html" class="nav-menu-trigger">기사 라인업</a>
+                    <div class="nav-dropdown" aria-label="기사 라인업 세부 메뉴">
+                        <a href="lineup.html#low">Low Ranked</a>
+                        <a href="lineup.html#high">High Ranked</a>
                     </div>
                 </li>
+                <li><a href="index.html#status">작업현황</a></li>
                 <li><a href="index.html#faq">자주 묻는 질문</a></li>
             </ul>
         </nav>
+        <button class="btn-customer" type="button" onclick="openChat()">고객센터</button>
     </header>
 
-    <main class="page-wrap">
-        <section class="page-hero">
-            <span class="page-kicker">PRICE TABLE</span>
-            <h1>백현팀 가격표</h1>
-            <p>원하는 진행 방식에 맞춰 승당제, 승급제, 듀오제 가격을 따로 확인하세요.</p>
-        </section>
-
-        <section class="package-showcase" aria-label="가격 패키지 쇼케이스">
+    <main class="price-page">
+        <section class="package-showcase" aria-label="패키지별 가격 안내">
             <div class="package-showcase-head">
                 <div>
-                    <span class="package-showcase-kicker">PREMIUM PACKAGE</span>
-                    <h2>패키지별 가격 안내</h2>
+                    <span class="package-kicker">PREMIUM PACKAGE</span>
+                    <h1>패키지별 가격 안내</h1>
                 </div>
-                <p>승당제, 승급제, 듀오제를 한눈에 비교하고 오른쪽 계산기로 예상 금액을 빠르게 확인하세요.</p>
+                <p>승당제, 승급제, 듀오제를 한 화면에서 비교하고 예상 금액 계산기로 바로 확인하세요.</p>
             </div>
 
             <div class="package-layout">
                 <div>
                     <div class="package-stage" id="packageStage" aria-label="가격 패키지 카드">
-                        <article class="package-card-premium is-active" data-package-card data-tab="per-win">
-                            <div class="package-card-top">
+                        <article class="package-card is-active" data-package-card data-tab="per-win">
+                            <div>
                                 <span class="package-chip">PER WIN PACKAGE</span>
-                                <h3>승당제</h3>
+                                <h2>승당제</h2>
                                 <p>2승 1패를 1승 기준으로 안내하는 단기 진행 패키지입니다. 필요한 구간만 빠르게 확인하고 신청하기 좋습니다.</p>
                                 <div class="package-summary-grid">
                                     <div class="package-summary"><span>시작가</span><strong>3,000원</strong></div>
                                     <div class="package-summary"><span>고티어</span><strong>14,000원부터</strong></div>
                                     <div class="package-summary"><span>레디언트</span><strong>문의</strong></div>
                                 </div>
+                                <div class="rank-preview" data-rank-preview="win"></div>
                             </div>
                             <div class="package-card-bottom">
                                 <div class="package-services">
@@ -1002,20 +820,21 @@
                                     <span>1승 기준</span>
                                     <span>구간별 안내</span>
                                 </div>
-                                <button class="package-jump" type="button" data-jump-tab="per-win">승당제 표 보기</button>
+                                <button class="package-action" type="button" onclick="openChat()">상담 신청하기</button>
                             </div>
                         </article>
 
-                        <article class="package-card-premium is-next" data-package-card data-tab="promotion">
-                            <div class="package-card-top">
+                        <article class="package-card is-next" data-package-card data-tab="promotion">
+                            <div>
                                 <span class="package-chip">PROMOTION PACKAGE</span>
-                                <h3>승급제</h3>
+                                <h2>승급제</h2>
                                 <p>기본 MMR 승당 20점 기준으로 한 티어 승급 단위 안내입니다. 목표 티어까지 안정적으로 맡기고 싶을 때 적합합니다.</p>
                                 <div class="package-summary-grid">
                                     <div class="package-summary"><span>시작가</span><strong>9,000원</strong></div>
                                     <div class="package-summary"><span>고티어</span><strong>42,000원부터</strong></div>
                                     <div class="package-summary"><span>레디언트</span><strong>문의</strong></div>
                                 </div>
+                                <div class="rank-preview" data-rank-preview="promotion"></div>
                             </div>
                             <div class="package-card-bottom">
                                 <div class="package-services">
@@ -1023,20 +842,21 @@
                                     <span>승급 단위</span>
                                     <span>예약 가능</span>
                                 </div>
-                                <button class="package-jump" type="button" data-jump-tab="promotion">승급제 표 보기</button>
+                                <button class="package-action" type="button" onclick="openChat()">상담 신청하기</button>
                             </div>
                         </article>
 
-                        <article class="package-card-premium is-prev" data-package-card data-tab="duo">
-                            <div class="package-card-top">
+                        <article class="package-card is-prev" data-package-card data-tab="duo">
+                            <div>
                                 <span class="package-chip">DUO PACKAGE</span>
-                                <h3>듀오제</h3>
+                                <h2>듀오제</h2>
                                 <p>기사와 함께 플레이하며 피드백과 구간 진행을 같이 받는 방식입니다. 현재 티어, 목표 티어, 시간대에 따라 상담 후 안내합니다.</p>
                                 <div class="package-summary-grid">
                                     <div class="package-summary"><span>진행</span><strong>동행 플레이</strong></div>
                                     <div class="package-summary"><span>가격</span><strong>상담 안내</strong></div>
                                     <div class="package-summary"><span>추천</span><strong>피드백 희망</strong></div>
                                 </div>
+                                <div class="rank-preview" data-rank-preview="duo"></div>
                             </div>
                             <div class="package-card-bottom">
                                 <div class="package-services">
@@ -1044,7 +864,7 @@
                                     <span>피드백 가능</span>
                                     <span>화면공유</span>
                                 </div>
-                                <button class="package-jump" type="button" data-jump-tab="duo">듀오제 보기</button>
+                                <button class="package-action" type="button" onclick="openChat()">듀오 상담하기</button>
                             </div>
                         </article>
                     </div>
@@ -1055,9 +875,9 @@
                     </div>
                 </div>
 
-                <aside class="package-calculator" aria-label="예상 가격 계산기">
-                    <h3>예상 금액 계산</h3>
-                    <p>현재 티어와 목표 티어만 선택하면 승당제/승급제 기준 예상 금액을 보여드립니다. 레디언트 포함 구간은 상담이 필요합니다.</p>
+                <aside class="calculator" aria-label="예상 금액 계산기">
+                    <h2>예상 금액 계산</h2>
+                    <p>현재 티어와 목표 티어만 선택하면 승당제/승급제 기준 예상 금액을 보여드립니다.</p>
                     <div class="calc-type-tabs" role="tablist" aria-label="계산 방식">
                         <button class="calc-type-tab active" type="button" data-calc-type="win">승당제</button>
                         <button class="calc-type-tab" type="button" data-calc-type="promotion">승급제</button>
@@ -1070,139 +890,24 @@
                         <label for="calcToTier">목표 티어</label>
                         <select id="calcToTier"></select>
                     </div>
+                    <div class="tier-preview">
+                        <div class="tier-preview-card">
+                            <span>현재</span>
+                            <img id="fromTierIcon" alt="">
+                            <strong id="fromTierName">-</strong>
+                        </div>
+                        <div class="tier-preview-card">
+                            <span>목표</span>
+                            <img id="toTierIcon" alt="">
+                            <strong id="toTierName">-</strong>
+                        </div>
+                    </div>
                     <div class="calc-result">
-                        <span id="calcResultLabel">예상 안내</span>
+                        <span>예상 안내</span>
                         <strong id="calcResultAmount">계산 중</strong>
                         <p id="calcResultNote">구간을 선택하면 예상 금액이 표시됩니다.</p>
                     </div>
                 </aside>
-            </div>
-        </section>
-
-        <div class="tab-bar" role="tablist" aria-label="가격표 종류">
-            <button class="price-tab active" type="button" data-price-tab="per-win" onclick="setPriceTab('per-win')">승당제</button>
-            <button class="price-tab" type="button" data-price-tab="promotion" onclick="setPriceTab('promotion')">승급제</button>
-            <button class="price-tab" type="button" data-price-tab="duo" onclick="setPriceTab('duo')">듀오제</button>
-        </div>
-
-        <section class="price-panel active" id="panel-per-win" data-panel="per-win">
-            <div class="panel-head">
-                <div>
-                    <h2>발로란트 대리 승당제</h2>
-                    <p>2승 1패 = 1승 기준으로 안내됩니다.</p>
-                </div>
-            </div>
-            <div class="tier-groups">
-                <div class="tier-group">
-                    <div class="tier-group-head">
-                        <div class="tier-group-title">저티어 구간</div>
-                        <div class="tier-group-range">아이언부터 다이아3까지</div>
-                    </div>
-                    <table class="price-table">
-                        <thead>
-                            <tr>
-                                <th>대리 티어구간</th>
-                                <th style="text-align: right;">단가 (1승당)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="tier-name">IRON 아이언</td><td class="tier-price">3,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">BRONZE 브론즈</td><td class="tier-price">4,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">SILVER 실버</td><td class="tier-price">5,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">GOLD 골드</td><td class="tier-price">6,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">PLATINUM 플래티넘</td><td class="tier-price">8,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">DIAMOND 다이아</td><td class="tier-price">10,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tier-group">
-                    <div class="tier-group-head">
-                        <div class="tier-group-title">고티어 구간</div>
-                        <div class="tier-group-range">초월자1부터 레디언트까지</div>
-                    </div>
-                    <table class="price-table">
-                        <thead>
-                            <tr>
-                                <th>대리 티어구간</th>
-                                <th style="text-align: right;">단가 (1승당)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="tier-name">ASCENDANT 초월자 1</td><td class="tier-price">14,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">ASCENDANT 초월자 2</td><td class="tier-price">16,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">ASCENDANT 초월자 3</td><td class="tier-price">18,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">IMMORTAL 불멸 1</td><td class="tier-price">25,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">IMMORTAL 불멸 2</td><td class="tier-price">30,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">IMMORTAL 불멸 3</td><td class="tier-price">35,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">RADIANT 레디언트</td><td class="tier-price" style="color: #a5b4fc;">문의 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <section class="price-panel" id="panel-promotion" data-panel="promotion">
-            <div class="panel-head">
-                <div>
-                    <h2>발로란트 대리 승급제</h2>
-                    <p>기본 MMR 승당 20점 기준, 한 티어 승급 단가입니다.</p>
-                </div>
-            </div>
-            <div class="tier-groups">
-                <div class="tier-group">
-                    <div class="tier-group-head">
-                        <div class="tier-group-title">저티어 구간</div>
-                        <div class="tier-group-range">아이언부터 다이아3까지</div>
-                    </div>
-                    <table class="price-table">
-                        <thead>
-                            <tr>
-                                <th>대리 티어구간</th>
-                                <th style="text-align: right;">단가</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="tier-name">IRON 아이언</td><td class="tier-price">9,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">BRONZE 브론즈</td><td class="tier-price">12,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">SILVER 실버</td><td class="tier-price">15,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">GOLD 골드</td><td class="tier-price">18,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">PLATINUM 플래티넘</td><td class="tier-price">24,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">DIAMOND 다이아</td><td class="tier-price">30,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tier-group">
-                    <div class="tier-group-head">
-                        <div class="tier-group-title">고티어 구간</div>
-                        <div class="tier-group-range">초월자1부터 레디언트까지</div>
-                    </div>
-                    <table class="price-table">
-                        <thead>
-                            <tr>
-                                <th>대리 티어구간</th>
-                                <th style="text-align: right;">단가</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="tier-name">ASCENDANT 초월자 1</td><td class="tier-price">42,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">ASCENDANT 초월자 2</td><td class="tier-price">48,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">ASCENDANT 초월자 3</td><td class="tier-price">54,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">IMMORTAL 불멸 1</td><td class="tier-price">75,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">IMMORTAL 불멸 2</td><td class="tier-price">85,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">IMMORTAL 불멸 3</td><td class="tier-price">95,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                            <tr><td class="tier-name">RADIANT 레디언트</td><td class="tier-price" style="color: #a5b4fc;">문의 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <section class="price-panel" id="panel-duo" data-panel="duo">
-            <div class="duo-card">
-                <span class="page-kicker">DUO SERVICE</span>
-                <h2>발로란트 듀오제</h2>
-                <p>듀오는 현재 티어, 목표 티어, 진행 시간대에 따라 상담 후 안내됩니다. 같이 플레이하며 피드백과 티어 상승을 함께 진행합니다.</p>
-                <button class="btn-action" onclick="openChat()">듀오 상담하기</button>
             </div>
         </section>
     </main>
@@ -1210,17 +915,73 @@
     <div class="floating-banner" onclick="openChat()">⚡ 24시간 365일 편하게 상담주세요</div>
 
     <script>
-        function openChat() {
-            window.open('https://open.kakao.com/o/sJdWuGxi', '_blank');
-        }
+        const TIER_UUID = '03621f52-342b-cf4e-4f86-9350a49c6d04';
+        const tiers = [
+            { name: 'IRON 아이언', tier: 5, win: 3000, promotion: 9000 },
+            { name: 'BRONZE 브론즈', tier: 8, win: 4000, promotion: 12000 },
+            { name: 'SILVER 실버', tier: 11, win: 5000, promotion: 15000 },
+            { name: 'GOLD 골드', tier: 14, win: 6000, promotion: 18000 },
+            { name: 'PLATINUM 플래티넘', tier: 17, win: 8000, promotion: 24000 },
+            { name: 'DIAMOND 다이아', tier: 20, win: 10000, promotion: 30000 },
+            { name: 'ASCENDANT 초월자 1', tier: 21, win: 14000, promotion: 42000 },
+            { name: 'ASCENDANT 초월자 2', tier: 22, win: 16000, promotion: 48000 },
+            { name: 'ASCENDANT 초월자 3', tier: 23, win: 18000, promotion: 54000 },
+            { name: 'IMMORTAL 불멸 1', tier: 24, win: 25000, promotion: 75000 },
+            { name: 'IMMORTAL 불멸 2', tier: 25, win: 30000, promotion: 85000 },
+            { name: 'IMMORTAL 불멸 3', tier: 26, win: 35000, promotion: 95000 },
+            { name: 'RADIANT 레디언트', tier: 27, win: null, promotion: null }
+        ];
 
         const packageCards = Array.from(document.querySelectorAll('[data-package-card]'));
         const packageDots = Array.from(document.querySelectorAll('[data-package-go]'));
         const packageStage = document.getElementById('packageStage');
+        const calcFromTier = document.getElementById('calcFromTier');
+        const calcToTier = document.getElementById('calcToTier');
+        const calcResultAmount = document.getElementById('calcResultAmount');
+        const calcResultNote = document.getElementById('calcResultNote');
+        const fromTierIcon = document.getElementById('fromTierIcon');
+        const toTierIcon = document.getElementById('toTierIcon');
+        const fromTierName = document.getElementById('fromTierName');
+        const toTierName = document.getElementById('toTierName');
+
         let packageIndex = 0;
         let packageTimer = 0;
         let packageDragStart = 0;
         let packageDragging = false;
+        let calcType = 'win';
+
+        function openChat() {
+            window.open('https://open.kakao.com/o/sJdWuGxi', '_blank');
+        }
+
+        function tierIcon(tier) {
+            return `https://media.valorant-api.com/competitivetiers/${TIER_UUID}/${tier}/largeicon.png`;
+        }
+
+        function formatWon(value) {
+            return `${value.toLocaleString('ko-KR')}원`;
+        }
+
+        function renderRankPreview(type, indexes) {
+            const target = document.querySelector(`[data-rank-preview="${type}"]`);
+            if (!target) return;
+
+            target.innerHTML = indexes.map(index => {
+                const row = tiers[index];
+                const value = type === 'promotion' ? row.promotion : row.win;
+                const priceText = value === null ? '문의' : formatWon(value);
+                const label = type === 'duo' ? '상담 안내' : priceText;
+                return `
+                    <div class="rank-preview-item">
+                        <img src="${tierIcon(row.tier)}" alt="${row.name}">
+                        <div>
+                            <span>${row.name}</span>
+                            <strong>${label}</strong>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
         function renderPackageShowcase() {
             packageCards.forEach((card, index) => {
@@ -1235,30 +996,94 @@
             });
         }
 
-        function setPackageIndex(nextIndex) {
-            if (!packageCards.length) return;
+        function setPackageIndex(nextIndex, updateHash = true) {
             packageIndex = (nextIndex + packageCards.length) % packageCards.length;
             renderPackageShowcase();
+
+            if (updateHash) {
+                const tab = packageCards[packageIndex]?.dataset.tab;
+                if (tab && window.location.hash !== `#${tab}`) {
+                    history.replaceState(null, '', `#${tab}`);
+                }
+            }
+        }
+
+        function setPackageFromHash() {
+            const hash = window.location.hash.replace('#', '');
+            const index = packageCards.findIndex(card => card.dataset.tab === hash);
+            setPackageIndex(index >= 0 ? index : 0, false);
+            if (hash === 'promotion') {
+                setCalcType('promotion');
+            }
+            if (hash === 'per-win') {
+                setCalcType('win');
+            }
         }
 
         function resetPackageTimer() {
             if (packageTimer) {
                 window.clearInterval(packageTimer);
             }
-            packageTimer = window.setInterval(() => setPackageIndex(packageIndex + 1), 5200);
+            packageTimer = window.setInterval(() => setPackageIndex(packageIndex + 1), 5600);
+        }
+
+        function setupCalculatorOptions() {
+            calcFromTier.innerHTML = tiers.slice(0, -1).map((row, index) => `<option value="${index}">${row.name}</option>`).join('');
+            calcToTier.innerHTML = tiers.map((row, index) => `<option value="${index}">${row.name}</option>`).join('');
+            calcFromTier.value = '0';
+            calcToTier.value = '1';
+        }
+
+        function setCalcType(type) {
+            calcType = type === 'promotion' ? 'promotion' : 'win';
+            document.querySelectorAll('[data-calc-type]').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.calcType === calcType);
+            });
+            updateCalculator();
+        }
+
+        function updateTierPreview() {
+            const from = tiers[Number(calcFromTier.value)];
+            const to = tiers[Number(calcToTier.value)];
+            fromTierIcon.src = tierIcon(from.tier);
+            fromTierIcon.alt = from.name;
+            fromTierName.textContent = from.name;
+            toTierIcon.src = tierIcon(to.tier);
+            toTierIcon.alt = to.name;
+            toTierName.textContent = to.name;
+        }
+
+        function updateCalculator() {
+            updateTierPreview();
+
+            const from = Number(calcFromTier.value);
+            const to = Number(calcToTier.value);
+            const modeLabel = calcType === 'win' ? '승당제' : '승급제';
+
+            if (to <= from) {
+                calcResultAmount.textContent = '목표 티어 확인 필요';
+                calcResultNote.textContent = '목표 티어는 현재 티어보다 높게 선택해야 계산할 수 있습니다.';
+                return;
+            }
+
+            if (tiers[to]?.tier === 27) {
+                calcResultAmount.textContent = '상담 필요';
+                calcResultNote.textContent = '레디언트가 목표에 포함되는 구간은 진행 방식과 일정에 따라 별도 상담이 필요합니다.';
+                return;
+            }
+
+            const selectedRows = tiers.slice(from, to);
+            const multiplier = calcType === 'win' ? 3 : 1;
+            const total = selectedRows.reduce((sum, row) => sum + row[calcType] * multiplier, 0);
+
+            calcResultAmount.textContent = formatWon(total);
+            calcResultNote.textContent = `${tiers[from].name} → ${tiers[to].name} 기준 예상 ${modeLabel} 금액입니다. 실제 MMR, 시간대, 진행 방식에 따라 상담 후 조정될 수 있습니다.`;
         }
 
         packageDots.forEach(dot => {
             dot.addEventListener('click', () => {
                 setPackageIndex(Number(dot.dataset.packageGo || 0));
                 resetPackageTimer();
-            });
-        });
-
-        document.querySelectorAll('[data-jump-tab]').forEach(button => {
-            button.addEventListener('click', () => {
-                setPriceTab(button.dataset.jumpTab);
-                document.querySelector('.tab-bar')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
         });
 
@@ -1289,109 +1114,21 @@
             });
         }
 
-        const tierRows = [
-            { name: 'IRON 아이언', win: 3000, promotion: 9000 },
-            { name: 'BRONZE 브론즈', win: 4000, promotion: 12000 },
-            { name: 'SILVER 실버', win: 5000, promotion: 15000 },
-            { name: 'GOLD 골드', win: 6000, promotion: 18000 },
-            { name: 'PLATINUM 플래티넘', win: 8000, promotion: 24000 },
-            { name: 'DIAMOND 다이아', win: 10000, promotion: 30000 },
-            { name: 'ASCENDANT 초월자 1', win: 14000, promotion: 42000 },
-            { name: 'ASCENDANT 초월자 2', win: 16000, promotion: 48000 },
-            { name: 'ASCENDANT 초월자 3', win: 18000, promotion: 54000 },
-            { name: 'IMMORTAL 불멸 1', win: 25000, promotion: 75000 },
-            { name: 'IMMORTAL 불멸 2', win: 30000, promotion: 85000 },
-            { name: 'IMMORTAL 불멸 3', win: 35000, promotion: 95000 },
-            { name: 'RADIANT 레디언트', win: null, promotion: null }
-        ];
-
-        const calcFromTier = document.getElementById('calcFromTier');
-        const calcToTier = document.getElementById('calcToTier');
-        const calcResultAmount = document.getElementById('calcResultAmount');
-        const calcResultNote = document.getElementById('calcResultNote');
-        let calcType = 'win';
-
-        function formatWon(value) {
-            return `${value.toLocaleString('ko-KR')}원`;
-        }
-
-        function setupCalculatorOptions() {
-            if (!calcFromTier || !calcToTier) return;
-
-            calcFromTier.innerHTML = tierRows.slice(0, -1).map((row, index) => `<option value="${index}">${row.name}</option>`).join('');
-            calcToTier.innerHTML = tierRows.map((row, index) => `<option value="${index}">${row.name}</option>`).join('');
-            calcFromTier.value = '0';
-            calcToTier.value = '1';
-        }
-
-        function updateCalculator() {
-            if (!calcFromTier || !calcToTier || !calcResultAmount || !calcResultNote) return;
-
-            const from = Number(calcFromTier.value);
-            let to = Number(calcToTier.value);
-            if (to <= from) {
-                to = Math.min(from + 1, tierRows.length - 1);
-                calcToTier.value = String(to);
-            }
-
-            const selectedRows = tierRows.slice(from, to);
-            const hasInquiry = selectedRows.some(row => row[calcType] === null) || tierRows[to]?.[calcType] === null;
-            const modeLabel = calcType === 'win' ? '승당제' : '승급제';
-
-            if (hasInquiry) {
-                calcResultAmount.textContent = '상담 필요';
-                calcResultNote.textContent = `${tierRows[from].name}에서 ${tierRows[to].name} 구간은 ${modeLabel} 기준 상담 후 정확히 안내드립니다.`;
-                return;
-            }
-
-            const multiplier = calcType === 'win' ? 3 : 1;
-            const total = selectedRows.reduce((sum, row) => sum + row[calcType] * multiplier, 0);
-            calcResultAmount.textContent = formatWon(total);
-            calcResultNote.textContent = `${tierRows[from].name} → ${tierRows[to].name} 기준 예상 ${modeLabel} 금액입니다. 실제 MMR, 시간대, 진행 방식에 따라 상담 후 조정될 수 있습니다.`;
-        }
-
         document.querySelectorAll('[data-calc-type]').forEach(tab => {
-            tab.addEventListener('click', () => {
-                calcType = tab.dataset.calcType === 'promotion' ? 'promotion' : 'win';
-                document.querySelectorAll('[data-calc-type]').forEach(item => {
-                    item.classList.toggle('active', item === tab);
-                });
-                updateCalculator();
-            });
+            tab.addEventListener('click', () => setCalcType(tab.dataset.calcType));
         });
 
-        calcFromTier?.addEventListener('change', updateCalculator);
-        calcToTier?.addEventListener('change', updateCalculator);
+        calcFromTier.addEventListener('change', updateCalculator);
+        calcToTier.addEventListener('change', updateCalculator);
+        window.addEventListener('hashchange', setPackageFromHash);
 
-        renderPackageShowcase();
-        resetPackageTimer();
+        renderRankPreview('win', [0, 6, 12]);
+        renderRankPreview('promotion', [0, 6, 12]);
+        renderRankPreview('duo', [2, 5, 9]);
         setupCalculatorOptions();
+        setPackageFromHash();
         updateCalculator();
-
-        const validTabs = ['per-win', 'promotion', 'duo'];
-
-        function setPriceTab(tab) {
-            const nextTab = validTabs.includes(tab) ? tab : 'per-win';
-
-            document.querySelectorAll('.price-tab').forEach(button => {
-                button.classList.toggle('active', button.dataset.priceTab === nextTab);
-            });
-
-            document.querySelectorAll('.price-panel').forEach(panel => {
-                panel.classList.toggle('active', panel.dataset.panel === nextTab);
-            });
-
-            if (window.location.hash !== '#' + nextTab) {
-                history.replaceState(null, '', '#' + nextTab);
-            }
-        }
-
-        function syncTabFromHash() {
-            setPriceTab(window.location.hash.replace('#', '') || 'per-win');
-        }
-
-        window.addEventListener('hashchange', syncTabFromHash);
-        syncTabFromHash();
+        resetPackageTimer();
     </script>
 </body>
 </html>
