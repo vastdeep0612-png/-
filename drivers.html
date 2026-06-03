@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>백현팀</title>
-    <meta name="description" content="발로란트 대리, 발로 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다.">
-    <link rel="canonical" href="https://vastdeep0612-png.github.io/-/">
+    <title>기사 라인업 | 백현팀</title>
+    <meta name="description" content="발로란트 대리 백현팀의 Low Ranked, High Ranked 기사 라인업과 진행 가능 구간, 서비스 정보를 확인하세요.">
+    <link rel="canonical" href="https://vastdeep0612-png.github.io/-/drivers.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="백현팀">
-    <meta property="og:url" content="https://vastdeep0612-png.github.io/-/">
-    <meta property="og:title" content="백현팀">
-    <meta property="og:description" content="발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다.">
+    <meta property="og:url" content="https://vastdeep0612-png.github.io/-/drivers.html">
+    <meta property="og:title" content="기사 라인업 | 백현팀">
+    <meta property="og:description" content="발로란트 대리 백현팀의 Low Ranked, High Ranked 기사 라인업과 진행 가능 구간, 서비스 정보를 확인하세요.">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="백현팀">
-    <meta name="twitter:description" content="발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다.">
+    <meta name="twitter:title" content="기사 라인업 | 백현팀">
+    <meta name="twitter:description" content="발로란트 대리 백현팀의 Low Ranked, High Ranked 기사 라인업과 진행 가능 구간, 서비스 정보를 확인하세요.">
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
@@ -31,8 +31,8 @@
             "백현팀",
             "발로 대리 백현팀"
         ],
-        "url": "https://vastdeep0612-png.github.io/-/",
-        "description": "발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 백현팀 공식 사이트입니다."
+        "url": "https://vastdeep0612-png.github.io/-/drivers.html",
+        "description": "발로란트 대리 백현팀의 Low Ranked, High Ranked 기사 라인업과 진행 가능 구간, 서비스 정보를 확인하세요."
     }
     </script>
     <style>
@@ -914,10 +914,8 @@
             position: relative;
             overflow: hidden;
             background:
-                linear-gradient(180deg, rgba(5, 6, 10, 0.84), rgba(8, 10, 18, 0.72) 42%, rgba(5, 6, 10, 0.9)),
-                linear-gradient(90deg, rgba(5, 6, 10, 0.92), rgba(5, 6, 10, 0.42), rgba(5, 6, 10, 0.88)),
-                radial-gradient(circle at 20% 20%, rgba(193, 58, 92, 0.18), transparent 36%),
-                url('assets/baekhyeon-tip-bg.gif') center / cover no-repeat;
+                radial-gradient(circle at 18% 18%, rgba(255, 42, 95, 0.08), transparent 32%),
+                linear-gradient(180deg, #05060a 0%, #080a12 45%, #05060a 100%);
         }
 
         .section-tips::before {
@@ -2272,6 +2270,22 @@
             text-wrap: balance;
         }
 
+        body.driver-lineup-page .wrapper > section:not(.section-drivers) {
+            display: none !important;
+        }
+
+        body.driver-lineup-page .section-drivers {
+            display: block !important;
+        }
+
+        body.driver-lineup-page .section-drivers.driver-camera-section {
+            margin-top: 0;
+        }
+
+        body.driver-lineup-page .popup-overlay {
+            display: none !important;
+        }
+
         /* 모바일 반응형 최적화 */
         @media (max-width: 1024px) {
             .hero-section {
@@ -2493,7 +2507,7 @@
         }
     </style>
 </head>
-<body>
+<body class="driver-lineup-page">
 
     <!-- 1. 상단 네비게이션 헤더 바 -->
     <header>
@@ -2503,7 +2517,7 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">공지사항</a></li>
+                <li><a href="index.html">공지사항</a></li>
                 <li class="nav-price-menu">
                     <a href="price.html" class="nav-price-trigger">가격표</a>
                     <div class="price-dropdown" aria-label="가격표 세부 메뉴">
@@ -2514,14 +2528,14 @@
                     </div>
                 </li>
                 <li class="nav-price-menu nav-driver-menu">
-                    <a href="drivers.html" class="nav-price-trigger nav-driver-trigger">기사 라인업</a>
+                    <a href="drivers.html" class="nav-price-trigger nav-driver-trigger active">기사 라인업</a>
                     <div class="price-dropdown driver-dropdown" aria-label="기사 라인업 세부 메뉴">
-                        <a href="drivers.html#drivers-low">저티어</a>
-                        <a href="drivers.html#drivers-high">고티어</a>
+                        <a href="#drivers-low" data-driver-tier="low" onclick="showDriverLineup('low'); return false;">저티어</a>
+                        <a href="#drivers-high" data-driver-tier="high" onclick="showDriverLineup('high'); return false;">고티어</a>
                     </div>
                 </li>
-                <li><a href="#">작업현황</a></li>
-                <li><a href="#faq">자주 묻는 질문</a></li>
+                <li><a href="index.html">작업현황</a></li>
+                <li><a href="index.html#faq">자주 묻는 질문</a></li>
             </ul>
         </nav>
         <div class="btn-customer" onclick="openChat()">고객센터</div>
@@ -3237,21 +3251,14 @@
         const driverTrigger = document.querySelector('.nav-driver-trigger');
         if (driverTrigger) {
             driverTrigger.addEventListener('click', event => {
-                if (driverTrigger.getAttribute('href') === '#drivers') {
-                    event.preventDefault();
-                    showDriverLineup('low');
-                }
+                event.preventDefault();
+                showDriverLineup('low');
             });
         }
 
         const isDriverLineupPage = document.body.classList.contains('driver-lineup-page');
         if (driverSection && isDriverLineupPage) {
             driverSection.classList.add('drivers-open');
-        }
-
-        const isDriverHash = window.location.hash === '#drivers' || window.location.hash === '#drivers-low' || window.location.hash === '#drivers-high';
-        if (!isDriverLineupPage && isDriverHash) {
-            window.location.replace(`drivers.html${window.location.hash}`);
         }
 
         const initialDriverTier = window.location.hash === '#drivers-high' ? 'high' : (window.location.hash === '#drivers-low' || window.location.hash === '#drivers' || isDriverLineupPage ? 'low' : null);
