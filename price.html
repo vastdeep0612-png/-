@@ -1,1134 +1,918 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>가격표 | 백현팀</title>
-    <meta name="description" content="발로란트 대리 백현팀의 승당제, 승급제, 듀오제 패키지 가격과 예상 금액 계산기를 확인하세요.">
-    <link rel="canonical" href="https://vastdeep0612-png.github.io/-/price.html">
-    <link rel="icon" href="favicon.ico" sizes="any">
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
-    <link rel="preconnect" href="https://media.valorant-api.com">
-    <style>
-        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-
-        @font-face {
-            font-family: 'Paperlogy';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
-            font-weight: 800;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'Waguri';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/WAGURITTF.woff2') format('woff2');
-            font-weight: normal;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'JoseonPalace';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGs.woff') format('woff');
-            font-weight: normal;
-            font-display: swap;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        html {
-            min-height: 100%;
-            overflow-x: hidden;
-            background: #03040a;
-        }
-
-        body {
-            min-height: 100vh;
-            color: #f8fafc;
-            font-family: 'Paperlogy', system-ui, sans-serif;
-            font-weight: 800;
-            overflow-x: hidden;
-            background:
-                linear-gradient(180deg, rgba(3, 4, 10, 0.86), rgba(3, 4, 10, 0.7) 36%, #03040a 100%),
-                linear-gradient(90deg, rgba(3, 4, 10, 0.94), rgba(3, 4, 10, 0.54) 48%, rgba(3, 4, 10, 0.8)),
-                url('assets/baekhyeon-price-bg.jpg') center top / cover no-repeat fixed,
-                #03040a;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button,
-        select {
-            font: inherit;
-        }
-
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            height: 82px;
-            padding: 0 56px;
-            display: grid;
-            grid-template-columns: minmax(240px, 1fr) auto minmax(240px, 1fr);
-            align-items: center;
-            background: rgba(3, 4, 10, 0.88);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(18px);
-        }
-
-        .logo {
-            justify-self: start;
-            line-height: 1.08;
-        }
-
-        .logo-sub {
-            margin-bottom: 5px;
-            color: #8d97ad;
-            font-size: 10px;
-            letter-spacing: 0;
-            white-space: nowrap;
-        }
-
-        .logo-main {
-            color: #fff;
-            font-family: 'JoseonPalace', 'Paperlogy', sans-serif;
-            font-size: 24px;
-            font-weight: normal;
-            letter-spacing: 0;
-            white-space: nowrap;
-        }
-
-        .logo-main span {
-            color: #ff1f67;
-            font-family: inherit;
-        }
-
-        nav {
-            justify-self: center;
-        }
-
-        nav ul {
-            height: 70px;
-            list-style: none;
-            display: flex;
-            align-items: center;
-            gap: 38px;
-        }
-
-        nav li {
-            position: relative;
-            height: 70px;
-            display: flex;
-            align-items: center;
-        }
-
-        nav a {
-            color: #cbd5e1;
-            font-size: 15px;
-            transition: color 0.2s ease;
-            white-space: nowrap;
-        }
-
-        nav a:hover,
-        nav a.active {
-            color: #fff;
-        }
-
-        .nav-menu-trigger::after {
-            content: '';
-            display: inline-block;
-            width: 7px;
-            height: 7px;
-            margin-left: 8px;
-            border-right: 2px solid currentColor;
-            border-bottom: 2px solid currentColor;
-            transform: rotate(45deg) translateY(-3px);
-        }
-
-        .nav-dropdown {
-            position: absolute;
-            top: calc(100% - 2px);
-            left: 50%;
-            width: 210px;
-            padding: 18px;
-            display: grid;
-            gap: 6px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translate(-50%, 10px);
-            border: 1px solid rgba(255, 31, 103, 0.44);
-            border-radius: 14px;
-            background: rgba(12, 8, 18, 0.96);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
-        }
-
-        .nav-dropdown::before {
-            content: '';
-            position: absolute;
-            top: -12px;
-            left: 0;
-            right: 0;
-            height: 12px;
-        }
-
-        .nav-dropdown a {
-            min-height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 6px;
-            color: #f5f7fb;
-            font-family: 'Waguri', 'Paperlogy', sans-serif;
-            font-size: 18px;
-        }
-
-        .nav-dropdown a::after {
-            content: '›';
-            color: #ff1f67;
-        }
-
-        .nav-menu:hover .nav-dropdown,
-        .nav-menu:focus-within .nav-dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, 0);
-        }
-
-        .btn-customer {
-            justify-self: end;
-            padding: 12px 18px;
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-radius: 12px;
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.04);
-            cursor: pointer;
-        }
-
-        .price-page {
-            width: min(1280px, calc(100% - 56px));
-            min-height: calc(100vh - 82px);
-            margin: 0 auto;
-            padding: 34px 0 48px;
-            display: flex;
-            align-items: center;
-        }
-
-        .package-showcase {
-            position: relative;
-            width: 100%;
-            padding: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            background:
-                radial-gradient(circle at 18% 8%, rgba(255, 31, 103, 0.13), transparent 34%),
-                radial-gradient(circle at 92% 18%, rgba(216, 181, 114, 0.09), transparent 28%),
-                linear-gradient(145deg, rgba(255, 255, 255, 0.058), rgba(255, 255, 255, 0.018)),
-                rgba(5, 6, 12, 0.78);
-            box-shadow: 0 36px 94px rgba(0, 0, 0, 0.38);
-            backdrop-filter: blur(18px);
-            overflow: hidden;
-        }
-
-        .package-showcase::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background:
-                linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-            background-size: 74px 74px;
-            opacity: 0.22;
-            mask-image: radial-gradient(circle at center, black, transparent 76%);
-            -webkit-mask-image: radial-gradient(circle at center, black, transparent 76%);
-        }
-
-        .package-showcase-head {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 28px;
-            margin-bottom: 24px;
-        }
-
-        .package-kicker {
-            display: inline-flex;
-            margin-bottom: 10px;
-            color: #ff5d8f;
-            font-size: 12px;
-            letter-spacing: 0.12em;
-        }
-
-        .package-showcase h1 {
-            color: #fff;
-            font-family: 'NanumSquare', 'Paperlogy', sans-serif;
-            font-size: clamp(34px, 4.8vw, 60px);
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -0.02em;
-        }
-
-        .package-showcase-head p {
-            max-width: 470px;
-            color: rgba(203, 213, 225, 0.76);
-            font-size: 14px;
-            line-height: 1.75;
-            text-align: right;
-            word-break: keep-all;
-        }
-
-        .package-layout {
-            position: relative;
-            z-index: 1;
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 370px;
-            gap: 24px;
-            align-items: stretch;
-        }
-
-        .package-stage {
-            position: relative;
-            min-height: 520px;
-            border-radius: 24px;
-            perspective: 1200px;
-            cursor: grab;
-            overflow: hidden;
-        }
-
-        .package-stage.dragging {
-            cursor: grabbing;
-        }
-
-        .package-card {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.11);
-            border-radius: 24px;
-            background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.022)),
-                radial-gradient(circle at 0 0, rgba(255, 31, 103, 0.14), transparent 34%),
-                rgba(8, 10, 18, 0.91);
-            box-shadow: 0 34px 78px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transform: translate3d(0, 18px, -120px) scale(0.92);
-            transition: opacity 520ms cubic-bezier(0.22, 1, 0.36, 1), visibility 520ms, transform 520ms cubic-bezier(0.22, 1, 0.36, 1), filter 520ms;
-            transform-style: preserve-3d;
-        }
-
-        .package-card.is-active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-            transform: translate3d(0, 0, 0) scale(1);
-            filter: none;
-        }
-
-        .package-card.is-prev {
-            opacity: 0.1;
-            visibility: visible;
-            transform: translate3d(-116%, 18px, -220px) scale(0.68) rotateY(10deg);
-            filter: blur(1.5px);
-        }
-
-        .package-card.is-next {
-            opacity: 0.1;
-            visibility: visible;
-            transform: translate3d(116%, 18px, -220px) scale(0.68) rotateY(-10deg);
-            filter: blur(1.5px);
-        }
-
-        .package-card::before {
-            content: '';
-            position: absolute;
-            left: 28px;
-            right: 28px;
-            top: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #d8b572, #ff1f67, transparent);
-            opacity: 0.8;
-        }
-
-        .package-chip {
-            display: inline-flex;
-            width: fit-content;
-            padding: 8px 13px;
-            border: 1px solid rgba(255, 31, 103, 0.28);
-            border-radius: 999px;
-            color: #ff6f99;
-            background: rgba(255, 31, 103, 0.07);
-            font-size: 12px;
-        }
-
-        .package-card h2 {
-            margin-top: 18px;
-            font-family: 'NanumSquare', 'Paperlogy', sans-serif;
-            font-size: clamp(36px, 5vw, 62px);
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -0.03em;
-        }
-
-        .package-card p {
-            max-width: 640px;
-            margin-top: 14px;
-            color: rgba(226, 232, 240, 0.74);
-            font-size: 15px;
-            line-height: 1.8;
-            word-break: keep-all;
-        }
-
-        .package-summary-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
-            margin: 22px 0;
-        }
-
-        .package-summary {
-            padding: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.032);
-        }
-
-        .package-summary span {
-            display: block;
-            margin-bottom: 7px;
-            color: rgba(148, 163, 184, 0.84);
-            font-size: 11px;
-        }
-
-        .package-summary strong {
-            color: #fff;
-            font-size: 17px;
-            line-height: 1.35;
-        }
-
-        .rank-preview {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
-            margin-top: 6px;
-        }
-
-        .rank-preview-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-height: 74px;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.075);
-            border-radius: 16px;
-            background: rgba(3, 4, 10, 0.38);
-        }
-
-        .rank-preview-item img {
-            width: 42px;
-            height: 42px;
-            object-fit: contain;
-            filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.38));
-        }
-
-        .rank-preview-item span {
-            display: block;
-            color: rgba(226, 232, 240, 0.72);
-            font-size: 11px;
-        }
-
-        .rank-preview-item strong {
-            display: block;
-            margin-top: 4px;
-            color: #fff;
-            font-size: 13px;
-            line-height: 1.2;
-        }
-
-        .package-card-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 18px;
-            margin-top: 20px;
-        }
-
-        .package-services {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .package-services span {
-            padding: 8px 11px;
-            border: 1px solid rgba(216, 181, 114, 0.18);
-            border-radius: 999px;
-            color: rgba(255, 235, 205, 0.88);
-            background: rgba(216, 181, 114, 0.06);
-            font-size: 12px;
-        }
-
-        .package-action {
-            flex: 0 0 auto;
-            padding: 12px 17px;
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            border-radius: 999px;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.055);
-            cursor: pointer;
-            transition: border-color 0.22s ease, background 0.22s ease, transform 0.22s ease;
-        }
-
-        .package-action:hover {
-            transform: translateY(-2px);
-            border-color: rgba(255, 31, 103, 0.48);
-            background: rgba(255, 31, 103, 0.12);
-        }
-
-        .package-dots {
-            display: flex;
-            justify-content: center;
-            gap: 9px;
-            margin-top: 16px;
-        }
-
-        .package-dot {
-            width: 34px;
-            height: 7px;
-            border: 0;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.18);
-            cursor: pointer;
-            transition: width 0.24s ease, background 0.24s ease;
-        }
-
-        .package-dot.active {
-            width: 58px;
-            background: linear-gradient(90deg, #d8b572, #ff1f67);
-        }
-
-        .calculator {
-            position: relative;
-            padding: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.11);
-            border-radius: 24px;
-            background:
-                radial-gradient(circle at 100% 0, rgba(216, 181, 114, 0.1), transparent 34%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
-                rgba(8, 10, 18, 0.88);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-        }
-
-        .calculator h2 {
-            font-family: 'NanumSquare', 'Paperlogy', sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            line-height: 1.15;
-        }
-
-        .calculator > p {
-            margin: 10px 0 18px;
-            color: rgba(203, 213, 225, 0.72);
-            font-size: 13px;
-            line-height: 1.7;
-            word-break: keep-all;
-        }
-
-        .calc-type-tabs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .calc-type-tab {
-            min-height: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 12px;
-            color: rgba(226, 232, 240, 0.74);
-            background: rgba(255, 255, 255, 0.035);
-            cursor: pointer;
-        }
-
-        .calc-type-tab.active {
-            color: #fff;
-            border-color: rgba(255, 31, 103, 0.48);
-            background: rgba(255, 31, 103, 0.16);
-        }
-
-        .calc-field {
-            display: grid;
-            gap: 7px;
-            margin-top: 12px;
-        }
-
-        .calc-field label {
-            color: rgba(148, 163, 184, 0.92);
-            font-size: 12px;
-        }
-
-        .calc-field select {
-            width: 100%;
-            min-height: 44px;
-            padding: 0 13px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 12px;
-            color: #fff;
-            background: rgba(3, 4, 10, 0.72);
-            outline: none;
-        }
-
-        .tier-preview {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 14px;
-        }
-
-        .tier-preview-card {
-            min-height: 96px;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .tier-preview-card span {
-            display: block;
-            color: rgba(148, 163, 184, 0.86);
-            font-size: 11px;
-        }
-
-        .tier-preview-card img {
-            width: 46px;
-            height: 46px;
-            margin: 8px 0 6px;
-            object-fit: contain;
-            filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.36));
-        }
-
-        .tier-preview-card strong {
-            display: block;
-            color: #fff;
-            font-size: 12px;
-            line-height: 1.25;
-        }
-
-        .calc-result {
-            margin-top: 18px;
-            padding: 18px;
-            border: 1px solid rgba(255, 31, 103, 0.18);
-            border-radius: 18px;
-            background: rgba(255, 31, 103, 0.065);
-        }
-
-        .calc-result span {
-            display: block;
-            color: rgba(203, 213, 225, 0.76);
-            font-size: 12px;
-        }
-
-        .calc-result strong {
-            display: block;
-            margin-top: 6px;
-            color: #ff1f67;
-            font-size: 30px;
-            line-height: 1.15;
-        }
-
-        .calc-result p {
-            margin-top: 8px;
-            color: rgba(226, 232, 240, 0.76);
-            font-size: 12px;
-            line-height: 1.65;
-            word-break: keep-all;
-        }
-
-        .floating-banner {
-            position: fixed;
-            right: 26px;
-            bottom: 24px;
-            z-index: 60;
-            padding: 14px 24px;
-            border-radius: 999px;
-            color: #111827;
-            background: #fff;
-            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.36);
-            cursor: pointer;
-        }
-
-        @media (max-width: 1040px) {
-            header {
-                height: auto;
-                min-height: 82px;
-                padding: 18px 20px;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 14px;
-            }
-
-            nav ul {
-                height: auto;
-                flex-wrap: wrap;
-                gap: 18px;
-            }
-
-            nav li {
-                height: 42px;
-            }
-
-            .btn-customer {
-                display: none;
-            }
-
-            .price-page {
-                width: min(100% - 28px, 760px);
-                min-height: auto;
-                padding: 22px 0 40px;
-            }
-
-            .package-showcase {
-                padding: 20px;
-                border-radius: 22px;
-            }
-
-            .package-showcase-head {
-                display: block;
-            }
-
-            .package-showcase-head p {
-                margin-top: 12px;
-                text-align: left;
-            }
-
-            .package-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .package-stage {
-                min-height: 620px;
-            }
-
-            .package-card {
-                padding: 22px;
-            }
-
-            .package-card.is-prev,
-            .package-card.is-next {
-                opacity: 0;
-                visibility: hidden;
-                transform: translate3d(0, 18px, -120px) scale(0.92);
-            }
-
-            .package-summary-grid,
-            .rank-preview {
-                grid-template-columns: 1fr;
-            }
-
-            .package-card-bottom {
-                display: grid;
-            }
-
-            .floating-banner {
-                right: 14px;
-                left: 14px;
-                text-align: center;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <a class="logo" href="index.html">
-            <div class="logo-sub">발로란트 신속대리 백현팀</div>
-            <div class="logo-main">VLRT <span>1oohyun</span></div>
-        </a>
-        <nav>
-            <ul>
-                <li><a href="index.html">공지사항</a></li>
-                <li class="nav-menu">
-                    <a href="price.html" class="nav-menu-trigger active">가격표</a>
-                    <div class="nav-dropdown" aria-label="가격표 세부 메뉴">
-                        <a href="price.html#per-win">승당제</a>
-                        <a href="price.html#promotion">승급제</a>
-                        <a href="price.html#duo">듀오제</a>
-                        <a href="terms.html">대리 약관</a>
-                    </div>
-                </li>
-                <li class="nav-menu">
-                    <a href="lineup.html" class="nav-menu-trigger">기사 라인업</a>
-                    <div class="nav-dropdown" aria-label="기사 라인업 세부 메뉴">
-                        <a href="lineup.html#low">Low Ranked</a>
-                        <a href="lineup.html#high">High Ranked</a>
-                    </div>
-                </li>
-                <li><a href="index.html#status">작업현황</a></li>
-                <li><a href="index.html#faq">자주 묻는 질문</a></li>
-            </ul>
-        </nav>
-        <button class="btn-customer" type="button" onclick="openChat()">고객센터</button>
-    </header>
-
-    <main class="price-page">
-        <section class="package-showcase" aria-label="패키지별 가격 안내">
-            <div class="package-showcase-head">
-                <div>
-                    <span class="package-kicker">PREMIUM PACKAGE</span>
-                    <h1>패키지별 가격 안내</h1>
-                </div>
-                <p>승당제, 승급제, 듀오제를 한 화면에서 비교하고 예상 금액 계산기로 바로 확인하세요.</p>
-            </div>
-
-            <div class="package-layout">
-                <div>
-                    <div class="package-stage" id="packageStage" aria-label="가격 패키지 카드">
-                        <article class="package-card is-active" data-package-card data-tab="per-win">
-                            <div>
-                                <span class="package-chip">PER WIN PACKAGE</span>
-                                <h2>승당제</h2>
-                                <p>2승 1패를 1승 기준으로 안내하는 단기 진행 패키지입니다. 필요한 구간만 빠르게 확인하고 신청하기 좋습니다.</p>
-                                <div class="package-summary-grid">
-                                    <div class="package-summary"><span>시작가</span><strong>3,000원</strong></div>
-                                    <div class="package-summary"><span>고티어</span><strong>14,000원부터</strong></div>
-                                    <div class="package-summary"><span>레디언트</span><strong>문의</strong></div>
-                                </div>
-                                <div class="rank-preview" data-rank-preview="win"></div>
-                            </div>
-                            <div class="package-card-bottom">
-                                <div class="package-services">
-                                    <span>빠른 진행</span>
-                                    <span>1승 기준</span>
-                                    <span>구간별 안내</span>
-                                </div>
-                                <button class="package-action" type="button" onclick="openChat()">상담 신청하기</button>
-                            </div>
-                        </article>
-
-                        <article class="package-card is-next" data-package-card data-tab="promotion">
-                            <div>
-                                <span class="package-chip">PROMOTION PACKAGE</span>
-                                <h2>승급제</h2>
-                                <p>기본 MMR 승당 20점 기준으로 한 티어 승급 단위 안내입니다. 목표 티어까지 안정적으로 맡기고 싶을 때 적합합니다.</p>
-                                <div class="package-summary-grid">
-                                    <div class="package-summary"><span>시작가</span><strong>9,000원</strong></div>
-                                    <div class="package-summary"><span>고티어</span><strong>42,000원부터</strong></div>
-                                    <div class="package-summary"><span>레디언트</span><strong>문의</strong></div>
-                                </div>
-                                <div class="rank-preview" data-rank-preview="promotion"></div>
-                            </div>
-                            <div class="package-card-bottom">
-                                <div class="package-services">
-                                    <span>목표 티어</span>
-                                    <span>승급 단위</span>
-                                    <span>예약 가능</span>
-                                </div>
-                                <button class="package-action" type="button" onclick="openChat()">상담 신청하기</button>
-                            </div>
-                        </article>
-
-                        <article class="package-card is-prev" data-package-card data-tab="duo">
-                            <div>
-                                <span class="package-chip">DUO PACKAGE</span>
-                                <h2>듀오제</h2>
-                                <p>기사와 함께 플레이하며 피드백과 구간 진행을 같이 받는 방식입니다. 현재 티어, 목표 티어, 시간대에 따라 상담 후 안내합니다.</p>
-                                <div class="package-summary-grid">
-                                    <div class="package-summary"><span>진행</span><strong>동행 플레이</strong></div>
-                                    <div class="package-summary"><span>가격</span><strong>상담 안내</strong></div>
-                                    <div class="package-summary"><span>추천</span><strong>피드백 희망</strong></div>
-                                </div>
-                                <div class="rank-preview" data-rank-preview="duo"></div>
-                            </div>
-                            <div class="package-card-bottom">
-                                <div class="package-services">
-                                    <span>실시간 동행</span>
-                                    <span>피드백 가능</span>
-                                    <span>화면공유</span>
-                                </div>
-                                <button class="package-action" type="button" onclick="openChat()">듀오 상담하기</button>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="package-dots" id="packageDots" aria-label="패키지 이동">
-                        <button class="package-dot active" type="button" data-package-go="0" aria-label="승당제"></button>
-                        <button class="package-dot" type="button" data-package-go="1" aria-label="승급제"></button>
-                        <button class="package-dot" type="button" data-package-go="2" aria-label="듀오제"></button>
-                    </div>
-                </div>
-
-                <aside class="calculator" aria-label="예상 금액 계산기">
-                    <h2>예상 금액 계산</h2>
-                    <p>현재 티어와 목표 티어만 선택하면 승당제/승급제 기준 예상 금액을 보여드립니다.</p>
-                    <div class="calc-type-tabs" role="tablist" aria-label="계산 방식">
-                        <button class="calc-type-tab active" type="button" data-calc-type="win">승당제</button>
-                        <button class="calc-type-tab" type="button" data-calc-type="promotion">승급제</button>
-                    </div>
-                    <div class="calc-field">
-                        <label for="calcFromTier">현재 티어</label>
-                        <select id="calcFromTier"></select>
-                    </div>
-                    <div class="calc-field">
-                        <label for="calcToTier">목표 티어</label>
-                        <select id="calcToTier"></select>
-                    </div>
-                    <div class="tier-preview">
-                        <div class="tier-preview-card">
-                            <span>현재</span>
-                            <img id="fromTierIcon" alt="">
-                            <strong id="fromTierName">-</strong>
-                        </div>
-                        <div class="tier-preview-card">
-                            <span>목표</span>
-                            <img id="toTierIcon" alt="">
-                            <strong id="toTierName">-</strong>
-                        </div>
-                    </div>
-                    <div class="calc-result">
-                        <span>예상 안내</span>
-                        <strong id="calcResultAmount">계산 중</strong>
-                        <p id="calcResultNote">구간을 선택하면 예상 금액이 표시됩니다.</p>
-                    </div>
-                </aside>
-            </div>
-        </section>
-    </main>
-
-    <div class="floating-banner" onclick="openChat()">⚡ 24시간 365일 편하게 상담주세요</div>
-
-    <script>
-        const TIER_UUID = '03621f52-342b-cf4e-4f86-9350a49c6d04';
-        const tiers = [
-            { name: 'IRON 아이언', tier: 5, win: 3000, promotion: 9000 },
-            { name: 'BRONZE 브론즈', tier: 8, win: 4000, promotion: 12000 },
-            { name: 'SILVER 실버', tier: 11, win: 5000, promotion: 15000 },
-            { name: 'GOLD 골드', tier: 14, win: 6000, promotion: 18000 },
-            { name: 'PLATINUM 플래티넘', tier: 17, win: 8000, promotion: 24000 },
-            { name: 'DIAMOND 다이아', tier: 20, win: 10000, promotion: 30000 },
-            { name: 'ASCENDANT 초월자 1', tier: 21, win: 14000, promotion: 42000 },
-            { name: 'ASCENDANT 초월자 2', tier: 22, win: 16000, promotion: 48000 },
-            { name: 'ASCENDANT 초월자 3', tier: 23, win: 18000, promotion: 54000 },
-            { name: 'IMMORTAL 불멸 1', tier: 24, win: 25000, promotion: 75000 },
-            { name: 'IMMORTAL 불멸 2', tier: 25, win: 30000, promotion: 85000 },
-            { name: 'IMMORTAL 불멸 3', tier: 26, win: 35000, promotion: 95000 },
-            { name: 'RADIANT 레디언트', tier: 27, win: null, promotion: null }
-        ];
-
-        const packageCards = Array.from(document.querySelectorAll('[data-package-card]'));
-        const packageDots = Array.from(document.querySelectorAll('[data-package-go]'));
-        const packageStage = document.getElementById('packageStage');
-        const calcFromTier = document.getElementById('calcFromTier');
-        const calcToTier = document.getElementById('calcToTier');
-        const calcResultAmount = document.getElementById('calcResultAmount');
-        const calcResultNote = document.getElementById('calcResultNote');
-        const fromTierIcon = document.getElementById('fromTierIcon');
-        const toTierIcon = document.getElementById('toTierIcon');
-        const fromTierName = document.getElementById('fromTierName');
-        const toTierName = document.getElementById('toTierName');
-
-        let packageIndex = 0;
-        let packageTimer = 0;
-        let packageDragStart = 0;
-        let packageDragging = false;
-        let calcType = 'win';
-
-        function openChat() {
-            window.open('https://open.kakao.com/o/sJdWuGxi', '_blank');
-        }
-
-        function tierIcon(tier) {
-            return `https://media.valorant-api.com/competitivetiers/${TIER_UUID}/${tier}/largeicon.png`;
-        }
-
-        function formatWon(value) {
-            return `${value.toLocaleString('ko-KR')}원`;
-        }
-
-        function renderRankPreview(type, indexes) {
-            const target = document.querySelector(`[data-rank-preview="${type}"]`);
-            if (!target) return;
-
-            target.innerHTML = indexes.map(index => {
-                const row = tiers[index];
-                const value = type === 'promotion' ? row.promotion : row.win;
-                const priceText = value === null ? '문의' : formatWon(value);
-                const label = type === 'duo' ? '상담 안내' : priceText;
-                return `
-                    <div class="rank-preview-item">
-                        <img src="${tierIcon(row.tier)}" alt="${row.name}">
-                        <div>
-                            <span>${row.name}</span>
-                            <strong>${label}</strong>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderPackageShowcase() {
-            packageCards.forEach((card, index) => {
-                const offset = (index - packageIndex + packageCards.length) % packageCards.length;
-                card.classList.toggle('is-active', index === packageIndex);
-                card.classList.toggle('is-next', offset === 1);
-                card.classList.toggle('is-prev', offset === packageCards.length - 1);
-            });
-
-            packageDots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === packageIndex);
-            });
-        }
-
-        function setPackageIndex(nextIndex, updateHash = true) {
-            packageIndex = (nextIndex + packageCards.length) % packageCards.length;
-            renderPackageShowcase();
-
-            if (updateHash) {
-                const tab = packageCards[packageIndex]?.dataset.tab;
-                if (tab && window.location.hash !== `#${tab}`) {
-                    history.replaceState(null, '', `#${tab}`);
-                }
-            }
-        }
-
-        function setPackageFromHash() {
-            const hash = window.location.hash.replace('#', '');
-            const index = packageCards.findIndex(card => card.dataset.tab === hash);
-            setPackageIndex(index >= 0 ? index : 0, false);
-            if (hash === 'promotion') {
-                setCalcType('promotion');
-            }
-            if (hash === 'per-win') {
-                setCalcType('win');
-            }
-        }
-
-        function resetPackageTimer() {
-            if (packageTimer) {
-                window.clearInterval(packageTimer);
-            }
-            packageTimer = window.setInterval(() => setPackageIndex(packageIndex + 1), 5600);
-        }
-
-        function setupCalculatorOptions() {
-            calcFromTier.innerHTML = tiers.slice(0, -1).map((row, index) => `<option value="${index}">${row.name}</option>`).join('');
-            calcToTier.innerHTML = tiers.map((row, index) => `<option value="${index}">${row.name}</option>`).join('');
-            calcFromTier.value = '0';
-            calcToTier.value = '1';
-        }
-
-        function setCalcType(type) {
-            calcType = type === 'promotion' ? 'promotion' : 'win';
-            document.querySelectorAll('[data-calc-type]').forEach(tab => {
-                tab.classList.toggle('active', tab.dataset.calcType === calcType);
-            });
-            updateCalculator();
-        }
-
-        function updateTierPreview() {
-            const from = tiers[Number(calcFromTier.value)];
-            const to = tiers[Number(calcToTier.value)];
-            fromTierIcon.src = tierIcon(from.tier);
-            fromTierIcon.alt = from.name;
-            fromTierName.textContent = from.name;
-            toTierIcon.src = tierIcon(to.tier);
-            toTierIcon.alt = to.name;
-            toTierName.textContent = to.name;
-        }
-
-        function updateCalculator() {
-            updateTierPreview();
-
-            const from = Number(calcFromTier.value);
-            const to = Number(calcToTier.value);
-            const modeLabel = calcType === 'win' ? '승당제' : '승급제';
-
-            if (to <= from) {
-                calcResultAmount.textContent = '목표 티어 확인 필요';
-                calcResultNote.textContent = '목표 티어는 현재 티어보다 높게 선택해야 계산할 수 있습니다.';
-                return;
-            }
-
-            if (tiers[to]?.tier === 27) {
-                calcResultAmount.textContent = '상담 필요';
-                calcResultNote.textContent = '레디언트가 목표에 포함되는 구간은 진행 방식과 일정에 따라 별도 상담이 필요합니다.';
-                return;
-            }
-
-            const selectedRows = tiers.slice(from, to);
-            const multiplier = calcType === 'win' ? 3 : 1;
-            const total = selectedRows.reduce((sum, row) => sum + row[calcType] * multiplier, 0);
-
-            calcResultAmount.textContent = formatWon(total);
-            calcResultNote.textContent = `${tiers[from].name} → ${tiers[to].name} 기준 예상 ${modeLabel} 금액입니다. 실제 MMR, 시간대, 진행 방식에 따라 상담 후 조정될 수 있습니다.`;
-        }
-
-        packageDots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                setPackageIndex(Number(dot.dataset.packageGo || 0));
-                resetPackageTimer();
-            });
-        });
-
-        if (packageStage) {
-            packageStage.addEventListener('pointerdown', event => {
-                packageDragging = true;
-                packageDragStart = event.clientX;
-                packageStage.classList.add('dragging');
-                packageStage.setPointerCapture?.(event.pointerId);
-            });
-
-            packageStage.addEventListener('pointerup', event => {
-                if (!packageDragging) return;
-                const diff = event.clientX - packageDragStart;
-                packageDragging = false;
-                packageStage.classList.remove('dragging');
-                packageStage.releasePointerCapture?.(event.pointerId);
-
-                if (Math.abs(diff) > 48) {
-                    setPackageIndex(packageIndex + (diff < 0 ? 1 : -1));
-                    resetPackageTimer();
-                }
-            });
-
-            packageStage.addEventListener('pointercancel', () => {
-                packageDragging = false;
-                packageStage.classList.remove('dragging');
-            });
-        }
-
-        document.querySelectorAll('[data-calc-type]').forEach(tab => {
-            tab.addEventListener('click', () => setCalcType(tab.dataset.calcType));
-        });
-
-        calcFromTier.addEventListener('change', updateCalculator);
-        calcToTier.addEventListener('change', updateCalculator);
-        window.addEventListener('hashchange', setPackageFromHash);
-
-        renderRankPreview('win', [0, 6, 12]);
-        renderRankPreview('promotion', [0, 6, 12]);
-        renderRankPreview('duo', [2, 5, 9]);
-        setupCalculatorOptions();
-        setPackageFromHash();
-        updateCalculator();
-        resetPackageTimer();
-    </script>
-</body>
-</html>
+<!DOCTYPE html> <html lang="ko"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>발로란트 패키지 쇼케이스</title> <link rel="preconnect" href="https://media.valorant-api.com" /> <style> @font-face { font-family: 'ChosunIlboMyungjo'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff'); font-weight: normal; font-display: swap; } :root { --bg: #04050a; --text: #f5f2ed; --muted: rgba(239, 240, 246, 0.58); --soft: rgba(255, 255, 255, 0.36); --line: rgba(255, 255, 255, 0.115); --ruby: #ff3f72; --ruby-soft: rgba(255, 63, 114, 0.14); --gold: #d8b572; --gold-soft: rgba(216, 181, 114, 0.14); --blue: #9fb8ff; } * { box-sizing: border-box; } html, body { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif; user-select: none; -webkit-user-select: none; } body { cursor: grab; } body.dragging { cursor: grabbing; } .package-scene { position: relative; width: 100vw; height: 100vh; overflow: hidden; isolation: isolate; background: radial-gradient(circle at 50% 33%, rgba(255, 63, 114, 0.13), transparent 31%), radial-gradient(circle at 18% 12%, rgba(124, 98, 255, 0.13), transparent 25%), radial-gradient(circle at 82% 84%, rgba(216, 181, 114, 0.08), transparent 30%), linear-gradient(180deg, #05060c 0%, #080b14 56%, #020309 100%); } .scene-grid { position: absolute; inset: 0; z-index: 0; opacity: 0.16; pointer-events: none; background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 108px 108px; mask-image: radial-gradient(circle at center, black 0%, transparent 78%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 78%); } .scene-noise { position: absolute; inset: 0; z-index: 30; opacity: 0.052; pointer-events: none; mix-blend-mode: screen; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.76' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.76'/%3E%3C/svg%3E"); } .scene-vignette { position: absolute; inset: 0; z-index: 28; pointer-events: none; background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.88) 118%), linear-gradient(90deg, rgba(0,0,0,0.66), transparent 28%, transparent 72%, rgba(0,0,0,0.66)); } .orb { position: absolute; z-index: 0; border-radius: 999px; filter: blur(74px); pointer-events: none; opacity: 0.32; } .orb-a { width: 430px; height: 430px; left: 12%; top: 8%; background: rgba(255, 63, 114, 0.14); } .orb-b { width: 380px; height: 380px; right: 10%; bottom: 12%; background: rgba(124, 98, 255, 0.13); } .hud { position: absolute; left: 34px; right: 34px; z-index: 60; display: flex; align-items: center; gap: 18px; pointer-events: none; color: rgba(255,255,255,0.42); font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; } .hud div { flex: 1; height: 1px; background: rgba(255,255,255,0.13); } .hud-top { top: 24px; } .hud-bottom { bottom: 26px; } .hero-copy { position: absolute; top: 48px; left: 50%; z-index: 42; width: min(920px, calc(100vw - 48px)); transform: translateX(-50%); text-align: center; pointer-events: none; } .hero-kicker { margin: 0 0 8px; color: var(--ruby); font-family: 'ChosunIlboMyungjo', serif; font-size: clamp(22px, 2.3vw, 34px); line-height: 1; letter-spacing: -0.04em; text-shadow: 0 0 24px rgba(255, 63, 114, 0.24); } .hero-title { margin: 0; color: #fff; font-size: clamp(40px, 5vw, 70px); line-height: 0.92; font-weight: 950; letter-spacing: -0.075em; text-transform: uppercase; text-shadow: 0 22px 64px rgba(0,0,0,0.72); } .hero-desc { margin: 16px auto 0; max-width: 760px; color: rgba(235,239,247,0.58); font-size: 13px; line-height: 1.7; letter-spacing: -0.025em; word-break: keep-all; } .viewport { position: absolute; inset: 0; z-index: 10; perspective: 1900px; overflow: hidden; } .carousel { position: absolute; left: 50%; top: 59%; width: 1px; height: 1px; transform-style: preserve-3d; transform: translateZ(-1180px) scale(0.86); will-change: transform; } .package-card { position: absolute; left: 50%; top: 50%; width: min(820px, calc(100vw - 280px)); min-height: 540px; padding: 22px; border-radius: 28px; transform-style: preserve-3d; overflow: hidden; backface-visibility: hidden; contain: layout paint style; will-change: transform, opacity; border: 1px solid rgba(255,255,255,0.11); background: linear-gradient(180deg, rgba(255,255,255,0.065), rgba(255,255,255,0.018)), radial-gradient(circle at 0% 0%, rgba(255,63,114,0.10), transparent 34%), radial-gradient(circle at 100% 0%, rgba(216,181,114,0.085), transparent 30%), rgba(9, 12, 20, 0.84); box-shadow: 0 44px 110px rgba(0,0,0,0.68), inset 0 1px 0 rgba(255,255,255,0.075), inset 0 -1px 0 rgba(255,255,255,0.032); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: opacity 260ms ease, box-shadow 260ms ease, border-color 260ms ease; } .package-card::before { content: ""; position: absolute; inset: 0; padding: 1px; border-radius: inherit; background: linear-gradient(145deg, rgba(216,181,114,0.58), rgba(255,255,255,0.05) 20%, rgba(255,255,255,0.025) 56%, rgba(255,63,114,0.38) ); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude; -webkit-mask-composite: xor; pointer-events: none; opacity: 0.48; } .package-card::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 18% 8%, rgba(255,255,255,0.085), transparent 17%), linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.04) 25%, transparent 48%); opacity: 0.34; mix-blend-mode: screen; } .package-card.is-active { border-color: rgba(216, 181, 114, 0.28); box-shadow: 0 48px 120px rgba(0,0,0,0.75), 0 0 44px rgba(255,63,114,0.10), 0 0 24px rgba(216,181,114,0.055), inset 0 1px 0 rgba(255,255,255,0.08); } .card-accent { position: absolute; left: 26px; right: 26px; top: 0; height: 2px; background: linear-gradient(90deg, transparent 0%, var(--gold) 10%, var(--ruby) 44%, transparent 100%); opacity: 0.92; pointer-events: none; } .package-head { position: relative; z-index: 3; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; align-items: start; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.085); } .package-chip { display: inline-flex; width: fit-content; align-items: center; gap: 9px; padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(255,63,114,0.32); background: rgba(255,63,114,0.07); color: #ff6f99; font-size: 12px; letter-spacing: -0.02em; } .package-chip::before { content: ""; width: 7px; height: 7px; border-radius: 99px; background: currentColor; box-shadow: 0 0 14px currentColor; } .package-name { margin: 16px 0 0; font-family: 'ChosunIlboMyungjo', serif; font-size: clamp(38px, 4.6vw, 58px); font-weight: normal; line-height: 0.98; letter-spacing: -0.07em; color: #fff; text-shadow: 0 18px 54px rgba(0,0,0,0.64); } .package-sub { margin: 12px 0 0; max-width: 500px; color: rgba(235,239,247,0.58); font-size: 13px; line-height: 1.62; letter-spacing: -0.03em; word-break: keep-all; } .package-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; } .summary-box { min-height: 68px; padding: 12px; border-radius: 17px; border: 1px solid rgba(255,255,255,0.065); background: linear-gradient(180deg, rgba(255,255,255,0.042), rgba(255,255,255,0.012)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.035); } .summary-box strong { display: block; color: rgba(255,255,255,0.38); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 7px; } .summary-box span { color: #fff; font-size: 14px; font-weight: 760; letter-spacing: -0.035em; line-height: 1.35; word-break: keep-all; } .summary-box .gold { color: #f3d39b; } .package-body { position: relative; z-index: 3; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; } .price-panel { overflow: hidden; border-radius: 21px; border: 1px solid rgba(255,255,255,0.085); background: linear-gradient(180deg, rgba(255,255,255,0.032), rgba(255,255,255,0.012)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.035); } .price-panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; background: linear-gradient(90deg, rgba(255,63,114,0.16), rgba(255,63,114,0.052), rgba(216,181,114,0.04)); border-bottom: 1px solid rgba(255,255,255,0.075); } .price-panel-head h3 { margin: 0; color: #fff; font-size: 15px; letter-spacing: -0.055em; } .price-panel-head span { color: rgba(235,239,247,0.54); font-size: 10px; letter-spacing: -0.02em; white-space: nowrap; } .price-list { padding: 5px 0; } .price-row { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 9px; min-height: 38px; padding: 5px 13px; border-bottom: 1px solid rgba(255,255,255,0.052); } .price-row:last-child { border-bottom: 0; } .rank-icon { width: 28px; height: 28px; object-fit: contain; display: block; filter: drop-shadow(0 0 8px rgba(255,255,255,0.11)) drop-shadow(0 6px 10px rgba(0,0,0,0.32)); } .rank-name { color: rgba(255,255,255,0.84); font-size: 12px; font-weight: 780; letter-spacing: -0.035em; } .rank-name small { display: block; margin-top: 1px; color: rgba(255,255,255,0.36); font-size: 9px; font-weight: 600; letter-spacing: 0; } .price { color: var(--ruby); font-size: 13px; font-weight: 900; letter-spacing: -0.04em; white-space: nowrap; text-shadow: 0 0 18px rgba(255,63,114,0.16); } .price.ask { color: var(--blue); } .duo-layout { grid-template-columns: 1fr; } .duo-panel { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 14px; } .duo-feature { padding: 16px; border-radius: 21px; border: 1px solid rgba(255,255,255,0.085); background: linear-gradient(180deg, rgba(255,255,255,0.034), rgba(255,255,255,0.012)); box-shadow: inset 0 1px 0 rgba(255,255,255,0.035); } .duo-feature h3 { margin: 0 0 12px; color: #fff; font-size: 16px; letter-spacing: -0.05em; } .duo-feature ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; } .duo-feature li { position: relative; padding-left: 18px; color: rgba(255,255,255,0.72); font-size: 12px; line-height: 1.5; letter-spacing: -0.03em; word-break: keep-all; } .duo-feature li::before { content: ""; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 99px; background: var(--gold); box-shadow: 0 0 12px rgba(216,181,114,0.48); } .duo-quote { display: grid; gap: 10px; } .quote-box { padding: 15px; border-radius: 21px; border: 1px solid rgba(216,181,114,0.12); background: radial-gradient(circle at 100% 0%, rgba(216,181,114,0.12), transparent 36%), rgba(255,255,255,0.022); } .quote-box strong { display: block; color: rgba(255,255,255,0.42); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; } .quote-box span { display: block; color: #fff; font-size: 21px; line-height: 1.1; font-weight: 950; letter-spacing: -0.07em; } .quote-box p { margin: 8px 0 0; color: rgba(235,239,247,0.5); font-size: 11px; line-height: 1.5; letter-spacing: -0.025em; word-break: keep-all; } .card-bottom { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; margin-top: 15px; gap: 12px; } .service-chips { display: flex; flex-wrap: wrap; gap: 7px; } .service-chip { padding: 7px 11px; border-radius: 999px; border: 1px solid rgba(216,181,114,0.18); background: rgba(216,181,114,0.06); color: rgba(255,235,205,0.9); font-size: 10px; letter-spacing: -0.01em; white-space: nowrap; } .apply-button { flex: 0 0 auto; border: 1px solid rgba(255,255,255,0.13); outline: none; border-radius: 999px; padding: 10px 16px; background: linear-gradient(180deg, rgba(255,255,255,0.085), rgba(255,255,255,0.025)); color: #fff; font-size: 12px; font-weight: 900; letter-spacing: -0.03em; cursor: pointer; transition: border-color 240ms ease, background 240ms ease, box-shadow 240ms ease; } .apply-button:hover { border-color: rgba(216,181,114,0.42); background: linear-gradient(180deg, rgba(216,181,114,0.16), rgba(255,255,255,0.035)); box-shadow: 0 0 26px rgba(216,181,114,0.12); } .watermark { position: absolute; right: 24px; bottom: 16px; z-index: 1; color: rgba(255,255,255,0.027); font-size: 82px; line-height: 1; font-weight: 950; letter-spacing: -0.1em; pointer-events: none; } .nav { position: absolute; left: 50%; bottom: 58px; z-index: 62; display: flex; align-items: center; justify-content: center; gap: 10px; transform: translateX(-50%); } .nav button { width: 34px; height: 6px; padding: 0; border: 0; border-radius: 999px; background: rgba(255,255,255,0.18); cursor: pointer; transition: width 260ms ease, background 260ms ease, box-shadow 260ms ease; } .nav button.is-active { width: 62px; background: linear-gradient(90deg, var(--gold), var(--ruby)); box-shadow: 0 0 18px rgba(255,63,114,0.2); } .drag-hint { position: absolute; right: 34px; bottom: 54px; z-index: 62; color: rgba(255,255,255,0.38); font-size: 11px; letter-spacing: -0.02em; pointer-events: none; } @media (max-width: 980px) { .hero-copy { top: 38px; } .hero-title { font-size: clamp(34px, 6vw, 56px); } .carousel { transform: translateZ(-930px) scale(0.86); } .package-card { width: min(800px, calc(100vw - 56px)); min-height: 590px; padding: 20px; } .package-head { grid-template-columns: 1fr; } .package-summary { grid-template-columns: repeat(4, minmax(0, 1fr)); } .package-body { grid-template-columns: 1fr 1fr; gap: 10px; } .rank-name, .price { font-size: 11px; } .rank-icon { width: 26px; height: 26px; } .price-row { padding: 5px 10px; gap: 7px; } .duo-panel { grid-template-columns: 1fr; } } @media (max-width: 720px) { .hero-copy { display: none; } .carousel { top: 50%; transform: translateZ(-650px) scale(0.9); } .package-card { width: calc(100vw - 24px); min-height: auto; max-height: calc(100vh - 80px); overflow-y: auto; } .package-summary, .package-body { grid-template-columns: 1fr; } .hud, .drag-hint { display: none; } } 
+  /* ===== 독립 계산기 패널: 기존 3D 카드 디자인은 건드리지 않음 ===== */
+  .price-calculator {
+    position: fixed;
+    right: 34px;
+    top: 50%;
+    z-index: 90;
+    width: min(390px, calc(100vw - 860px));
+    min-width: 340px;
+    transform: translateY(-50%);
+    padding: 20px;
+    border-radius: 26px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.018)),
+      radial-gradient(circle at 0% 0%, rgba(255,63,114,0.12), transparent 38%),
+      radial-gradient(circle at 100% 0%, rgba(216,181,114,0.09), transparent 34%),
+      rgba(9, 12, 20, 0.88);
+    box-shadow:
+      0 42px 100px rgba(0,0,0,0.62),
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      inset 0 -1px 0 rgba(255,255,255,0.03);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .price-calculator::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background:
+      linear-gradient(145deg,
+        rgba(216,181,114,0.48),
+        rgba(255,255,255,0.045) 26%,
+        rgba(255,255,255,0.025) 58%,
+        rgba(255,63,114,0.42)
+      );
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+    opacity: 0.55;
+  }
+
+  .calc-inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .calc-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,63,114,0.32);
+    background: rgba(255,63,114,0.07);
+    color: #ff6f99;
+    font-size: 11px;
+    letter-spacing: -0.02em;
+  }
+
+  .calc-kicker::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+    background: currentColor;
+    box-shadow: 0 0 14px currentColor;
+  }
+
+  .calc-title {
+    margin: 14px 0 10px;
+    font-family: 'ChosunIlboMyungjo', serif;
+    font-size: 38px;
+    font-weight: normal;
+    line-height: 0.95;
+    letter-spacing: -0.07em;
+  }
+
+  .calc-desc {
+    margin: 0;
+    color: rgba(235,239,247,0.58);
+    font-size: 12px;
+    line-height: 1.55;
+    letter-spacing: -0.025em;
+    word-break: keep-all;
+  }
+
+  .calc-divider {
+    height: 1px;
+    margin: 15px 0;
+    background: rgba(255,255,255,0.09);
+  }
+
+  .calc-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .calc-tab {
+    border: 1px solid rgba(255,255,255,0.105);
+    background: rgba(255,255,255,0.035);
+    color: rgba(255,255,255,0.66);
+    border-radius: 14px;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: 220ms ease;
+  }
+
+  .calc-tab.is-active {
+    color: #fff;
+    border-color: rgba(255,63,114,0.42);
+    background: linear-gradient(180deg, rgba(255,63,114,0.18), rgba(255,255,255,0.03));
+    box-shadow: 0 0 22px rgba(255,63,114,0.10);
+  }
+
+  .calc-form {
+    display: grid;
+    gap: 12px;
+    margin-top: 15px;
+  }
+
+  .form-row {
+    display: grid;
+    gap: 7px;
+  }
+
+  .form-row label {
+    color: rgba(255,255,255,0.42);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .calc-select {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.095);
+    outline: none;
+    border-radius: 16px;
+    padding: 12px 13px;
+    background: rgba(255,255,255,0.035);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 750;
+    letter-spacing: -0.03em;
+  }
+
+  .calc-select option {
+    background: #0b0e17;
+    color: #fff;
+  }
+
+  .calc-tier-preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 13px;
+  }
+
+  .calc-tier-card {
+    min-height: 92px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .calc-tier-card span {
+    display: block;
+    color: rgba(148, 163, 184, 0.86);
+    font-size: 11px;
+  }
+
+  .calc-tier-card img {
+    width: 44px;
+    height: 44px;
+    margin: 8px 0 6px;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.36));
+  }
+
+  .calc-tier-card strong {
+    display: block;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .calc-result {
+    margin-top: 14px;
+    padding: 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(216,181,114,0.15);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(216,181,114,0.12), transparent 38%),
+      rgba(255,255,255,0.025);
+  }
+
+  .calc-result strong {
+    display: block;
+    color: rgba(255,255,255,0.44);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .calc-total {
+    color: #fff;
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 950;
+    letter-spacing: -0.075em;
+  }
+
+  .calc-total.ask {
+    color: var(--blue);
+    font-size: 28px;
+  }
+
+  .calc-sub {
+    margin-top: 8px;
+    color: rgba(235,239,247,0.56);
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: -0.025em;
+    word-break: keep-all;
+  }
+
+  .calc-mini {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .calc-mini-box {
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.024);
+  }
+
+  .calc-mini-box span {
+    display: block;
+    color: rgba(255,255,255,0.34);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .calc-mini-box b {
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: -0.03em;
+  }
+
+  .calc-cta {
+    width: 100%;
+    margin-top: 13px;
+    border: 1px solid rgba(255,255,255,0.13);
+    outline: none;
+    border-radius: 999px;
+    padding: 10px 15px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.085), rgba(255,255,255,0.025));
+    color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    cursor: pointer;
+    transition: 220ms ease;
+  }
+
+  .calc-cta:hover {
+    border-color: rgba(216,181,114,0.42);
+    background: linear-gradient(180deg, rgba(216,181,114,0.16), rgba(255,255,255,0.035));
+    box-shadow: 0 0 26px rgba(216,181,114,0.12);
+  }
+
+  @media (max-width: 1180px) {
+    .price-calculator {
+      right: 50%;
+      top: auto;
+      bottom: 18px;
+      transform: translateX(50%);
+      width: min(720px, calc(100vw - 40px));
+      min-width: 0;
+      max-height: 390px;
+      overflow-y: auto;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .price-calculator {
+      width: calc(100vw - 24px);
+    }
+
+    .calc-tier-preview,
+    .calc-mini {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+  /* ===== 상단 공통 헤더 ===== */
+  body {
+    padding-top: 82px;
+  }
+
+  .site-header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 150;
+    height: 82px;
+    padding: 0 56px;
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) auto minmax(240px, 1fr);
+    align-items: center;
+    background: rgba(3, 4, 10, 0.92);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .site-logo {
+    justify-self: start;
+    color: inherit;
+    text-decoration: none;
+    line-height: 1.05;
+  }
+
+  .site-logo-sub {
+    margin-bottom: 6px;
+    color: #8d97ad;
+    font-size: 10px;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  .site-logo-main {
+    color: #fff;
+    font-family: 'ChosunIlboMyungjo', serif;
+    font-size: 24px;
+    font-weight: normal;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  .site-logo-main span {
+    color: var(--ruby);
+  }
+
+  .site-nav {
+    justify-self: center;
+  }
+
+  .site-nav ul {
+    height: 82px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 38px;
+  }
+
+  .site-nav li {
+    position: relative;
+    height: 82px;
+    display: flex;
+    align-items: center;
+  }
+
+  .site-nav a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 900;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .site-nav a:hover,
+  .site-nav a.active {
+    color: #fff;
+  }
+
+  .site-nav-trigger::after {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-left: 8px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg) translateY(-3px);
+  }
+
+  .site-dropdown {
+    position: absolute;
+    top: calc(100% - 2px);
+    left: 50%;
+    width: 210px;
+    padding: 18px;
+    display: grid;
+    gap: 6px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 10px);
+    border: 1px solid rgba(255, 63, 114, 0.44);
+    border-radius: 14px;
+    background: rgba(12, 8, 18, 0.96);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  }
+
+  .site-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
+  }
+
+  .site-dropdown a {
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6px;
+    color: #f5f7fb;
+    font-size: 15px;
+  }
+
+  .site-dropdown a::after {
+    content: '›';
+    color: var(--ruby);
+  }
+
+  .site-nav-menu:hover .site-dropdown,
+  .site-nav-menu:focus-within .site-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+
+  .site-customer {
+    justify-self: end;
+    padding: 12px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: border-color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+  }
+
+  .site-customer:hover {
+    border-color: rgba(255, 63, 114, 0.48);
+    background: rgba(255, 63, 114, 0.12);
+    transform: translateY(-1px);
+  }
+
+  .package-scene {
+    height: calc(100vh - 82px);
+  }
+
+  /* ===== 우측 하단 상담 배너 ===== */
+  .floating-consult {
+    position: fixed;
+    right: 26px;
+    bottom: 24px;
+    z-index: 160;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 0 24px;
+    border: 0;
+    border-radius: 999px;
+    color: #111827;
+    background: #fff;
+    font-size: 14px;
+    font-weight: 950;
+    letter-spacing: -0.04em;
+    box-shadow:
+      0 16px 44px rgba(0, 0, 0, 0.36),
+      inset 0 1px 0 rgba(255,255,255,0.75);
+    cursor: pointer;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .floating-consult:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 22px 54px rgba(0, 0, 0, 0.46),
+      0 0 24px rgba(255, 63, 114, 0.14);
+  }
+
+  @media (max-width: 980px) {
+    body {
+      padding-top: 112px;
+      overflow: auto;
+    }
+
+    .site-header {
+      height: auto;
+      min-height: 112px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .site-nav ul {
+      height: auto;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .site-nav li {
+      height: 32px;
+    }
+
+    .site-customer {
+      display: none;
+    }
+
+    .package-scene {
+      height: calc(100vh - 112px);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .floating-consult {
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      width: auto;
+    }
+  }
+
+
+  /* ===== final tweak: 설명 문구 제거 + 카드 확대/좌측 이동 ===== */
+  .hero-desc {
+    display: none !important;
+  }
+
+  .hero-copy {
+    top: 40px !important;
+  }
+
+  .carousel {
+    left: 42% !important;
+    top: 60% !important;
+    transform: translateZ(-1080px) scale(1.02) !important;
+  }
+
+  .package-card {
+    width: min(900px, calc(100vw - 520px)) !important;
+    min-height: 570px !important;
+  }
+
+  .package-name {
+    font-size: clamp(44px, 5vw, 66px) !important;
+  }
+
+  .package-sub {
+    font-size: 14px !important;
+    color: rgba(235,239,247,0.72) !important;
+  }
+
+  .rank-name {
+    font-size: 13px !important;
+  }
+
+  .rank-name small {
+    font-size: 10px !important;
+  }
+
+  .price {
+    font-size: 14px !important;
+  }
+
+  .rank-icon {
+    width: 31px !important;
+    height: 31px !important;
+  }
+
+  .price-row {
+    min-height: 41px !important;
+  }
+
+  .price-panel-head h3 {
+    font-size: 16px !important;
+  }
+
+  .price-panel-head span {
+    font-size: 11px !important;
+  }
+
+  .nav {
+    left: 42% !important;
+    bottom: 50px !important;
+  }
+
+  .drag-hint {
+    right: 420px !important;
+    bottom: 48px !important;
+  }
+
+  @media (max-width: 1180px) {
+    .carousel {
+      left: 50% !important;
+      top: 52% !important;
+      transform: translateZ(-960px) scale(0.95) !important;
+    }
+
+    .package-card {
+      width: min(880px, calc(100vw - 48px)) !important;
+      min-height: 580px !important;
+    }
+
+    .nav {
+      left: 50% !important;
+    }
+
+    .drag-hint {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .carousel {
+      top: 50% !important;
+      transform: translateZ(-640px) scale(0.9) !important;
+    }
+
+    .package-card {
+      width: calc(100vw - 24px) !important;
+      min-height: auto !important;
+    }
+  }
+
+</style> </head> <body>
+
+<header class="site-header">
+  <a class="site-logo" href="index.html" aria-label="홈으로 이동">
+    <div class="site-logo-sub">발로란트 신속대리 백현팀</div>
+    <div class="site-logo-main">VLRT <span>1oohyun</span></div>
+  </a>
+
+  <nav class="site-nav" aria-label="상단 메뉴">
+    <ul>
+      <li><a href="index.html">공지사항</a></li>
+
+      <li class="site-nav-menu">
+        <a href="price.html" class="site-nav-trigger active">가격표</a>
+        <div class="site-dropdown">
+          <a href="price.html#per-win">승당제</a>
+          <a href="price.html#promotion">승급제</a>
+          <a href="price.html#duo">듀오제</a>
+        </div>
+      </li>
+
+      <li class="site-nav-menu">
+        <a href="lineup.html" class="site-nav-trigger">기사 라인업</a>
+        <div class="site-dropdown">
+          <a href="lineup.html#low">Low Ranked</a>
+          <a href="lineup.html#high">High Ranked</a>
+        </div>
+      </li>
+
+      <li><a href="index.html#status">작업현황</a></li>
+      <li><a href="index.html#faq">자주 묻는 질문</a></li>
+    </ul>
+  </nav>
+
+  <button class="site-customer" type="button" onclick="openConsult()">고객센터</button>
+</header>
+
+<button class="floating-consult" type="button" onclick="openConsult()">⚡ 24시간 365일 편하게 상담주세요</button>
+ <main class="package-scene" id="packageScene"> <div class="scene-grid"></div> <div class="scene-noise"></div> <div class="scene-vignette"></div> <div class="orb orb-a"></div> <div class="orb orb-b"></div> <div class="hud hud-top"> <span>PACKAGE SELECTOR</span> <div></div> <span id="activeHud">PER-WIN</span> </div> <div class="hud hud-bottom"> <span>SMOOTH AUTO ROTATION</span> <div></div> <span>DRAG TO ROTATE</span> </div> <section class="hero-copy"> <p class="hero-kicker">1oohyun</p> <h1 class="hero-title">PACKAGE PLAN</h1> <p class="hero-desc"> 승당제, 승급제, 듀오제 패키지를 한 화면에서 비교할 수 있도록 구성했습니다. 마우스로 좌우 드래그하면 직접 넘길 수 있고, 아무것도 하지 않으면 자동으로 천천히 회전합니다. </p> </section> <div class="viewport"> <div class="carousel" id="carousel"></div> </div> <div class="nav" id="navDots"> <button class="is-active" data-go="0" aria-label="승당제 패키지"></button> <button data-go="1" aria-label="승급제 패키지"></button> <button data-go="2" aria-label="듀오제 패키지"></button> </div> <div class="drag-hint">마우스로 좌우 드래그 가능</div> 
+  <aside class="price-calculator" aria-label="대리 가격 계산기">
+    <div class="calc-inner">
+      <div class="calc-kicker">PRICE CALCULATOR</div>
+      <h2 class="calc-title">대리 계산기</h2>
+      <p class="calc-desc">현재 티어와 목표 티어만 선택하면 승당제 / 승급제 예상 금액을 바로 확인할 수 있습니다.</p>
+
+      <div class="calc-divider"></div>
+
+      <div class="calc-tabs">
+        <button class="calc-tab is-active" type="button" data-calc-type="win">승당제</button>
+        <button class="calc-tab" type="button" data-calc-type="up">승급제</button>
+      </div>
+
+      <div class="calc-form">
+        <div class="form-row">
+          <label for="fromTier">현재 티어</label>
+          <select class="calc-select" id="fromTier"></select>
+        </div>
+        <div class="form-row">
+          <label for="toTier">목표 티어</label>
+          <select class="calc-select" id="toTier"></select>
+        </div>
+      </div>
+
+      <div class="calc-tier-preview">
+        <div class="calc-tier-card">
+          <span>현재</span>
+          <img id="fromTierIcon" alt="">
+          <strong id="fromTierName">-</strong>
+        </div>
+        <div class="calc-tier-card">
+          <span>목표</span>
+          <img id="toTierIcon" alt="">
+          <strong id="toTierName">-</strong>
+        </div>
+      </div>
+
+      <div class="calc-result">
+        <strong>Estimated Quote</strong>
+        <div class="calc-total" id="calcTotal">0원</div>
+        <div class="calc-sub" id="calcSub">티어를 선택해주세요.</div>
+      </div>
+
+      <div class="calc-mini">
+        <div class="calc-mini-box">
+          <span>Mode</span>
+          <b id="miniMode">승당제</b>
+        </div>
+        <div class="calc-mini-box">
+          <span>Rule</span>
+          <b id="miniRule">단계별 3승 기준</b>
+        </div>
+        <div class="calc-mini-box">
+          <span>Status</span>
+          <b id="miniStatus">계산 완료</b>
+        </div>
+      </div>
+
+      <button class="calc-cta" type="button">상담으로 정확한 견적 받기</button>
+    </div>
+  </aside>
+
+</main> <script> const TIER_UUID = "03621f52-342b-cf4e-4f86-9350a49c6d04"; const TIER_BASE = `https://media.valorant-api.com/competitivetiers/${TIER_UUID}`; const rankIcon = (tier) => `${TIER_BASE}/${tier}/largeicon.png`; const winLow = [ { tier: 5, name: "IRON 아이언", sub: "1승당", price: "3,000원" }, { tier: 8, name: "BRONZE 브론즈", sub: "1승당", price: "4,000원" }, { tier: 11, name: "SILVER 실버", sub: "1승당", price: "5,000원" }, { tier: 14, name: "GOLD 골드", sub: "1승당", price: "6,000원" }, { tier: 17, name: "PLATINUM 플래티넘", sub: "1승당", price: "8,000원" }, { tier: 20, name: "DIAMOND 다이아", sub: "1승당", price: "10,000원" } ]; const winHigh = [ { tier: 21, name: "ASCENDANT 초월자 1", sub: "1승당", price: "14,000원" }, { tier: 22, name: "ASCENDANT 초월자 2", sub: "1승당", price: "16,000원" }, { tier: 23, name: "ASCENDANT 초월자 3", sub: "1승당", price: "18,000원" }, { tier: 24, name: "IMMORTAL 불멸 1", sub: "1승당", price: "25,000원" }, { tier: 25, name: "IMMORTAL 불멸 2", sub: "1승당", price: "30,000원" }, { tier: 26, name: "IMMORTAL 불멸 3", sub: "1승당", price: "35,000원" }, { tier: 27, name: "RADIANT 레디언트", sub: "상담 필요", price: "문의", ask: true } ]; const upLow = [ { tier: 5, name: "IRON 아이언", sub: "한 티어 승급", price: "9,000원" }, { tier: 8, name: "BRONZE 브론즈", sub: "한 티어 승급", price: "12,000원" }, { tier: 11, name: "SILVER 실버", sub: "한 티어 승급", price: "15,000원" }, { tier: 14, name: "GOLD 골드", sub: "한 티어 승급", price: "18,000원" }, { tier: 17, name: "PLATINUM 플래티넘", sub: "한 티어 승급", price: "24,000원" }, { tier: 20, name: "DIAMOND 다이아", sub: "한 티어 승급", price: "30,000원" } ]; const upHigh = [ { tier: 21, name: "ASCENDANT 초월자 1", sub: "한 티어 승급", price: "42,000원" }, { tier: 22, name: "ASCENDANT 초월자 2", sub: "한 티어 승급", price: "48,000원" }, { tier: 23, name: "ASCENDANT 초월자 3", sub: "한 티어 승급", price: "54,000원" }, { tier: 24, name: "IMMORTAL 불멸 1", sub: "한 티어 승급", price: "75,000원" }, { tier: 25, name: "IMMORTAL 불멸 2", sub: "한 티어 승급", price: "85,000원" }, { tier: 26, name: "IMMORTAL 불멸 3", sub: "한 티어 승급", price: "95,000원" }, { tier: 27, name: "RADIANT 레디언트", sub: "상담 필요", price: "문의", ask: true } ]; const carousel = document.getElementById("carousel"); const scene = document.getElementById("packageScene"); const dots = [...document.querySelectorAll("#navDots button")]; const activeHud = document.getElementById("activeHud"); function rowTemplate(row) { return ` <div class="price-row"> <img class="rank-icon" src="${rankIcon(row.tier)}" alt="${row.name}" loading="eager" decoding="async" /> <div class="rank-name">${row.name}<small>${row.sub}</small></div> <div class="price ${row.ask ? "ask" : ""}">${row.price}</div> </div> `; } function panelTemplate(title, subtitle, rows) { return ` <div class="price-panel"> <div class="price-panel-head"> <h3>${title}</h3> <span>${subtitle}</span> </div> <div class="price-list"> ${rows.map(rowTemplate).join("")} </div> </div> `; } function packageTemplate(data) { return ` <article class="package-card" data-index="${data.index}" data-name="${data.hud}"> <div class="card-accent"></div> <header class="package-head"> <div> <div class="package-chip">${data.chip}</div> <h2 class="package-name">${data.name}</h2> <p class="package-sub">${data.desc}</p> </div> <div class="package-summary"> ${data.summary.map(item => ` <div class="summary-box"> <strong>${item.label}</strong> <span class="${item.gold ? "gold" : ""}">${item.value}</span> </div> `).join("")} </div> </header> <section class="package-body"> ${panelTemplate(data.leftTitle, data.leftSub, data.leftRows)} ${panelTemplate(data.rightTitle, data.rightSub, data.rightRows)} </section> <div class="card-bottom"> <div class="service-chips"> ${data.chips.map(chip => `<span class="service-chip">${chip}</span>`).join("")} </div> <button class="apply-button">신청하기</button> </div> <div class="watermark">${data.mark}</div> </article> `; } function duoTemplate() { return ` <article class="package-card" data-index="2" data-name="DUO"> <div class="card-accent"></div> <header class="package-head"> <div> <div class="package-chip">듀오제 패키지</div> <h2 class="package-name">듀오제</h2> <p class="package-sub"> 고객 계정으로 직접 플레이하며 기사와 함께 진행하는 동행형 패키지입니다. 화면공유, 피드백, 구간별 맞춤 운영을 원하는 경우에 적합합니다. </p> </div> <div class="package-summary"> <div class="summary-box"> <strong>방식</strong> <span>함께 진행</span> </div> <div class="summary-box"> <strong>추천 대상</strong> <span class="gold">피드백 희망</span> </div> <div class="summary-box"> <strong>가격</strong> <span>상담 후 확정</span> </div> <div class="summary-box"> <strong>진행</strong> <span>예약제 가능</span> </div> </div> </header> <section class="package-body duo-layout"> <div class="duo-panel"> <div class="duo-feature"> <h3>듀오제 구성</h3> <ul> <li>기사와 함께 큐를 잡고 실시간으로 구간을 진행합니다.</li> <li>포지션, 요원, 맵 숙련도에 맞춰 진행 방식을 조율합니다.</li> <li>화면공유가 가능한 기사와 매칭 시 플레이 피드백을 받을 수 있습니다.</li> <li>단순 승리 목적뿐 아니라 실력 향상 목적의 진행도 가능합니다.</li> <li>고티어 구간은 기사 스케줄에 따라 예약제로 운영됩니다.</li> </ul> </div> <div class="duo-quote"> <div class="quote-box"> <strong>Recommended</strong> <span>승당제 기준 + 듀오 옵션</span> <p>현재 티어, 목표 티어, 시간대, 화면공유 여부에 따라 견적이 달라집니다.</p> </div> <div class="quote-box"> <strong>Premium Duo</strong> <span>강의형 진행 가능</span> <p>고티어 기사와 함께 플레이하면서 운영, 교전, 요원 선택까지 피드백 받을 수 있습니다.</p> </div> <div class="quote-box"> <strong>Contact</strong> <span>상담 후 가격 확정</span> <p>정확한 금액은 가격표 탭에서 확인하고, 이 영역은 패키지 선택 유도용으로 쓰면 됩니다.</p> </div> </div> </div> </section> <div class="card-bottom"> <div class="service-chips"> <span class="service-chip">실시간 동행</span> <span class="service-chip">피드백 가능</span> <span class="service-chip">예약제</span> <span class="service-chip">화면공유</span> </div> <button class="apply-button">상담하기</button> </div> <div class="watermark">DUO</div> </article> `; } const packages = [ { index: 0, hud: "PER-WIN", chip: "승당제 패키지", name: "승당제", desc: "2승 1패 = 1승 기준으로 계산되는 단기형 패키지입니다. 필요한 구간만 빠르게 진행하고 싶을 때 적합합니다.", summary: [ { label: "기준", value: "2승 1패 = 1승" }, { label: "저티어 시작", value: "3,000원", gold: true }, { label: "고티어 시작", value: "14,000원", gold: true }, { label: "레디언트", value: "문의" } ], leftTitle: "저티어 구간", leftSub: "아이언부터 다이아까지", leftRows: winLow, rightTitle: "고티어 구간", rightSub: "초월자부터 레디언트까지", rightRows: winHigh, chips: ["단기 진행", "1승 기준", "빠른 견적"], mark: "WIN" }, { index: 1, hud: "PROMOTION", chip: "승급제 패키지", name: "승급제", desc: "기준 MMR 슬롯 20점 기준, 한 티어 승급 단위로 진행되는 패키지입니다. 목표 티어까지 안정적으로 올리고 싶을 때 적합합니다.", summary: [ { label: "기준", value: "한 티어 승급" }, { label: "저티어 시작", value: "9,000원", gold: true }, { label: "고티어 시작", value: "42,000원", gold: true }, { label: "레디언트", value: "문의" } ], leftTitle: "저티어 구간", leftSub: "아이언부터 다이아까지", leftRows: upLow, rightTitle: "고티어 구간", rightSub: "초월자부터 레디언트까지", rightRows: upHigh, chips: ["목표 티어", "승급 단위", "안정 진행"], mark: "UP" } ]; carousel.innerHTML = packages.map(packageTemplate).join("") + duoTemplate(); const cards = [...document.querySelectorAll(".package-card")]; const imageUrls = [ ...new Set( [...winLow, ...winHigh, ...upLow, ...upHigh].map(row => rankIcon(row.tier)) ) ]; imageUrls.forEach(src => { const img = new Image(); img.src = src; }); const STATE = { rotation: 0, target: null, autoDegreesPerSecond: 7.5, radius: 690, isDragging: false, startX: 0, startRotation: 0, lastInteract: performance.now(), activeIndex: 0, lastTime: performance.now() }; const labels = ["PER-WIN", "PROMOTION", "DUO"]; function normalizeAngle(deg) { return ((deg % 360) + 360) % 360; } function getActiveIndex(rotation) { const normalized = normalizeAngle(-rotation); return Math.round(normalized / 120) % 3; } function closestTargetForIndex(index, fromRotation) { const base = -index * 120; const k = Math.round((fromRotation - base) / 360); return base + k * 360; } function goTo(index) { STATE.target = closestTargetForIndex(index, STATE.rotation); STATE.lastInteract = performance.now(); } function updateCardTransforms() { cards.forEach((card, index) => { const cardAngle = index * 120 + STATE.rotation; const rad = cardAngle * Math.PI / 180; const front = Math.cos(rad); const visible = Math.max(front, 0); const side = Math.abs(Math.sin(rad)); const opacity = 0.12 + visible * 0.88; const scale = 0.86 + visible * 0.12; const lift = visible * 42; const dim = 0.54 + visible * 0.46; card.style.transform = ` translate3d(-50%, -50%, 0) rotateY(${cardAngle}deg) translateZ(${STATE.radius + lift}px) scale(${scale}) `; card.style.opacity = opacity; card.style.pointerEvents = front > 0.78 ? "auto" : "none"; card.style.setProperty("--dim", dim); if (front > 0.78) { card.classList.add("is-active"); } else { card.classList.remove("is-active"); } }); const activeIndex = getActiveIndex(STATE.rotation); if (activeIndex !== STATE.activeIndex) { STATE.activeIndex = activeIndex; dots.forEach((dot, index) => { dot.classList.toggle("is-active", index === activeIndex); }); activeHud.textContent = labels[activeIndex]; } } function render(now) { const delta = Math.min((now - STATE.lastTime) / 1000, 0.033); STATE.lastTime = now; const idle = now - STATE.lastInteract; if (!STATE.isDragging && STATE.target === null && idle > 1400) { STATE.rotation -= STATE.autoDegreesPerSecond * delta; } if (STATE.target !== null && !STATE.isDragging) { const diff = STATE.target - STATE.rotation; const ease = 1 - Math.pow(0.0008, delta); STATE.rotation += diff * ease; if (Math.abs(diff) < 0.03) { STATE.rotation = STATE.target; STATE.target = null; } } updateCardTransforms(); requestAnimationFrame(render); } function onPointerDown(event) { if (event.target.closest('.price-calculator')) return; STATE.isDragging = true; STATE.target = null; STATE.startX = event.clientX; STATE.startRotation = STATE.rotation; STATE.lastInteract = performance.now(); document.body.classList.add("dragging"); scene.setPointerCapture?.(event.pointerId); } function onPointerMove(event) { if (!STATE.isDragging) return; const diffX = event.clientX - STATE.startX; STATE.rotation = STATE.startRotation + diffX * 0.28; STATE.lastInteract = performance.now(); } function onPointerUp(event) { if (!STATE.isDragging) return; STATE.isDragging = false; STATE.lastInteract = performance.now(); document.body.classList.remove("dragging"); const active = getActiveIndex(STATE.rotation); goTo(active); scene.releasePointerCapture?.(event.pointerId); } scene.addEventListener("pointerdown", onPointerDown); scene.addEventListener("pointermove", onPointerMove); scene.addEventListener("pointerup", onPointerUp); scene.addEventListener("pointercancel", onPointerUp); scene.addEventListener("mouseleave", onPointerUp); dots.forEach(dot => { dot.addEventListener("click", () => { goTo(Number(dot.dataset.go)); }); }); updateCardTransforms(); requestAnimationFrame(render); 
+  /* ===== 독립 계산기 JS: 기존 3D 카드 JS는 건드리지 않음 ===== */
+  const CALC_WIN_ROWS = [
+    { tier: 5,  name: "IRON 아이언", price: 3000 },
+    { tier: 8,  name: "BRONZE 브론즈", price: 4000 },
+    { tier: 11, name: "SILVER 실버", price: 5000 },
+    { tier: 14, name: "GOLD 골드", price: 6000 },
+    { tier: 17, name: "PLATINUM 플래티넘", price: 8000 },
+    { tier: 20, name: "DIAMOND 다이아", price: 10000 },
+    { tier: 21, name: "ASCENDANT 초월자 1", price: 14000 },
+    { tier: 22, name: "ASCENDANT 초월자 2", price: 16000 },
+    { tier: 23, name: "ASCENDANT 초월자 3", price: 18000 },
+    { tier: 24, name: "IMMORTAL 불멸 1", price: 25000 },
+    { tier: 25, name: "IMMORTAL 불멸 2", price: 30000 },
+    { tier: 26, name: "IMMORTAL 불멸 3", price: 35000 },
+    { tier: 27, name: "RADIANT 레디언트", price: null, ask: true }
+  ];
+
+  const CALC_UP_ROWS = [
+    { tier: 5,  name: "IRON 아이언", price: 9000 },
+    { tier: 8,  name: "BRONZE 브론즈", price: 12000 },
+    { tier: 11, name: "SILVER 실버", price: 15000 },
+    { tier: 14, name: "GOLD 골드", price: 18000 },
+    { tier: 17, name: "PLATINUM 플래티넘", price: 24000 },
+    { tier: 20, name: "DIAMOND 다이아", price: 30000 },
+    { tier: 21, name: "ASCENDANT 초월자 1", price: 42000 },
+    { tier: 22, name: "ASCENDANT 초월자 2", price: 48000 },
+    { tier: 23, name: "ASCENDANT 초월자 3", price: 54000 },
+    { tier: 24, name: "IMMORTAL 불멸 1", price: 75000 },
+    { tier: 25, name: "IMMORTAL 불멸 2", price: 85000 },
+    { tier: 26, name: "IMMORTAL 불멸 3", price: 95000 },
+    { tier: 27, name: "RADIANT 레디언트", price: null, ask: true }
+  ];
+
+  const calcTabs = [...document.querySelectorAll(".calc-tab")];
+  const fromTier = document.getElementById("fromTier");
+  const toTier = document.getElementById("toTier");
+  const fromTierIcon = document.getElementById("fromTierIcon");
+  const toTierIcon = document.getElementById("toTierIcon");
+  const fromTierName = document.getElementById("fromTierName");
+  const toTierName = document.getElementById("toTierName");
+  const calcTotal = document.getElementById("calcTotal");
+  const calcSub = document.getElementById("calcSub");
+  const miniMode = document.getElementById("miniMode");
+  const miniRule = document.getElementById("miniRule");
+  const miniStatus = document.getElementById("miniStatus");
+
+  let calcType = "win";
+
+  function formatWon(n) {
+    return `${n.toLocaleString("ko-KR")}원`;
+  }
+
+  function optionTemplate(row, index) {
+    return `<option value="${index}">${row.name}</option>`;
+  }
+
+  fromTier.innerHTML = CALC_UP_ROWS.slice(0, -1).map(optionTemplate).join("");
+  toTier.innerHTML = CALC_UP_ROWS.map(optionTemplate).join("");
+  fromTier.value = "0";
+  toTier.value = "1";
+
+  function syncGoalMinimum() {
+    const from = Number(fromTier.value);
+    if (Number(toTier.value) <= from) {
+      toTier.value = String(from + 1);
+    }
+  }
+
+  function updateTierPreview() {
+    const from = CALC_WIN_ROWS[Number(fromTier.value)];
+    const to = CALC_WIN_ROWS[Number(toTier.value)];
+
+    fromTierIcon.src = rankIcon(from.tier);
+    fromTierIcon.alt = from.name;
+    fromTierName.textContent = from.name;
+
+    toTierIcon.src = rankIcon(to.tier);
+    toTierIcon.alt = to.name;
+    toTierName.textContent = to.name;
+  }
+
+  function setCalcType(type) {
+    calcType = type === "up" ? "up" : "win";
+    calcTabs.forEach((tab) => tab.classList.toggle("is-active", tab.dataset.calcType === calcType));
+    updateCalculator();
+  }
+
+  function updateCalculator() {
+    syncGoalMinimum();
+    updateTierPreview();
+
+    const from = Number(fromTier.value);
+    const to = Number(toTier.value);
+    const rows = calcType === "win" ? CALC_WIN_ROWS : CALC_UP_ROWS;
+
+    calcTotal.classList.remove("ask");
+
+    if (to <= from) {
+      calcTotal.textContent = "목표 확인";
+      calcTotal.classList.add("ask");
+      calcSub.textContent = "목표 티어는 현재 티어보다 높게 선택해야 합니다.";
+      miniStatus.textContent = "확인 필요";
+      return;
+    }
+
+    if (rows[to]?.tier === 27) {
+      calcTotal.textContent = "상담 필요";
+      calcTotal.classList.add("ask");
+      calcSub.textContent = "레디언트 포함 구간은 정확한 진행 방식에 따라 별도 상담이 필요합니다.";
+      miniMode.textContent = calcType === "win" ? "승당제" : "승급제";
+      miniRule.textContent = calcType === "win" ? "단계별 3승 기준" : "티어 승급 합산";
+      miniStatus.textContent = "문의";
+      return;
+    }
+
+    if (calcType === "win") {
+      const selected = rows.slice(from, to);
+      const total = selected.reduce((sum, row) => sum + row.price * 3, 0);
+
+      calcTotal.textContent = formatWon(total);
+      calcSub.textContent = `${rows[from].name} → ${rows[to].name} 기준, 각 단계당 3승으로 계산한 승당제 예상 금액입니다.`;
+      miniMode.textContent = "승당제";
+      miniRule.textContent = "단계별 3승 기준";
+      miniStatus.textContent = "계산 완료";
+      return;
+    }
+
+    const selected = rows.slice(from, to);
+    const total = selected.reduce((sum, row) => sum + row.price, 0);
+
+    calcTotal.textContent = formatWon(total);
+    calcSub.textContent = `${rows[from].name} → ${rows[to].name} 기준 예상 승급 금액입니다. 실제 MMR 상태에 따라 달라질 수 있습니다.`;
+    miniMode.textContent = "승급제";
+    miniRule.textContent = "티어 승급 합산";
+    miniStatus.textContent = "계산 완료";
+  }
+
+  calcTabs.forEach((tab) => tab.addEventListener("click", () => setCalcType(tab.dataset.calcType)));
+  fromTier.addEventListener("change", updateCalculator);
+  toTier.addEventListener("change", updateCalculator);
+
+  document.querySelector(".price-calculator")?.addEventListener("pointerdown", (event) => {
+    event.stopPropagation();
+  });
+
+  setCalcType("win");
+
+
+  function openConsult() {
+    window.open("https://open.kakao.com/o/sJdWuGxi", "_blank");
+  }
+
+  document.querySelectorAll(".apply-button, .calc-cta").forEach((button) => {
+    button.addEventListener("click", openConsult);
+  });
+
+</script> </body> </html>
