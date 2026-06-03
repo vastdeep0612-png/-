@@ -53,10 +53,11 @@
         body {
             min-height: 100vh;
             color: #f8fafc;
+            background-attachment: fixed;
             background:
-                linear-gradient(180deg, rgba(3, 4, 10, 0.78), #03040a 42%, #03040a 100%),
-                radial-gradient(circle at 18% 12%, rgba(255, 42, 104, 0.24), transparent 32%),
-                radial-gradient(circle at 80% 0%, rgba(255, 42, 104, 0.16), transparent 28%),
+                linear-gradient(180deg, rgba(3, 4, 10, 0.84), rgba(3, 4, 10, 0.72) 34%, #03040a 100%),
+                linear-gradient(90deg, rgba(3, 4, 10, 0.92), rgba(3, 4, 10, 0.48) 48%, rgba(3, 4, 10, 0.76)),
+                url('assets/baekhyeon-price-bg.jpg') center top / cover no-repeat fixed,
                 #03040a;
         }
 
@@ -315,6 +316,45 @@
             line-height: 1.7;
         }
 
+        .tier-groups {
+            display: grid;
+            gap: 18px;
+            padding: 22px;
+        }
+
+        .tier-group {
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            background: rgba(5, 6, 12, 0.56);
+        }
+
+        .tier-group-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            background:
+                linear-gradient(90deg, rgba(255, 31, 103, 0.16), rgba(255, 255, 255, 0.02)),
+                rgba(8, 9, 18, 0.72);
+        }
+
+        .tier-group-title {
+            color: #ffffff;
+            font-family: 'NanumSquare', 'Paperlogy', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .tier-group-range {
+            color: #9aa7bd;
+            font-size: 13px;
+            text-align: right;
+            word-break: keep-all;
+        }
+
         .price-table {
             width: 100%;
             border-collapse: collapse;
@@ -446,6 +486,19 @@
                 display: block;
             }
 
+            .tier-groups {
+                padding: 16px;
+            }
+
+            .tier-group-head {
+                display: block;
+            }
+
+            .tier-group-range {
+                margin-top: 6px;
+                text-align: left;
+            }
+
             .price-table th,
             .price-table td {
                 padding: 16px 18px;
@@ -518,29 +571,53 @@
                     <p>2승 1패 = 1승 기준으로 안내됩니다.</p>
                 </div>
             </div>
-            <table class="price-table">
-                <thead>
-                    <tr>
-                        <th>대리 티어구간</th>
-                        <th style="text-align: right;">단가 (1승당)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td class="tier-name">IRON 아이언</td><td class="tier-price">3,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">BRONZE 브론즈</td><td class="tier-price">4,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">SILVER 실버</td><td class="tier-price">5,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">GOLD 골드</td><td class="tier-price">6,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">PLATINUM 플래티넘</td><td class="tier-price">8,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">DIAMOND 다이아</td><td class="tier-price">10,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">ASCENDANT 초월자 1</td><td class="tier-price">14,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">ASCENDANT 초월자 2</td><td class="tier-price">16,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">ASCENDANT 초월자 3</td><td class="tier-price">18,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">IMMORTAL 불멸 1</td><td class="tier-price">25,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">IMMORTAL 불멸 2</td><td class="tier-price">30,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">IMMORTAL 불멸 3</td><td class="tier-price">35,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">RADIANT 레디언트</td><td class="tier-price" style="color: #a5b4fc;">문의 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                </tbody>
-            </table>
+            <div class="tier-groups">
+                <div class="tier-group">
+                    <div class="tier-group-head">
+                        <div class="tier-group-title">저티어 구간</div>
+                        <div class="tier-group-range">아이언부터 다이아3까지</div>
+                    </div>
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>대리 티어구간</th>
+                                <th style="text-align: right;">단가 (1승당)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="tier-name">IRON 아이언</td><td class="tier-price">3,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">BRONZE 브론즈</td><td class="tier-price">4,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">SILVER 실버</td><td class="tier-price">5,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">GOLD 골드</td><td class="tier-price">6,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">PLATINUM 플래티넘</td><td class="tier-price">8,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">DIAMOND 다이아</td><td class="tier-price">10,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tier-group">
+                    <div class="tier-group-head">
+                        <div class="tier-group-title">고티어 구간</div>
+                        <div class="tier-group-range">초월자1부터 레디언트까지</div>
+                    </div>
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>대리 티어구간</th>
+                                <th style="text-align: right;">단가 (1승당)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="tier-name">ASCENDANT 초월자 1</td><td class="tier-price">14,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">ASCENDANT 초월자 2</td><td class="tier-price">16,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">ASCENDANT 초월자 3</td><td class="tier-price">18,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">IMMORTAL 불멸 1</td><td class="tier-price">25,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">IMMORTAL 불멸 2</td><td class="tier-price">30,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">IMMORTAL 불멸 3</td><td class="tier-price">35,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">RADIANT 레디언트</td><td class="tier-price" style="color: #a5b4fc;">문의 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
 
         <section class="price-panel" id="panel-promotion" data-panel="promotion">
@@ -550,29 +627,53 @@
                     <p>기본 MMR 승당 20점 기준, 한 티어 승급 단가입니다.</p>
                 </div>
             </div>
-            <table class="price-table">
-                <thead>
-                    <tr>
-                        <th>대리 티어구간</th>
-                        <th style="text-align: right;">단가</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td class="tier-name">IRON 아이언</td><td class="tier-price">9,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">BRONZE 브론즈</td><td class="tier-price">12,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">SILVER 실버</td><td class="tier-price">15,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">GOLD 골드</td><td class="tier-price">18,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">PLATINUM 플래티넘</td><td class="tier-price">24,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">DIAMOND 다이아</td><td class="tier-price">30,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">ASCENDANT 초월자 1</td><td class="tier-price">42,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">ASCENDANT 초월자 2</td><td class="tier-price">48,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">ASCENDANT 초월자 3</td><td class="tier-price">54,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">IMMORTAL 불멸 1</td><td class="tier-price">75,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">IMMORTAL 불멸 2</td><td class="tier-price">85,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">IMMORTAL 불멸 3</td><td class="tier-price">95,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                    <tr><td class="tier-name">RADIANT 레디언트</td><td class="tier-price" style="color: #a5b4fc;">문의 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
-                </tbody>
-            </table>
+            <div class="tier-groups">
+                <div class="tier-group">
+                    <div class="tier-group-head">
+                        <div class="tier-group-title">저티어 구간</div>
+                        <div class="tier-group-range">아이언부터 다이아3까지</div>
+                    </div>
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>대리 티어구간</th>
+                                <th style="text-align: right;">단가</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="tier-name">IRON 아이언</td><td class="tier-price">9,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">BRONZE 브론즈</td><td class="tier-price">12,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">SILVER 실버</td><td class="tier-price">15,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">GOLD 골드</td><td class="tier-price">18,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">PLATINUM 플래티넘</td><td class="tier-price">24,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">DIAMOND 다이아</td><td class="tier-price">30,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tier-group">
+                    <div class="tier-group-head">
+                        <div class="tier-group-title">고티어 구간</div>
+                        <div class="tier-group-range">초월자1부터 레디언트까지</div>
+                    </div>
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>대리 티어구간</th>
+                                <th style="text-align: right;">단가</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="tier-name">ASCENDANT 초월자 1</td><td class="tier-price">42,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">ASCENDANT 초월자 2</td><td class="tier-price">48,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">ASCENDANT 초월자 3</td><td class="tier-price">54,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">IMMORTAL 불멸 1</td><td class="tier-price">75,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">IMMORTAL 불멸 2</td><td class="tier-price">85,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">IMMORTAL 불멸 3</td><td class="tier-price">95,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                            <tr><td class="tier-name">RADIANT 레디언트</td><td class="tier-price" style="color: #a5b4fc;">문의 <button class="btn-table-order" onclick="openChat()">신청하기</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
 
         <section class="price-panel" id="panel-duo" data-panel="duo">
