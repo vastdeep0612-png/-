@@ -139,6 +139,8 @@
         }
 
         .logo {
+            color: inherit;
+            text-decoration: none;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -191,7 +193,8 @@
             transition: color 0.2s;
         }
 
-        nav ul li a:hover {
+        nav ul li a:hover,
+        nav ul li a.active {
             color: #ffffff;
         }
 
@@ -2491,19 +2494,27 @@
                 font-size: 12px;
             }
         }
+
+
+        /* 최종 링크 정리: 고정 헤더에 앵커가 가려지지 않게 보정 */
+        #home,
+        #status,
+        #faq {
+            scroll-margin-top: 92px;
+        }
     </style>
 </head>
 <body>
 
     <!-- 1. 상단 네비게이션 헤더 바 -->
     <header>
-        <div class="logo">
+        <a class="logo" href="index.html" aria-label="홈으로 이동">
             <div class="logo-sub">발로란트 신속대리 백현팀</div>
             <div class="logo-main">VLRT <span>1oohyun</span></div>
-        </div>
+        </a>
         <nav>
             <ul>
-                <li><a href="#">공지사항</a></li>
+                <li><a href="index.html#home" class="active">공지사항</a></li>
                 <li class="nav-price-menu">
                     <a href="price.html" class="nav-price-trigger">가격표</a>
                     <div class="price-dropdown" aria-label="가격표 세부 메뉴">
@@ -2516,12 +2527,12 @@
                 <li class="nav-price-menu nav-driver-menu">
                     <a href="lineup.html" class="nav-price-trigger nav-driver-trigger">기사 라인업</a>
                     <div class="price-dropdown driver-dropdown" aria-label="기사 라인업 세부 메뉴">
-                        <a href="lineup.html#low">저티어</a>
-                        <a href="lineup.html#high">고티어</a>
+                        <a href="lineup.html#low">Low Ranked</a>
+                        <a href="lineup.html#high">High Ranked</a>
                     </div>
                 </li>
-                <li><a href="#">작업현황</a></li>
-                <li><a href="#faq">자주 묻는 질문</a></li>
+                <li><a href="index.html#status">작업현황</a></li>
+                <li><a href="index.html#faq">자주 묻는 질문</a></li>
             </ul>
         </nav>
         <div class="btn-customer" onclick="openChat()">고객센터</div>
@@ -2608,7 +2619,7 @@
         </section>
 
         <!-- 5. 백현팀 이용 TIP -->
-        <section class="section-tips" aria-label="백현팀 이용 TIP">
+        <section class="section-tips" id="status" aria-label="백현팀 이용 TIP">
             <div class="tips-heading">
                 <h2>백현팀 이용 TIP</h2>
                 <p>상담 전 몇 가지만 확인하시면 더 빠르고 정확하게 안내받을 수 있습니다.</p>
