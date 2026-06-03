@@ -1137,207 +1137,6 @@
         .price-line-art span:nth-child(2) { top: 52px; right: 30px; }
         .price-line-art span:nth-child(3) { top: 74px; }
 
-        /* 3. 가격표 섹션 스타일 */
-        .section-price {
-            display: none;
-            padding: 100px 0 40px 0;
-            text-align: center;
-            scroll-margin-top: 86px;
-        }
-
-        .section-price.price-open {
-            display: block;
-        }
-
-        .section-price h2 {
-            font-size: 42px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 40px;
-        }
-
-        .price-container {
-            display: block;
-            max-width: 980px;
-            margin-top: 20px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .price-box {
-            display: none;
-            background-color: #0b0b14;
-            border: 1px solid #1e1e30;
-            border-radius: 16px;
-            padding: 40px 30px;
-            scroll-margin-top: 96px;
-        }
-
-        .price-box.active {
-            display: block;
-        }
-
-        .price-box h3 {
-            font-size: 28px;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 8px;
-        }
-
-        .price-desc {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 800;
-            background-color: #1e1b4b;
-            color: #a5b4fc;
-            padding: 4px 12px;
-            border-radius: 4px;
-            margin-bottom: 30px;
-        }
-
-        .price-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .price-table th {
-            font-size: 14px;
-            font-weight: 800;
-            color: #64748b;
-            padding: 12px 8px;
-            border-bottom: 1px solid #1e1e30;
-            text-align: left;
-        }
-
-        .price-table th:last-child {
-            text-align: right;
-        }
-
-        .price-table td {
-            font-size: 15px;
-            font-weight: 800;
-            padding: 14px 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            text-align: left;
-        }
-
-        .price-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .tier-name {
-            color: #e2e8f0;
-        }
-
-        .tier-price {
-            color: #ff2a5f;
-            text-align: right;
-            font-weight: 800;
-        }
-
-        .btn-table-order {
-            background-color: #161624;
-            color: #cbd5e1;
-            border: 1px solid #27273a;
-            padding: 6px 14px;
-            font-size: 12px;
-            font-weight: 800;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-left: 15px;
-        }
-
-        .btn-table-order:hover {
-            background-color: #ff2a5f;
-            color: #ffffff;
-            border-color: #ff2a5f;
-        }
-
-        .price-guide-grid {
-            display: block;
-            max-width: 980px;
-            margin-top: 28px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .price-guide-card {
-            display: none;
-            min-height: 168px;
-            padding: 28px;
-            text-align: left;
-            border: 1px solid rgba(255, 42, 95, 0.22);
-            border-radius: 14px;
-            background:
-                radial-gradient(circle at top right, rgba(255, 42, 95, 0.18), transparent 38%),
-                linear-gradient(145deg, rgba(12, 12, 22, 0.96), rgba(7, 7, 14, 0.98));
-            scroll-margin-top: 96px;
-        }
-
-        .price-guide-card.active {
-            display: block;
-        }
-
-        .price-guide-card h3 {
-            margin-bottom: 10px;
-            color: #ffffff;
-            font-size: 24px;
-            font-weight: 800;
-            line-height: 1.32;
-        }
-
-        .price-guide-card p {
-            color: #cbd5e1;
-            font-size: 15px;
-            font-weight: 800;
-            line-height: 1.62;
-            word-break: keep-all;
-        }
-
-        .terms-card {
-            padding: 34px;
-        }
-
-        .terms-lead {
-            margin-bottom: 26px;
-            color: #e5e7eb;
-            font-size: 15px;
-            font-weight: 800;
-            line-height: 1.75;
-            word-break: keep-all;
-        }
-
-        .terms-divider {
-            height: 1px;
-            margin: 24px 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 42, 95, 0.58), transparent);
-        }
-
-        .terms-block {
-            margin-top: 24px;
-        }
-
-        .terms-block h4 {
-            margin-bottom: 12px;
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 800;
-            line-height: 1.45;
-            word-break: keep-all;
-        }
-
-        .terms-block ul {
-            display: grid;
-            gap: 9px;
-            margin-left: 18px;
-            color: #cbd5e1;
-            font-size: 14px;
-            font-weight: 800;
-            line-height: 1.68;
-            word-break: keep-all;
-        }
-
         /* 4. 기사 라인업 섹션 */
         .section-drivers {
             display: none;
@@ -1881,7 +1680,6 @@
             .tips-heading h2,
             .section-services h2,
             .section-reviews h2,
-            .section-price h2,
             .section-drivers h2 { font-size: 30px; }
             .section-tips { padding: 46px 0 38px; }
             .tips-grid { grid-template-columns: 1fr; }
@@ -1928,12 +1726,12 @@
             <ul>
                 <li><a href="#">공지사항</a></li>
                 <li class="nav-price-menu">
-                    <a href="#price" class="nav-price-trigger" onclick="showPricePanel('per-win'); return false;">가격표</a>
+                    <a href="price.html" class="nav-price-trigger">가격표</a>
                     <div class="price-dropdown" aria-label="가격표 세부 메뉴">
-                        <a href="#price-per-win" data-price-panel="per-win" onclick="showPricePanel('per-win'); return false;">승당제</a>
-                        <a href="#price-promotion" data-price-panel="promotion" onclick="showPricePanel('promotion'); return false;">승급제</a>
-                        <a href="#duo-price" data-price-panel="duo" onclick="showPricePanel('duo'); return false;">듀오제</a>
-                        <a href="#boost-terms" data-price-panel="terms" onclick="showPricePanel('terms'); return false;">대리 약관</a>
+                        <a href="price.html#per-win">승당제</a>
+                        <a href="price.html#promotion">승급제</a>
+                        <a href="price.html#duo">듀오제</a>
+                        <a href="terms.html">대리 약관</a>
                     </div>
                 </li>
                 <li class="nav-price-menu nav-driver-menu">
@@ -2104,203 +1902,6 @@
                         <div class="review-stars">★★★★★</div>
                         <p>듀오하면서 피드백도 받아서 도움이 많이 됐습니다.</p>
                         <div class="review-name">박○○</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. 가격표 섹션 (수정 완료) -->
-        <section class="section-price" id="price">
-            <h2>발로란트 대리 가격표</h2>
-
-            <div class="price-container">
-                <!-- 승당제 카드 (image_5822fc.png 기준 가격 100% 동일화) -->
-                <div class="price-box price-panel" id="price-per-win" data-panel="per-win">
-                    <h3>발로란트 대리 승당제</h3>
-                    <span class="price-desc">2승 1패 = 1승</span>
-
-                    <table class="price-table">
-                        <thead>
-                            <tr>
-                                <th>대리 티어구간</th>
-                                <th style="text-align: right;">단가 (1승당)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="tier-name">IRON 아이언</td>
-                                <td class="tier-price">3,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">BRONZE 브론즈</td>
-                                <td class="tier-price">4,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">SILVER 실버</td>
-                                <td class="tier-price">5,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">GOLD 골드</td>
-                                <td class="tier-price">6,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">PLATINUM 플래티넘</td>
-                                <td class="tier-price">8,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">DIAMOND 다이아</td>
-                                <td class="tier-price">10,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">ASCENDANT 초월자 1</td>
-                                <td class="tier-price">14,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">ASCENDANT 초월자 2</td>
-                                <td class="tier-price">16,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">ASCENDANT 초월자 3</td>
-                                <td class="tier-price">18,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">IMMORTAL 불멸 1</td>
-                                <td class="tier-price">25,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">IMMORTAL 불멸 2</td>
-                                <td class="tier-price">30,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">IMMORTAL 불멸 3</td>
-                                <td class="tier-price">35,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">RADIANT 레디언트</td>
-                                <td class="tier-price" style="color: #a5b4fc;">문의 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- 승급제 카드 (image_5822c3.png 기준 가격 100% 동일화) -->
-                <div class="price-box price-panel" id="price-promotion" data-panel="promotion">
-                    <h3>발로란트 대리 승급제</h3>
-                    <span class="price-desc">기본 MMR 승당 20점 기준 / 한티어 승급</span>
-
-                    <table class="price-table">
-                        <thead>
-                            <tr>
-                                <th>대리 티어구간</th>
-                                <th style="text-align: right;">단가</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="tier-name">IRON 아이언</td>
-                                <td class="tier-price">9,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">BRONZE 브론즈</td>
-                                <td class="tier-price">12,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">SILVER 실버</td>
-                                <td class="tier-price">15,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">GOLD 골드</td>
-                                <td class="tier-price">18,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">PLATINUM 플래티넘</td>
-                                <td class="tier-price">24,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">DIAMOND 다이아</td>
-                                <td class="tier-price">30,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">ASCENDANT 초월자 1</td>
-                                <td class="tier-price">42,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">ASCENDANT 초월자 2</td>
-                                <td class="tier-price">48,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">ASCENDANT 초월자 3</td>
-                                <td class="tier-price">54,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">IMMORTAL 불멸 1</td>
-                                <td class="tier-price">75,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">IMMORTAL 불멸 2</td>
-                                <td class="tier-price">85,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">IMMORTAL 불멸 3</td>
-                                <td class="tier-price">95,000원 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                            <tr>
-                                <td class="tier-name">RADIANT 레디언트</td>
-                                <td class="tier-price" style="color: #a5b4fc;">문의 <button class="btn-table-order" onclick="openChat()">신청하기</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="price-guide-grid">
-                <div class="price-guide-card price-panel" id="duo-price" data-panel="duo">
-                    <h3>발로란트 듀오제</h3>
-                    <p>듀오는 현재 티어, 목표 티어, 진행 시간대에 따라 상담 후 안내됩니다. 같이 플레이하며 피드백과 티어 상승을 함께 진행합니다.</p>
-                </div>
-                <div class="price-guide-card terms-card price-panel" id="boost-terms" data-panel="terms">
-                    <h3>대리 신청 전 필독 / 법적 면책 동의서</h3>
-                    <p class="terms-lead">본 채널의 모든 작업은 신청자가 아래의 모든 면책 조항 및 규칙에 100% 서명 및 동의한 것으로 간주하며, 동의하지 않을 시 작업 진행이 절대 불가능합니다.</p>
-
-                    <div class="terms-divider"></div>
-
-                    <div class="terms-block">
-                        <h4>1. 영구정지 및 제재에 대한 전적인 면책</h4>
-                        <ul>
-                            <li>대리 작업은 게임사 약관상 제재 대상으로, 작업 방식과 무관하게 언제든 영구정지, 기간정지, 랭크회수 등의 조치가 취해질 수 있습니다.</li>
-                            <li>본 작업자는 오직 순수 실력 핸드 플레이로만 진행하며, 작업 도중 또는 완료 후 게임사의 시스템 검출, 타인 신고, IP 불일치 등으로 계정에 어떠한 제재 및 불이익이 발생하더라도 민·형사상의 보상, 배상, 대금 환불 책임을 일절 지지 않습니다.</li>
-                            <li>모든 정지 리스크는 의뢰인이 인지하고 전적으로 본인 부담, 즉 위험 인수 하에 신청하는 것입니다.</li>
-                        </ul>
-                    </div>
-
-                    <div class="terms-block">
-                        <h4>2. 소송 및 고소 제기 포기 조항</h4>
-                        <ul>
-                            <li>의뢰인은 대리 작업 결과 및 계정 불이익을 사유로 본 작업자에게 민·형사상 고소, 고발, 손해배상 청구, 소송을 절대 제기할 수 없습니다.</li>
-                            <li>이를 위반하여 의뢰인이 법적 조치를 취할 경우, 본 조항에 의거하여 의뢰인의 청구는 기각되며 이로 인해 발생하는 작업자의 법률 비용은 전액 의뢰인이 부담해야 합니다.</li>
-                        </ul>
-                    </div>
-
-                    <div class="terms-block">
-                        <h4>3. 중복 접속 및 의뢰인 과실 책임</h4>
-                        <ul>
-                            <li>작업 시간 중 의뢰인의 무단 중복 접속으로 계정 영구정지, 보호조치, 패배 처리가 발생하는 경우 모든 책임은 의뢰인에게 있으며 작업은 즉시 종료되고 대금 환불은 불가합니다.</li>
-                            <li>계정 정보 입력 오류, OTP 인증 지연 등 의뢰인의 과실로 발생하는 문제 역시 작업자가 책임지지 않습니다.</li>
-                        </ul>
-                    </div>
-
-                    <div class="terms-block">
-                        <h4>4. 환불 및 중도 취소 불가</h4>
-                        <ul>
-                            <li>선입금 확인 후 작업이 개시되며, 작업이 시작된 이후에는 의뢰인의 단순 변심으로 인한 환불 및 중도 취소가 절대 불가능합니다.</li>
-                        </ul>
-                    </div>
-
-                    <div class="terms-divider"></div>
-
-                    <div class="terms-block">
-                        <h4>신청 방법 및 확약 안내</h4>
-                        <p class="terms-lead">본 유의사항은 혹시 모를 분쟁 시 법적 증거 자료로 활용됩니다. 신청을 원하시는 분은 반드시 DM 또는 대화방에 본 내용을 숙지했다는 의미로 아래 문구를 정확히 타이핑하여 보내주셔야 접수가 완료됩니다.</p>
                     </div>
                 </div>
             </div>
@@ -2559,44 +2160,6 @@
             document.getElementById('popupLayer').style.display = 'none';
         }
 
-        const pricePanelHash = {
-            'per-win': '#price-per-win',
-            'promotion': '#price-promotion',
-            'duo': '#duo-price',
-            'terms': '#boost-terms'
-        };
-
-        const hashToPricePanel = {
-            '#price': 'per-win',
-            '#price-per-win': 'per-win',
-            '#price-promotion': 'promotion',
-            '#duo-price': 'duo',
-            '#boost-terms': 'terms'
-        };
-
-        function showPricePanel(panel, shouldScroll = true) {
-            const section = document.getElementById('price');
-            if (!section || !pricePanelHash[panel]) return;
-
-            section.classList.add('price-open');
-
-            document.querySelectorAll('.price-panel').forEach(item => {
-                item.classList.toggle('active', item.dataset.panel === panel);
-            });
-
-            document.querySelectorAll('[data-price-panel]').forEach(link => {
-                link.classList.toggle('active', link.dataset.pricePanel === panel);
-            });
-
-            if (window.location.hash !== pricePanelHash[panel]) {
-                history.replaceState(null, '', pricePanelHash[panel]);
-            }
-
-            if (shouldScroll) {
-                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
         function setDriverTier(tier) {
             document.querySelectorAll('.driver-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.tier === tier);
@@ -2628,11 +2191,6 @@
             }
         }
 
-        const initialPricePanel = hashToPricePanel[window.location.hash];
-        if (initialPricePanel) {
-            showPricePanel(initialPricePanel, false);
-        }
-
         const initialDriverTier = window.location.hash === '#drivers-high' ? 'high' : (window.location.hash === '#drivers-low' || window.location.hash === '#drivers' ? 'low' : null);
         if (initialDriverTier) {
             showDriverLineup(initialDriverTier, false);
@@ -2641,11 +2199,6 @@
         }
 
         window.addEventListener('hashchange', () => {
-            const pricePanel = hashToPricePanel[window.location.hash];
-            if (pricePanel) {
-                showPricePanel(pricePanel, false);
-            }
-
             if (window.location.hash === '#drivers-low') {
                 showDriverLineup('low', false);
             }

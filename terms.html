@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>백현팀 대리 약관</title>
+    <meta name="description" content="백현팀 발로란트 대리 신청 전 확인해야 할 진행 약관과 유의사항입니다.">
+    <link rel="canonical" href="https://vastdeep0612-png.github.io/-/terms.html">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <style>
+        @font-face {
+            font-family: 'Paperlogy';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+            font-weight: 800;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Waguri';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403@1.0/WAGURITTF.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Paperlogy', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            background: #03040a;
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #f8fafc;
+            background:
+                linear-gradient(180deg, rgba(3, 4, 10, 0.78), #03040a 45%, #03040a),
+                radial-gradient(circle at 20% 10%, rgba(255, 42, 104, 0.22), transparent 34%),
+                radial-gradient(circle at 82% 16%, rgba(255, 42, 104, 0.16), transparent 28%),
+                #03040a;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            height: 82px;
+            padding: 0 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(3, 4, 10, 0.86);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+        }
+
+        .logo-sub {
+            margin-bottom: 5px;
+            font-size: 10px;
+            color: #8d97ad;
+            letter-spacing: 0;
+        }
+
+        .logo-main {
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: 0;
+            color: #fff;
+        }
+
+        .logo-main span {
+            font-family: inherit;
+            color: #ff1f67;
+        }
+
+        nav ul {
+            height: 70px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        nav li {
+            position: relative;
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            font-size: 15px;
+            color: #cbd5e1;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #fff;
+        }
+
+        .nav-price-trigger::after {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            margin-left: 8px;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(45deg) translateY(-3px);
+        }
+
+        .price-dropdown {
+            position: absolute;
+            top: calc(100% - 2px);
+            left: 50%;
+            width: 210px;
+            padding: 18px;
+            display: grid;
+            gap: 6px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, 10px);
+            border: 1px solid rgba(255, 31, 103, 0.44);
+            border-radius: 14px;
+            background: rgba(12, 8, 18, 0.96);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        }
+
+        .price-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 0;
+            right: 0;
+            height: 12px;
+        }
+
+        .nav-price-menu:hover .price-dropdown,
+        .nav-price-menu:focus-within .price-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+
+        .price-dropdown a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 38px;
+            padding: 0 6px;
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-size: 18px;
+            color: #f5f7fb;
+        }
+
+        .price-dropdown a::after {
+            content: '›';
+            color: #ff1f67;
+        }
+
+        .page-wrap {
+            width: min(1080px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 76px 0 96px;
+        }
+
+        .page-hero {
+            padding: 54px 0 34px;
+            text-align: center;
+        }
+
+        .page-kicker {
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+            padding: 0 14px;
+            border: 1px solid rgba(255, 31, 103, 0.45);
+            border-radius: 999px;
+            color: #ff4f87;
+            font-size: 13px;
+        }
+
+        h1 {
+            margin-top: 22px;
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-size: clamp(38px, 6vw, 68px);
+            letter-spacing: 0;
+        }
+
+        .page-hero p {
+            margin-top: 14px;
+            color: #aab3c4;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .terms-card {
+            padding: 42px;
+            border: 1px solid rgba(255, 31, 103, 0.34);
+            border-radius: 22px;
+            background:
+                linear-gradient(145deg, rgba(255, 31, 103, 0.13), rgba(255, 255, 255, 0.025) 34%, rgba(3, 4, 10, 0.92)),
+                rgba(9, 10, 19, 0.86);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.34);
+        }
+
+        .terms-card h2 {
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-size: 34px;
+            letter-spacing: 0;
+        }
+
+        .terms-lead {
+            margin-top: 18px;
+            color: #cbd5e1;
+            line-height: 1.9;
+        }
+
+        .terms-divider {
+            height: 1px;
+            margin: 34px 0;
+            background: linear-gradient(90deg, rgba(255, 31, 103, 0.72), rgba(255, 31, 103, 0.08));
+        }
+
+        .terms-block + .terms-block {
+            margin-top: 28px;
+        }
+
+        .terms-block h3 {
+            margin-bottom: 14px;
+            color: #ff2f71;
+            font-size: 21px;
+        }
+
+        .terms-block ul {
+            display: grid;
+            gap: 10px;
+            padding-left: 20px;
+            color: #d6dbe6;
+            line-height: 1.85;
+        }
+
+        .terms-block p {
+            color: #d6dbe6;
+            line-height: 1.85;
+        }
+
+        .terms-actions {
+            margin-top: 36px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            min-height: 48px;
+            padding: 0 22px;
+            border: 1px solid rgba(255, 31, 103, 0.66);
+            border-radius: 10px;
+            color: #fff;
+            background: #ff1f67;
+            cursor: pointer;
+            box-shadow: 0 16px 34px rgba(255, 31, 103, 0.24);
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.14);
+            box-shadow: none;
+        }
+
+        .floating-banner {
+            position: fixed;
+            right: 26px;
+            bottom: 24px;
+            z-index: 60;
+            padding: 14px 24px;
+            border-radius: 999px;
+            color: #111827;
+            background: #fff;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.36);
+            cursor: pointer;
+        }
+
+        @media (max-width: 860px) {
+            header {
+                height: auto;
+                min-height: 82px;
+                padding: 18px 20px;
+                gap: 18px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav ul {
+                height: auto;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+
+            nav li {
+                height: 42px;
+            }
+
+            .terms-card {
+                padding: 28px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a class="logo" href="index.html">
+            <div class="logo-sub">발로란트 신속대리 백현팀</div>
+            <div class="logo-main">VLRT <span>1oohyun</span></div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">공지사항</a></li>
+                <li class="nav-price-menu">
+                    <a href="price.html" class="nav-price-trigger">가격표</a>
+                    <div class="price-dropdown" aria-label="가격표 세부 메뉴">
+                        <a href="price.html#per-win">승당제</a>
+                        <a href="price.html#promotion">승급제</a>
+                        <a href="price.html#duo">듀오제</a>
+                        <a href="terms.html">대리 약관</a>
+                    </div>
+                </li>
+                <li class="nav-price-menu">
+                    <a href="index.html#drivers-low" class="nav-price-trigger">기사 라인업</a>
+                    <div class="price-dropdown" aria-label="기사 라인업 세부 메뉴">
+                        <a href="index.html#drivers-low">저티어</a>
+                        <a href="index.html#drivers-high">고티어</a>
+                    </div>
+                </li>
+                <li><a href="index.html#faq">자주 묻는 질문</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="page-wrap">
+        <section class="page-hero">
+            <span class="page-kicker">TERMS</span>
+            <h1>대리 약관</h1>
+            <p>작업 신청 전에 확인해야 할 진행 기준과 유의사항입니다.</p>
+        </section>
+
+        <section class="terms-card">
+            <h2>대리 신청 전 필독 / 법적 면책 동의서</h2>
+            <p class="terms-lead">본 채널의 모든 작업은 신청자가 아래의 면책 조항 및 규칙을 확인한 뒤 진행하는 것을 기준으로 합니다. 동의하지 않을 시 작업 진행이 불가능합니다.</p>
+
+            <div class="terms-divider"></div>
+
+            <div class="terms-block">
+                <h3>1. 영구정지 및 제재에 대한 전적인 면책</h3>
+                <ul>
+                    <li>대리 작업은 게임사 약관상 제재 대상으로, 작업 방식과 무관하게 언제든 영구정지, 기간정지, 랭크회수 등의 조치가 취해질 수 있습니다.</li>
+                    <li>본 작업자는 오직 순수 실력 핸드 플레이로만 진행하며, 작업 도중 또는 완료 후 게임사의 시스템 검출, 타인 신고, IP 불일치 등으로 계정에 어떠한 제재 및 불이익이 발생하더라도 민·형사상의 보상, 배상, 대금 환불 책임을 일절 지지 않습니다.</li>
+                    <li>모든 정지 리스크는 의뢰인이 인지하고 전적으로 본인 부담, 즉 위험 인수 하에 신청하는 것입니다.</li>
+                </ul>
+            </div>
+
+            <div class="terms-block">
+                <h3>2. 소송 및 고소 제기 포기 조항</h3>
+                <ul>
+                    <li>의뢰인은 대리 작업 결과 및 계정 불이익을 사유로 본 작업자에게 민·형사상 고소, 고발, 손해배상 청구, 소송을 절대 제기할 수 없습니다.</li>
+                    <li>이를 위반하여 의뢰인이 법적 조치를 취할 경우, 본 조항에 의거하여 의뢰인의 청구는 기각되며 이로 인해 발생하는 작업자의 법률 비용은 전액 의뢰인이 부담해야 합니다.</li>
+                </ul>
+            </div>
+
+            <div class="terms-block">
+                <h3>3. 중복 접속 및 의뢰인 과실 책임</h3>
+                <ul>
+                    <li>작업 시간 중 의뢰인의 무단 중복 접속으로 계정 영구정지, 보호조치, 패배 처리가 발생하는 경우 모든 책임은 의뢰인에게 있으며 작업은 즉시 종료되고 대금 환불은 불가합니다.</li>
+                    <li>계정 정보 입력 오류, OTP 인증 지연 등 의뢰인의 과실로 발생하는 문제 역시 작업자가 책임지지 않습니다.</li>
+                </ul>
+            </div>
+
+            <div class="terms-block">
+                <h3>4. 환불 및 중도 취소 불가</h3>
+                <ul>
+                    <li>선입금 확인 후 작업이 개시되며, 작업이 시작된 이후에는 의뢰인의 단순 변심으로 인한 환불 및 중도 취소가 절대 불가능합니다.</li>
+                </ul>
+            </div>
+
+            <div class="terms-divider"></div>
+
+            <div class="terms-block">
+                <h3>신청 방법 및 확약 안내</h3>
+                <p>본 유의사항은 혹시 모를 분쟁 시 법적 증거 자료로 활용됩니다. 신청 전 DM 또는 대화방에서 약관 확인 여부를 먼저 안내받은 뒤 접수를 진행합니다.</p>
+            </div>
+
+            <div class="terms-actions">
+                <button class="btn-action" onclick="openChat()">상담하기</button>
+                <a class="btn-action btn-ghost" href="price.html">가격표 보기</a>
+            </div>
+        </section>
+    </main>
+
+    <div class="floating-banner" onclick="openChat()">⚡ 24시간 365일 편하게 상담주세요</div>
+
+    <script>
+        function openChat() {
+            window.open('https://open.kakao.com/o/sJdWuGxi', '_blank');
+        }
+    </script>
+</body>
+</html>
