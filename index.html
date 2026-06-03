@@ -430,7 +430,16 @@
 
         /* 3. 신뢰도 카드 */
         .section-trust {
-            padding: 8px 0 44px;
+            width: auto;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            padding: 46px max(20px, calc((100vw - 1200px) / 2 + 20px)) 64px;
+            position: relative;
+            overflow: hidden;
+            background:
+                linear-gradient(180deg, rgba(6, 6, 12, 0.86) 0%, rgba(6, 6, 12, 0.76) 44%, rgba(6, 6, 12, 0.92) 100%),
+                linear-gradient(90deg, rgba(6, 6, 12, 0.96) 0%, rgba(6, 6, 12, 0.5) 46%, rgba(6, 6, 12, 0.94) 100%),
+                url('assets/1oohyun-trust-bg.jpg') center 52% / cover no-repeat;
         }
 
         .trust-grid {
