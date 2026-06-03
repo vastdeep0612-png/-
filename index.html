@@ -78,6 +78,13 @@
             font-display: swap;
         }
 
+        @font-face {
+            font-family: 'PyeongchangPeace';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-display: swap;
+        }
+
         /* 기본 스타일 초기화 */
         * {
             margin: 0;
@@ -386,12 +393,12 @@
 
         .hero-text-box h1 {
             max-width: 780px;
-            font-family: 'Simple', 'Paperlogy', sans-serif;
+            font-family: 'PyeongchangPeace', 'Simple', 'Paperlogy', sans-serif;
             font-size: 55px;
-            font-weight: normal;
-            line-height: 1.12;
+            font-weight: 700;
+            line-height: 1.16;
             margin-bottom: 22px;
-            letter-spacing: 0;
+            letter-spacing: -0.01em;
             white-space: normal;
             word-break: keep-all;
             text-wrap: balance;
@@ -431,18 +438,107 @@
         }
 
         .btn-main-action {
-            background: linear-gradient(90deg, #ff2a5f 0%, #ff1493 100%);
+            position: relative;
+            isolation: isolate;
+            gap: 10px;
+            overflow: hidden;
+            min-height: 56px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+                linear-gradient(135deg, rgba(20, 24, 34, 0.98), rgba(7, 9, 15, 0.98));
             color: #ffffff;
-            padding: 15px 34px;
-            font-size: 19px;
+            padding: 16px 30px 16px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 16px;
+            box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            white-space: nowrap;
+        }
+
+        .btn-main-action::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            z-index: 1;
+            padding: 1px;
+            border-radius: inherit;
+            opacity: 0;
+            background: conic-gradient(from 0deg, transparent 0 68%, rgba(206, 255, 128, 0.68) 73%, rgba(255, 255, 255, 0.25) 78%, transparent 84% 100%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            transition: opacity 0.24s ease;
+        }
+
+        .btn-main-action::after {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            z-index: 0;
+            border-radius: 15px;
+            background: radial-gradient(circle at 50% 0%, rgba(206, 255, 128, 0.08), transparent 46%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.24s ease;
+        }
+
+        .btn-main-text {
+            position: relative;
+            z-index: 2;
+            font-family: 'PyeongchangPeace', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-main-icon {
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(206, 255, 128, 0.78);
+            font-size: 17px;
             font-weight: 800;
-            border: none;
-            box-shadow: 0 12px 28px rgba(255, 42, 95, 0.34);
+            line-height: 1;
+            transform: translateX(0);
+            transition: transform 0.24s ease, color 0.24s ease;
         }
 
         .btn-main-action:hover {
             transform: translateY(-2px);
-            box-shadow: 0 16px 34px rgba(255, 42, 95, 0.45);
+            border-color: rgba(206, 255, 128, 0.28);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.026)),
+                linear-gradient(135deg, rgba(25, 30, 42, 0.98), rgba(9, 11, 18, 0.98));
+            box-shadow: 0 22px 42px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(206, 255, 128, 0.035), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-main-action:hover::before {
+            opacity: 1;
+            animation: cta-border-sweep 1.8s linear infinite;
+        }
+
+        .btn-main-action:hover::after {
+            opacity: 1;
+        }
+
+        .btn-main-action:hover .btn-main-icon {
+            color: rgba(225, 255, 166, 0.94);
+            transform: translateX(3px);
+        }
+
+        .btn-main-action:focus-visible {
+            outline: 2px solid rgba(206, 255, 128, 0.52);
+            outline-offset: 4px;
+            border-color: rgba(206, 255, 128, 0.34);
+        }
+
+        @keyframes cta-border-sweep {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .btn-sub-action {
@@ -1745,6 +1841,20 @@
             color: #ffffff;
         }
 
+        .hero-text-box h1,
+        .events-title,
+        .tips-heading h2,
+        .section-services h2,
+        .section-reviews h2,
+        .section-drivers h2,
+        .section-faq h2,
+        .final-cta-card h2 {
+            font-family: 'PyeongchangPeace', 'Paperlogy', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            text-wrap: balance;
+        }
+
         /* 모바일 반응형 최적화 */
         @media (max-width: 1024px) {
             .hero-section {
@@ -1889,7 +1999,7 @@
                 <h1>발로란트 대리 백현팀</h1>
                 <p>발로 대리, 배치고사, 듀오 상담을 빠르고 정확하게 안내받을 수 있습니다.</p>
                 <div class="hero-buttons">
-                    <button class="btn-main-action" onclick="openChat()">상담 및 신청하기</button>
+                    <button class="btn-main-action" onclick="openChat()"><span class="btn-main-text">빠른 상담 신청하기</span><span class="btn-main-icon" aria-hidden="true">→</span></button>
                 </div>
                 <div class="hero-note">
                     <span class="hero-note-mark">톡</span>
