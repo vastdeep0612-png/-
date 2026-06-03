@@ -64,6 +64,20 @@
             font-display: swap;
         }
 
+        @font-face {
+            font-family: 'JoseonPalace';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGs.woff') format('woff');
+            font-weight: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Simple';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Danjo-bold-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
         /* 기본 스타일 초기화 */
         * {
             margin: 0;
@@ -136,14 +150,16 @@
 
         .logo-main {
             color: #ffffff;
+            font-family: 'JoseonPalace', 'Paperlogy', sans-serif;
             font-size: 20px;
-            font-weight: 800;
+            font-weight: normal;
             letter-spacing: 0;
             white-space: nowrap;
         }
 
         .logo-main span {
             color: #ff2a5f;
+            font-family: inherit;
         }
 
         nav ul {
@@ -370,8 +386,9 @@
 
         .hero-text-box h1 {
             max-width: 780px;
+            font-family: 'Simple', 'Paperlogy', sans-serif;
             font-size: 52px;
-            font-weight: 800;
+            font-weight: normal;
             line-height: 1.12;
             margin-bottom: 22px;
             letter-spacing: 0;
@@ -769,8 +786,19 @@
             position: relative;
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.82);
-            background: url('assets/valorant-event-bg.gif') center / cover no-repeat;
+            background: rgba(5, 5, 12, 0.72);
             box-shadow: 0 28px 58px rgba(0, 0, 0, 0.48), 0 0 24px rgba(255, 64, 84, 0.16);
+            cursor: default;
+        }
+
+        .events-visual video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            user-select: none;
         }
 
         .events-visual::after {
@@ -1022,20 +1050,39 @@
             display: block;
         }
 
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            max-width: 900px;
+        .reviews-carousel {
+            position: relative;
+            max-width: 980px;
             margin: 0 auto;
         }
 
+        .reviews-viewport {
+            overflow: hidden;
+            padding: 2px;
+        }
+
+        .reviews-track {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            padding: 0 0 8px;
+        }
+
+        .reviews-track::-webkit-scrollbar {
+            display: none;
+        }
+
         .review-card {
+            flex: 0 0 calc((100% - 32px) / 3);
             min-height: 188px;
             padding: 26px 22px;
             border-radius: 10px;
             background: rgba(12, 12, 20, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            scroll-snap-align: start;
             transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
         }
 
@@ -1063,6 +1110,32 @@
         .review-name {
             color: #94a3b8;
             font-size: 14px;
+        }
+
+        .reviews-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .review-nav {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255, 42, 95, 0.32);
+            border-radius: 50%;
+            color: #ffffff;
+            background: rgba(15, 15, 24, 0.9);
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .review-nav:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 42, 95, 0.72);
+            box-shadow: 0 0 18px rgba(255, 42, 95, 0.18);
         }
 
         .price-cta-card {
@@ -1282,7 +1355,7 @@
         }
 
         .info-label {
-            font-size: 15px;
+            font-size: 18px;
             color: #ff2a5f;
             font-family: 'Hamlet', 'Paperlogy', sans-serif;
             font-weight: normal;
@@ -1646,7 +1719,7 @@
             .service-grid { grid-template-columns: 1fr; }
             .service-card { min-height: 180px; text-align: center; align-items: center; }
             .reviews-cta-layout { grid-template-columns: 1fr; }
-            .reviews-grid { grid-template-columns: 1fr; }
+            .review-card { flex-basis: calc((100% - 16px) / 2); }
             .price-line-art { opacity: 0.55; }
             .final-cta-card { grid-template-columns: 1fr; text-align: center; }
             .cta-line-graphic { display: none; }
@@ -1698,6 +1771,7 @@
                 font-size: 14px;
             }
             .events-visual { min-height: 220px; }
+            .review-card { flex-basis: 100%; }
             .service-card { padding: 30px 24px; }
             .service-card h3 { font-size: 42px; }
             .price-cta-card { padding: 28px 24px; }
@@ -1819,7 +1893,11 @@
                         <li><span>5</span>보안 시스템 및 비밀 유지 철저</li>
                         <li><span>6</span>진행 상황 실시간 확인 가능</li>
                     </ul>
-                    <div class="events-visual" aria-hidden="true"></div>
+                    <div class="events-visual" aria-hidden="true" oncontextmenu="return false;">
+                        <video autoplay muted loop playsinline preload="metadata" tabindex="-1" controlslist="nodownload noplaybackrate nofullscreen" disablepictureinpicture>
+                            <source src="assets/valorant-log-skin-trailer.mp4" type="video/mp4">
+                        </video>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1887,21 +1965,54 @@
         <section class="section-reviews" aria-label="실제 이용 후기">
             <h2>실제 이용 후기</h2>
             <div class="reviews-cta-layout">
-                <div class="reviews-grid">
-                    <div class="review-card">
-                        <div class="review-stars">★★★★★</div>
-                        <p>상담이 빠르고 설명이 깔끔해서 만족했습니다.</p>
-                        <div class="review-name">김○○</div>
+                <div class="reviews-carousel">
+                    <div class="reviews-viewport">
+                        <div class="reviews-track" id="reviewsTrack">
+                            <div class="review-card">
+                                <div class="review-stars">★★★★★</div>
+                                <p>상담이 빠르고 설명이 깔끔해서 만족했습니다.</p>
+                                <div class="review-name">김○○</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">★★★★★</div>
+                                <p>진행 상황 확인이 쉬워서 믿고 맡길 수 있었어요.</p>
+                                <div class="review-name">이○○</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">★★★★★</div>
+                                <p>듀오하면서 피드백도 받아서 도움이 많이 됐습니다.</p>
+                                <div class="review-name">박○○</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">★★★★★</div>
+                                <p>문의 답장이 빨라서 바로 진행할 수 있었습니다.</p>
+                                <div class="review-name">최○○</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">★★★★★</div>
+                                <p>가격 안내가 명확해서 추가 걱정 없이 맡겼습니다.</p>
+                                <div class="review-name">정○○</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">★★★★★</div>
+                                <p>원하는 시간대에 맞춰 진행돼서 편했습니다.</p>
+                                <div class="review-name">한○○</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">★★★★★</div>
+                                <p>보안 안내를 먼저 해줘서 믿음이 갔습니다.</p>
+                                <div class="review-name">윤○○</div>
+                            </div>
+                            <div class="review-card">
+                                <div class="review-stars">★★★★★</div>
+                                <p>작업 현황을 계속 확인할 수 있어 안심됐습니다.</p>
+                                <div class="review-name">강○○</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="review-card">
-                        <div class="review-stars">★★★★★</div>
-                        <p>진행 상황 확인이 쉬워서 믿고 맡길 수 있었어요.</p>
-                        <div class="review-name">이○○</div>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-stars">★★★★★</div>
-                        <p>듀오하면서 피드백도 받아서 도움이 많이 됐습니다.</p>
-                        <div class="review-name">박○○</div>
+                    <div class="reviews-controls" aria-label="후기 이동">
+                        <button class="review-nav" type="button" onclick="moveReviews(-1)" aria-label="이전 후기">‹</button>
+                        <button class="review-nav" type="button" onclick="moveReviews(1)" aria-label="다음 후기">›</button>
                     </div>
                 </div>
             </div>
@@ -2158,6 +2269,16 @@
 
         function closePopup() {
             document.getElementById('popupLayer').style.display = 'none';
+        }
+
+        function moveReviews(direction) {
+            const track = document.getElementById('reviewsTrack');
+            if (!track) return;
+
+            const card = track.querySelector('.review-card');
+            const gap = 16;
+            const distance = card ? card.getBoundingClientRect().width + gap : 320;
+            track.scrollBy({ left: direction * distance, behavior: 'smooth' });
         }
 
         function setDriverTier(tier) {

@@ -28,6 +28,13 @@
             font-display: swap;
         }
 
+        @font-face {
+            font-family: 'JoseonPalace';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGs.woff') format('woff');
+            font-weight: normal;
+            font-display: swap;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -66,12 +73,16 @@
             z-index: 50;
             height: 82px;
             padding: 0 56px;
-            display: flex;
+            display: grid;
+            grid-template-columns: minmax(240px, 1fr) auto minmax(240px, 1fr);
             align-items: center;
-            justify-content: space-between;
             background: rgba(3, 4, 10, 0.86);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(18px);
+        }
+
+        .logo {
+            justify-self: start;
         }
 
         .logo-sub {
@@ -82,16 +93,21 @@
         }
 
         .logo-main {
-            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-family: 'JoseonPalace', 'Paperlogy', sans-serif;
             font-size: 24px;
             line-height: 1;
             letter-spacing: 0;
             color: #fff;
+            font-weight: normal;
         }
 
         .logo-main span {
             font-family: inherit;
             color: #ff1f67;
+        }
+
+        nav {
+            justify-self: center;
         }
 
         nav ul {
@@ -182,13 +198,14 @@
         }
 
         .page-wrap {
-            width: min(1180px, calc(100% - 40px));
+            width: min(1080px, calc(100% - 56px));
             margin: 0 auto;
-            padding: 76px 0 96px;
+            padding: 18px 0 86px;
         }
 
         .page-hero {
-            padding: 54px 0 34px;
+            display: none;
+            padding: 34px 0 24px;
             text-align: center;
         }
 
@@ -218,10 +235,9 @@
         }
 
         .tab-bar {
-            position: sticky;
-            top: 82px;
+            position: relative;
             z-index: 30;
-            margin: 18px auto 30px;
+            margin: 8px auto 16px;
             padding: 10px;
             display: flex;
             justify-content: center;
@@ -260,6 +276,8 @@
 
         .price-panel {
             display: none;
+            max-width: 1080px;
+            margin: 0 auto;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 22px;
             background:
@@ -274,7 +292,7 @@
         }
 
         .panel-head {
-            padding: 30px 34px 22px;
+            padding: 28px 42px 20px;
             display: flex;
             justify-content: space-between;
             gap: 20px;
@@ -284,7 +302,7 @@
 
         .panel-head h2 {
             font-family: 'Waguri', 'Paperlogy', sans-serif;
-            font-size: clamp(28px, 4vw, 44px);
+            font-size: clamp(28px, 4vw, 42px);
             letter-spacing: 0;
         }
 
@@ -301,8 +319,16 @@
 
         .price-table th,
         .price-table td {
-            padding: 20px 34px;
+            padding: 10px 42px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .price-table tbody tr {
+            background: rgba(255, 255, 255, 0.012);
+        }
+
+        .price-table tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.025);
         }
 
         .price-table th {
@@ -312,27 +338,28 @@
         }
 
         .tier-name {
-            font-size: 18px;
+            font-size: 15px;
             color: #f7f8fb;
         }
 
         .tier-price {
-            min-width: 220px;
+            min-width: 210px;
             text-align: right;
             color: #ff1f67;
-            font-size: 18px;
+            font-size: 16px;
             white-space: nowrap;
         }
 
         .btn-table-order,
         .btn-action {
             margin-left: 16px;
-            padding: 10px 16px;
+            padding: 7px 13px;
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 8px;
             color: #fff;
             background: rgba(255, 255, 255, 0.06);
             cursor: pointer;
+            font-size: 13px;
             transition: border-color 0.2s ease, background 0.2s ease;
         }
 
@@ -386,6 +413,7 @@
                 min-height: 82px;
                 padding: 18px 20px;
                 gap: 18px;
+                display: flex;
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -401,7 +429,6 @@
             }
 
             .tab-bar {
-                top: 0;
                 width: 100%;
                 overflow-x: auto;
                 justify-content: flex-start;
@@ -481,7 +508,7 @@
             <button class="price-tab" type="button" data-price-tab="duo" onclick="setPriceTab('duo')">듀오제</button>
         </div>
 
-        <section class="price-panel active" id="per-win" data-panel="per-win">
+        <section class="price-panel active" id="panel-per-win" data-panel="per-win">
             <div class="panel-head">
                 <div>
                     <h2>발로란트 대리 승당제</h2>
@@ -513,7 +540,7 @@
             </table>
         </section>
 
-        <section class="price-panel" id="promotion" data-panel="promotion">
+        <section class="price-panel" id="panel-promotion" data-panel="promotion">
             <div class="panel-head">
                 <div>
                     <h2>발로란트 대리 승급제</h2>
@@ -545,7 +572,7 @@
             </table>
         </section>
 
-        <section class="price-panel" id="duo" data-panel="duo">
+        <section class="price-panel" id="panel-duo" data-panel="duo">
             <div class="duo-card">
                 <span class="page-kicker">DUO SERVICE</span>
                 <h2>발로란트 듀오제</h2>
