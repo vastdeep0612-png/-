@@ -57,6 +57,13 @@
             font-display: swap;
         }
 
+        @font-face {
+            font-family: 'Hamlet';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/Hahmlet-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-display: swap;
+        }
+
         /* 기본 스타일 초기화 */
         * {
             margin: 0;
@@ -233,6 +240,15 @@
             color: #ffffff;
             background-color: rgba(255, 42, 95, 0.13);
             transform: translateX(2px);
+        }
+
+        .nav-driver-trigger {
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-weight: normal;
+        }
+
+        .driver-dropdown {
+            min-width: 176px;
         }
 
         .nav-price-menu:hover .nav-price-trigger,
@@ -1232,119 +1248,165 @@
 
         /* 4. 기사 소개 섹션 */
         .section-drivers {
-            padding: 100px 0 40px 0;
+            padding: 100px 0 52px 0;
             text-align: center;
         }
 
         .section-drivers h2 {
             font-size: 42px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 5px;
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-weight: normal;
+            letter-spacing: 0;
+            margin-bottom: 8px;
         }
 
         .section-drivers p.subtitle {
-            font-size: 14px;
+            font-size: 15px;
             color: #94a3b8;
-            font-weight: 800;
-            margin-bottom: 50px;
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-weight: normal;
+            line-height: 1.65;
+            margin-bottom: 28px;
+        }
+
+        .driver-tabs {
+            display: inline-flex;
+            gap: 8px;
+            margin-bottom: 28px;
+            padding: 6px;
+            border: 1px solid rgba(255, 42, 95, 0.22);
+            border-radius: 999px;
+            background: rgba(10, 10, 18, 0.84);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+        }
+
+        .driver-tab {
+            min-width: 104px;
+            height: 42px;
+            padding: 0 18px;
+            color: #94a3b8;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-size: 15px;
+            font-weight: normal;
+            cursor: pointer;
+            transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .driver-tab:hover,
+        .driver-tab.active {
+            color: #ffffff;
+            background: rgba(255, 42, 95, 0.92);
+            box-shadow: 0 0 22px rgba(255, 42, 95, 0.28);
+        }
+
+        .driver-panel {
+            display: none;
+            scroll-margin-top: 96px;
+        }
+
+        .driver-panel.active {
+            display: block;
         }
 
         .driver-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+            max-width: 960px;
+            margin: 0 auto;
         }
 
         .driver-card {
-            background-color: #0b0b14;
-            border: 1px solid #1e1e30;
-            border-radius: 14px;
-            padding: 30px 24px;
+            min-height: 420px;
+            padding: 30px 28px;
             text-align: left;
             position: relative;
-            transition: border-color 0.3s, transform 0.3s;
+            overflow: hidden;
+            border: 1px solid rgba(255, 42, 95, 0.22);
+            border-radius: 16px;
+            background:
+                radial-gradient(circle at top right, rgba(255, 42, 95, 0.16), transparent 38%),
+                linear-gradient(145deg, rgba(12, 12, 22, 0.96), rgba(7, 7, 14, 0.98));
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .driver-card::after {
+            content: attr(data-code);
+            position: absolute;
+            right: 22px;
+            bottom: 12px;
+            color: rgba(255, 255, 255, 0.035);
+            font-family: 'Waguri', 'Paperlogy', sans-serif;
+            font-size: 78px;
+            font-weight: normal;
+            line-height: 1;
+            pointer-events: none;
         }
 
         .driver-card:hover {
-            border-color: #ff2a5f;
+            border-color: rgba(255, 42, 95, 0.52);
             transform: translateY(-5px);
-        }
-
-        .badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
-
-        .badge.gold {
-            background-color: rgba(217, 119, 6, 0.15);
-            color: #fbbf24;
-            border: 1px solid rgba(217, 119, 6, 0.3);
-        }
-
-        .badge.red {
-            background-color: rgba(220, 38, 38, 0.15);
-            color: #f87171;
-            border: 1px solid rgba(220, 38, 38, 0.3);
-        }
-
-        .avatar-box {
-            width: 100%;
-            height: 160px;
-            background-color: #161624;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .avatar-placeholder {
-            font-size: 50px;
-            opacity: 0.8;
+            box-shadow: 0 24px 48px rgba(255, 42, 95, 0.12);
         }
 
         .driver-id-badge {
-            background-color: #1e1b4b;
-            color: #a5b4fc;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 4px;
+            color: #ff2a5f;
+            border: 1px solid rgba(255, 42, 95, 0.34);
+            background: rgba(255, 42, 95, 0.08);
+            font-size: 12px;
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-weight: normal;
+            padding: 6px 11px;
+            border-radius: 999px;
             display: inline-block;
-            margin-bottom: 12px;
+            margin-bottom: 18px;
         }
 
         .driver-name {
-            font-size: 22px;
-            font-weight: 800;
-            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-size: 27px;
+            font-weight: normal;
+            line-height: 1.25;
+            margin-bottom: 22px;
+        }
+
+        .driver-info-list {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 12px;
         }
 
         .info-label {
-            font-size: 12px;
+            font-size: 13px;
             color: #ff2a5f;
-            font-weight: 800;
-            margin-top: 10px;
-            margin-bottom: 2px;
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-weight: normal;
+            margin-bottom: 4px;
         }
 
         .info-value {
-            font-size: 14px;
+            font-size: 15px;
             color: #e2e8f0;
-            font-weight: 800;
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-weight: normal;
+            line-height: 1.55;
         }
 
         .info-subtext {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 4px;
+            margin-top: 22px;
+            color: #94a3b8;
+            font-family: 'Hamlet', 'Paperlogy', sans-serif;
+            font-size: 13px;
+            font-weight: normal;
+            line-height: 1.55;
         }
 
         /* 5. 자주 묻는 질문 (FAQ) 섹션 */
@@ -1771,7 +1833,13 @@
                         <a href="#boost-terms">대리 약관</a>
                     </div>
                 </li>
-                <li><a href="#drivers">기사소개</a></li>
+                <li class="nav-price-menu nav-driver-menu">
+                    <a href="#drivers" class="nav-price-trigger nav-driver-trigger">기사소개</a>
+                    <div class="price-dropdown driver-dropdown" aria-label="기사소개 세부 메뉴">
+                        <a href="#drivers-low" onclick="setDriverTier('low')">저티어</a>
+                        <a href="#drivers-high" onclick="setDriverTier('high')">고티어</a>
+                    </div>
+                </li>
                 <li><a href="#">작업현황</a></li>
                 <li><a href="#faq">자주 묻는 질문</a></li>
             </ul>
@@ -2106,70 +2174,143 @@
 
         <!-- 4. 기사 소개 섹션 -->
         <section class="section-drivers" id="drivers">
-            <h2>발로란트 기사소개</h2>
-            <p class="subtitle">기사님들 티어</p>
+            <h2>기사소개</h2>
+            <p class="subtitle">티어 구간에 맞는 기사 정보를 확인하고 상담 시 원하는 진행 방식을 말해주세요.</p>
 
-            <div class="driver-grid">
-                <!-- 기사 1 -->
-                <div class="driver-card">
-                    <div class="badge gold">만족도 높은 기사</div>
-                    <div class="avatar-box"><div class="avatar-placeholder">👤</div></div>
-                    <div class="driver-id-badge">01</div>
-                    <div class="driver-name">X 기사님</div>
+            <div class="driver-tabs" role="tablist" aria-label="기사 티어 선택">
+                <button class="driver-tab active" type="button" data-tier="low" onclick="setDriverTier('low')">저티어</button>
+                <button class="driver-tab" type="button" data-tier="high" onclick="setDriverTier('high')">고티어</button>
+            </div>
 
-                    <div class="info-label">최고티어</div>
-                    <div class="info-value">매시즌 발로란트 레디언트 최상위 랭크 유지</div>
+            <div class="driver-panel active" id="drivers-low" data-tier="low">
+                <div class="driver-grid">
+                    <article class="driver-card" data-code="JS">
+                        <div class="driver-id-badge">저티어 기사</div>
+                        <div class="driver-name">JS기사</div>
+                        <div class="driver-info-list">
+                            <div>
+                                <div class="info-label">최고티어</div>
+                                <div class="info-value">한국서버 레디언트 350rr</div>
+                            </div>
+                            <div>
+                                <div class="info-label">화면공유</div>
+                                <div class="info-value">불가능</div>
+                            </div>
+                            <div>
+                                <div class="info-label">진행 가능 구간</div>
+                                <div class="info-value">브론즈부터 다이아까지 가능</div>
+                            </div>
+                            <div>
+                                <div class="info-label">모스트</div>
+                                <div class="info-value">오멘, 믹스, 아스트라</div>
+                            </div>
+                            <div>
+                                <div class="info-label">진행가능여부</div>
+                                <div class="info-value">즉시 진행</div>
+                            </div>
+                            <div>
+                                <div class="info-label">서비스</div>
+                                <div class="info-value">대리, 듀오제</div>
+                            </div>
+                        </div>
+                    </article>
 
-                    <div class="info-label">성향 요약</div>
-                    <div class="info-value">신속하고 정확한 진행</div>
-
-                    <div class="info-subtext">아시아서버 1000점</div>
+                    <article class="driver-card" data-code="SW">
+                        <div class="driver-id-badge">저티어 기사</div>
+                        <div class="driver-name">세원기사</div>
+                        <div class="driver-info-list">
+                            <div>
+                                <div class="info-label">최고티어</div>
+                                <div class="info-value">한국서버 레디언트 320rr</div>
+                            </div>
+                            <div>
+                                <div class="info-label">화면공유</div>
+                                <div class="info-value">가능</div>
+                            </div>
+                            <div>
+                                <div class="info-label">진행 가능 구간</div>
+                                <div class="info-value">브론즈부터 초월자까지 가능</div>
+                            </div>
+                            <div>
+                                <div class="info-label">모스트</div>
+                                <div class="info-value">레이나, 제트, 체임버</div>
+                            </div>
+                            <div>
+                                <div class="info-label">진행가능여부</div>
+                                <div class="info-value">즉시 진행</div>
+                            </div>
+                            <div>
+                                <div class="info-label">서비스</div>
+                                <div class="info-value">대리</div>
+                            </div>
+                        </div>
+                    </article>
                 </div>
+            </div>
 
-                <!-- 기사 2 -->
-                <div class="driver-card">
-                    <div class="badge red">이달의 스피드 기사</div>
-                    <div class="avatar-box"><div class="avatar-placeholder">👤</div></div>
-                    <div class="driver-id-badge">02</div>
-                    <div class="driver-name">B 기사님</div>
+            <div class="driver-panel" id="drivers-high" data-tier="high">
+                <div class="driver-grid">
+                    <article class="driver-card" data-code="BH">
+                        <div class="driver-id-badge">고티어 기사</div>
+                        <div class="driver-name">백 현 기사</div>
+                        <div class="driver-info-list">
+                            <div>
+                                <div class="info-label">최고티어</div>
+                                <div class="info-value">아시아서버 레디언트 800rr</div>
+                            </div>
+                            <div>
+                                <div class="info-label">화면공유</div>
+                                <div class="info-value">가능</div>
+                            </div>
+                            <div>
+                                <div class="info-label">진행 가능 구간</div>
+                                <div class="info-value">초월자부터 레디언트까지 가능</div>
+                            </div>
+                            <div>
+                                <div class="info-label">모스트</div>
+                                <div class="info-value">레이나, 클로브, 소바</div>
+                            </div>
+                            <div>
+                                <div class="info-label">진행가능여부</div>
+                                <div class="info-value">예약제 진행</div>
+                            </div>
+                            <div>
+                                <div class="info-label">서비스</div>
+                                <div class="info-value">대리, 강의</div>
+                            </div>
+                        </div>
+                    </article>
 
-                    <div class="info-label">최고티어</div>
-                    <div class="info-value">매시즌 발로란트 레디언트 최상위 랭크 유지</div>
-
-                    <div class="info-label">성향 요약</div>
-                    <div class="info-value">신속하고 정확한 진행</div>
-
-                    <div class="info-subtext">아시아서버 900점</div>
-                </div>
-
-                <!-- 기사 3 -->
-                <div class="driver-card">
-                    <div class="avatar-box"><div class="avatar-placeholder">👤</div></div>
-                    <div class="driver-id-badge">03</div>
-                    <div class="driver-name">J 기사님</div>
-
-                    <div class="info-label">최고티어</div>
-                    <div class="info-value">매시즌 발로란트 레디언트 최상위 랭크 유지</div>
-
-                    <div class="info-label">성향 요약</div>
-                    <div class="info-value">신속하고 정확한 진행</div>
-
-                    <div class="info-subtext">아시아서버 800점</div>
-                </div>
-
-                <!-- 기사 4 -->
-                <div class="driver-card">
-                    <div class="avatar-box"><div class="avatar-placeholder">👤</div></div>
-                    <div class="driver-id-badge">04</div>
-                    <div class="driver-name">P 기사님</div>
-
-                    <div class="info-label">최고티어</div>
-                    <div class="info-value">매시즌 발로란트 레디언트 최상위 랭크 유지</div>
-
-                    <div class="info-label">성향 요약</div>
-                    <div class="info-value">신속하고 정확한 진행</div>
-
-                    <div class="info-subtext">아시아 서버 1페이지</div>
+                    <article class="driver-card" data-code="BR">
+                        <div class="driver-id-badge">고티어 기사</div>
+                        <div class="driver-name">Bera기사</div>
+                        <div class="driver-info-list">
+                            <div>
+                                <div class="info-label">최고티어</div>
+                                <div class="info-value">아시아서버 레디언트 1000rr 전 프로게이머</div>
+                            </div>
+                            <div>
+                                <div class="info-label">화면공유</div>
+                                <div class="info-value">가능</div>
+                            </div>
+                            <div>
+                                <div class="info-label">진행 가능 구간</div>
+                                <div class="info-value">초월자부터 레디언트까지 가능</div>
+                            </div>
+                            <div>
+                                <div class="info-label">모스트</div>
+                                <div class="info-value">사이퍼, 데드록, 바이퍼</div>
+                            </div>
+                            <div>
+                                <div class="info-label">진행가능여부</div>
+                                <div class="info-value">예약제 진행</div>
+                            </div>
+                            <div>
+                                <div class="info-label">서비스</div>
+                                <div class="info-value">대리, 강의</div>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -2283,6 +2424,19 @@
         function closePopup() {
             document.getElementById('popupLayer').style.display = 'none';
         }
+
+        function setDriverTier(tier) {
+            document.querySelectorAll('.driver-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tier === tier);
+            });
+
+            document.querySelectorAll('.driver-panel').forEach(panel => {
+                panel.classList.toggle('active', panel.dataset.tier === tier);
+            });
+        }
+
+        const initialDriverTier = window.location.hash === '#drivers-high' ? 'high' : 'low';
+        setDriverTier(initialDriverTier);
 
         const faqQuestions = document.querySelectorAll('.faq-question');
 
