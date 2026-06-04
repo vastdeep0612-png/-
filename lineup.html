@@ -13,6 +13,20 @@
       font-display: swap;
     }
 
+    @font-face {
+      font-family: 'Cafe24LovingU';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Lovingu.woff2') format('woff2');
+      font-weight: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'UwuEuakKimRyuna';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2604-1@1.0/UwU-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-display: swap;
+    }
+
     :root {
       --bg: #04050a;
       --bg-2: #090b14;
@@ -276,6 +290,28 @@
       letter-spacing: -0.06em;
       text-transform: uppercase;
       text-shadow: 0 18px 58px rgba(0,0,0,0.65);
+    }
+
+    .roster[data-layer="low"] .title p {
+      font-family: 'UwuEuakKimRyuna', system-ui, sans-serif;
+      font-weight: normal;
+      letter-spacing: -0.025em;
+    }
+
+    .roster[data-layer="high"] .title p {
+      font-family: 'Cafe24LovingU', system-ui, sans-serif;
+      font-weight: normal;
+      letter-spacing: -0.01em;
+    }
+
+    #sceneLabel.is-low-ranked {
+      font-family: 'UwuEuakKimRyuna', system-ui, sans-serif;
+      letter-spacing: 0.2em;
+    }
+
+    #sceneLabel.is-high-ranked {
+      font-family: 'Cafe24LovingU', system-ui, sans-serif;
+      letter-spacing: 0.18em;
     }
 
     .title h2 {
@@ -1495,6 +1531,7 @@
 
       progressBar.style.width = `${phase * 100}%`;
       progressText.textContent = `${Math.round(phase * 100)}%`;
+      sceneLabel.classList.remove("is-low-ranked", "is-high-ranked");
 
       const introDistance = Math.abs(loopDistance(CONFIG.scenes.intro, state.current));
       const lowDistance = Math.abs(loopDistance(CONFIG.scenes.low, state.current));
@@ -1506,8 +1543,10 @@
         sceneLabel.textContent = "LINEUP";
       } else if (min === lowDistance) {
         sceneLabel.textContent = "LOW RANKED";
+        sceneLabel.classList.add("is-low-ranked");
       } else {
         sceneLabel.textContent = "HIGH RANKED";
+        sceneLabel.classList.add("is-high-ranked");
       }
     }
 
