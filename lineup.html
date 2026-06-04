@@ -41,6 +41,20 @@
       font-display: swap;
     }
 
+    @font-face {
+      font-family: 'BookkMyungjo';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'JoseonGulim';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+      font-weight: normal;
+      font-display: swap;
+    }
+
     :root {
       --bg: #04050a;
       --bg-2: #090b14;
@@ -793,6 +807,7 @@
     .site-logo-sub {
       margin-bottom: 6px;
       color: #8d97ad;
+      font-family: 'JoseonGulim', system-ui, sans-serif;
       font-size: 10px;
       letter-spacing: 0;
       white-space: nowrap;
@@ -800,9 +815,9 @@
 
     .site-logo-main {
       color: #5bbdff;
-      font-family: 'ChosunIlboMyungjo', serif;
+      font-family: 'BookkMyungjo', serif;
       font-size: 24px;
-      font-weight: normal;
+      font-weight: 700;
       letter-spacing: -0.02em;
       white-space: nowrap;
     }
@@ -1057,6 +1072,16 @@
             display: block !important;
         }
 
+        .bh-logo-item:not(.bh-logo-korean) {
+            font-family: 'BookkMyungjo', serif !important;
+            font-weight: 700 !important;
+        }
+
+        .bh-logo-korean {
+            font-family: 'JoseonGulim', system-ui, sans-serif !important;
+            font-weight: normal !important;
+        }
+
         .bh-logo-slider::after {
             content: '';
             position: absolute;
@@ -1102,15 +1127,15 @@
 
         <div class="site-logo-sub">대리 문의는?</div>
 
-        <div class="site-logo-main bh-logo-slider" data-bh-logo-slider aria-label="VLRT 1oohyunteam 또는 발로란트 신속대리">
+        <div class="site-logo-main bh-logo-slider" data-bh-logo-slider aria-label="VLRT 1oohyunTeam 또는 발로란트 신속대리">
 
             <div class="bh-logo-track">
 
-                <div class="bh-logo-item">VLRT <span>1oohyunteam</span></div>
+                <div class="bh-logo-item">VLRT <span>1oohyunTeam</span></div>
 
-                <div class="bh-logo-item">발로란트 <span>신속대리</span></div>
+                <div class="bh-logo-item bh-logo-korean">발로란트 <span>신속대리</span></div>
 
-                <div class="bh-logo-item" aria-hidden="true">VLRT <span>1oohyunteam</span></div>
+                <div class="bh-logo-item" aria-hidden="true">VLRT <span>1oohyunTeam</span></div>
 
             </div>
 
