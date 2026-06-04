@@ -27,6 +27,20 @@
       font-display: swap;
     }
 
+    @font-face {
+      font-family: 'KyoboHandwriting2019';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff') format('woff');
+      font-weight: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'JoseonShinmyeongjo';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.1/ChosunSm.woff') format('woff');
+      font-weight: normal;
+      font-display: swap;
+    }
+
     :root {
       --bg: #04050a;
       --bg-2: #090b14;
@@ -321,6 +335,18 @@
       line-height: 1;
       font-weight: 900;
       letter-spacing: -0.07em;
+    }
+
+    .roster[data-layer="low"] .title h2 {
+      font-family: 'KyoboHandwriting2019', system-ui, sans-serif;
+      font-weight: normal;
+      letter-spacing: -0.035em;
+    }
+
+    .roster[data-layer="high"] .title h2 {
+      font-family: 'JoseonShinmyeongjo', serif;
+      font-weight: normal;
+      letter-spacing: -0.03em;
     }
 
     .title span {
@@ -1198,7 +1224,7 @@
         <section class="layer roster" data-layer="high">
           <div class="title">
             <p>HIGH RANKED</p>
-            <h2>고티어 라인업</h2>
+            <h2>고티어 구간</h2>
             <span>초월자부터 레디언트까지 가능한 고티어 전문 기사</span>
           </div>
 
