@@ -2511,15 +2511,118 @@
         #faq {
             scroll-margin-top: 92px;
         }
+    
+        /* ===== 로고 애니메이션만 추가: 기존 색상/폰트 유지 ===== */
+        .bh-logo {
+            --bh-logo-width: 260px;
+            --bh-logo-height: 30px;
+            min-width: var(--bh-logo-width) !important;
+            overflow: hidden !important;
+            outline: none !important;
+            text-decoration: none !important;
+        }
+
+        .bh-logo:focus,
+        .bh-logo:focus-visible,
+        .bh-logo:active {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .bh-logo-slider {
+            position: relative !important;
+            display: block !important;
+            width: var(--bh-logo-width) !important;
+            height: var(--bh-logo-height) !important;
+            overflow: hidden !important;
+            line-height: var(--bh-logo-height) !important;
+        }
+
+        .bh-logo-track {
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            display: flex !important;
+            width: calc(var(--bh-logo-width) * 3) !important;
+            height: var(--bh-logo-height) !important;
+            transform: translate3d(0, 0, 0);
+            transition: transform 760ms cubic-bezier(0.22, 1, 0.36, 1), filter 760ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+            will-change: transform, filter !important;
+        }
+
+        .bh-logo-slider.is-switching .bh-logo-track {
+            filter: blur(0.8px) !important;
+        }
+
+        .bh-logo-item {
+            flex: 0 0 var(--bh-logo-width) !important;
+            width: var(--bh-logo-width) !important;
+            height: var(--bh-logo-height) !important;
+            line-height: var(--bh-logo-height) !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            display: block !important;
+        }
+
+        .bh-logo-slider::after {
+            content: '';
+            position: absolute;
+            inset: -20% -16%;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateX(-135%);
+            background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.28) 45%, transparent 60%);
+        }
+
+        .bh-logo-slider.is-switching::after {
+            animation: bhLogoLight 760ms ease-in-out 1;
+        }
+
+        @keyframes bhLogoLight {
+            0% {
+                opacity: 0;
+                transform: translateX(-135%);
+            }
+            45% {
+                opacity: 0.66;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(135%);
+            }
+        }
+
+        @media (max-width: 720px) {
+            .bh-logo {
+                --bh-logo-width: 220px;
+                --bh-logo-height: 28px;
+            }
+        }
+
     </style>
 </head>
 <body>
 
     <!-- 1. 상단 네비게이션 헤더 바 -->
     <header>
-        <a class="logo" href="index.html" aria-label="홈으로 이동">
-            <div class="logo-sub">발로란트 신속대리 백현팀</div>
-            <div class="logo-main">VLRT <span>1oohyunteam</span></div>
+        <a class="logo bh-logo" href="index.html" aria-label="홈으로 이동">
+
+            <div class="logo-sub">대리 문의는?</div>
+
+            <div class="logo-main bh-logo-slider" data-bh-logo-slider aria-label="VLRT 1oohyunteam 또는 발로란트 신속대리">
+
+                <div class="bh-logo-track">
+
+                    <div class="bh-logo-item">VLRT <span>1oohyunteam</span></div>
+
+                    <div class="bh-logo-item">발로란트 <span>신속대리</span></div>
+
+                    <div class="bh-logo-item" aria-hidden="true">VLRT <span>1oohyunteam</span></div>
+
+                </div>
+
+            </div>
+
         </a>
         <nav>
             <ul>
@@ -2920,5 +3023,74 @@
             });
         });
     </script>
+
+<script>
+    (() => {
+        const initBhLogoSlider = () => {
+            document.querySelectorAll("[data-bh-logo-slider]").forEach((slider) => {
+                if (slider.dataset.ready === "1") return;
+                slider.dataset.ready = "1";
+
+                const track = slider.querySelector(".bh-logo-track");
+                if (!track) return;
+
+                let index = 0;
+                let locked = false;
+                const HOLD_MS = 2300;
+                const MOVE_MS = 760;
+
+                const moveTo = (nextIndex, animated) => {
+                    const width = slider.getBoundingClientRect().width || 260;
+
+                    track.style.setProperty(
+                        "transition",
+                        animated
+                            ? `transform ${MOVE_MS}ms cubic-bezier(0.22, 1, 0.36, 1), filter ${MOVE_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`
+                            : "none",
+                        "important"
+                    );
+
+                    track.style.setProperty(
+                        "transform",
+                        `translate3d(${-width * nextIndex}px, 0, 0)`,
+                        "important"
+                    );
+                };
+
+                const next = () => {
+                    if (locked) return;
+                    locked = true;
+                    index += 1;
+
+                    slider.classList.add("is-switching");
+                    moveTo(index, true);
+
+                    window.setTimeout(() => {
+                        slider.classList.remove("is-switching");
+
+                        if (index >= 2) {
+                            index = 0;
+                            moveTo(index, false);
+                            void track.offsetWidth;
+                        }
+
+                        locked = false;
+                    }, MOVE_MS + 40);
+                };
+
+                moveTo(0, false);
+                window.setInterval(next, HOLD_MS);
+                window.addEventListener("resize", () => moveTo(index, false));
+            });
+        };
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initBhLogoSlider);
+        } else {
+            initBhLogoSlider();
+        }
+    })();
+</script>
+
 </body>
 </html>
