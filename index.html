@@ -2122,11 +2122,15 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             transition: opacity 0.3s ease;
+        }
+
+        .popup-overlay.is-visible {
+            display: flex;
         }
 
         .event-popup {
@@ -2824,7 +2828,7 @@
             </div>
             <div class="popup-footer">
                 <button class="btn-close" onclick="closePopup()">닫기</button>
-                <button class="btn-cookie" onclick="closePopup()">1일 동안 보지 않기</button>
+                <button class="btn-cookie" onclick="hideEventPopupForOneDay()">1일 동안 보지 않기</button>
             </div>
         </div>
     </div>
@@ -2840,9 +2844,44 @@
             window.open('https://open.kakao.com/o/sJdWuGxi', '_blank');
         }
 
-        function closePopup() {
-            document.getElementById('popupLayer').style.display = 'none';
+        const EVENT_POPUP_STORAGE_KEY = 'baekhyeon_event_popup_hidden_until';
+        const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+        function getEventPopupLayer() {
+            return document.getElementById('popupLayer');
         }
+
+        function isEventPopupHidden() {
+            const hiddenUntil = Number(localStorage.getItem(EVENT_POPUP_STORAGE_KEY));
+            return Number.isFinite(hiddenUntil) && Date.now() < hiddenUntil;
+        }
+
+        function showEventPopupIfNeeded() {
+            const popupLayer = getEventPopupLayer();
+            if (!popupLayer) return;
+
+            if (isEventPopupHidden()) {
+                popupLayer.classList.remove('is-visible');
+                return;
+            }
+
+            localStorage.removeItem(EVENT_POPUP_STORAGE_KEY);
+            popupLayer.classList.add('is-visible');
+        }
+
+        function closePopup() {
+            const popupLayer = getEventPopupLayer();
+            if (popupLayer) {
+                popupLayer.classList.remove('is-visible');
+            }
+        }
+
+        function hideEventPopupForOneDay() {
+            localStorage.setItem(EVENT_POPUP_STORAGE_KEY, String(Date.now() + ONE_DAY_MS));
+            closePopup();
+        }
+
+        showEventPopupIfNeeded();
 
         function moveReviews(direction) {
             const track = document.getElementById('reviewsTrack');
