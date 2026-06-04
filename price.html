@@ -594,7 +594,7 @@
   }
 
   .price {
-    font-size: 14px !important;
+    font-size: 19px !important;
   }
 
   .rank-icon {
@@ -655,6 +655,228 @@
       width: calc(100vw - 24px) !important;
       min-height: auto !important;
     }
+  }
+
+
+  /* ===== final price font tweak: 가격 금액 3px 확대 ===== */
+  .price {
+    font-size: 19px !important;
+  }
+
+  .price.ask {
+    font-size: 19px !important;
+  }
+
+
+  /* ===== final card text tweak: 패키지 카드 내부 글자 2px 확대 ===== */
+  .package-card .package-chip {
+    font-size: 12px !important;
+  }
+
+  .package-card .package-name {
+    font-size: clamp(46px, 5.2vw, 68px) !important;
+  }
+
+  .package-card .package-sub {
+    font-size: 16px !important;
+  }
+
+  .package-card .summary-box strong {
+    font-size: 12px !important;
+  }
+
+  .package-card .summary-box span {
+    font-size: 16px !important;
+  }
+
+  .package-card .price-panel-head h3 {
+    font-size: 18px !important;
+  }
+
+  .package-card .price-panel-head span {
+    font-size: 13px !important;
+  }
+
+  .package-card .rank-name {
+    font-size: 15px !important;
+  }
+
+  .package-card .rank-name small {
+    font-size: 12px !important;
+  }
+
+  .package-card .price {
+    font-size: 21px !important;
+  }
+
+  .package-card .price.ask {
+    font-size: 21px !important;
+  }
+
+  .package-card .duo-feature h3 {
+    font-size: 18px !important;
+  }
+
+  .package-card .duo-feature li {
+    font-size: 14px !important;
+  }
+
+  .package-card .quote-box strong {
+    font-size: 12px !important;
+  }
+
+  .package-card .quote-box span {
+    font-size: 23px !important;
+  }
+
+  .package-card .quote-box p {
+    font-size: 13px !important;
+  }
+
+  .package-card .service-chip {
+    font-size: 12px !important;
+  }
+
+  .package-card .apply-button {
+    font-size: 14px !important;
+  }
+
+  .package-card .watermark {
+    font-size: 84px !important;
+  }
+
+
+  /* ===== blur fix: 카드 복귀 중 글씨 흐려짐/반투명 현상 제거 ===== */
+  .scene-noise {
+    z-index: 3 !important;
+    opacity: 0.018 !important;
+    mix-blend-mode: soft-light !important;
+  }
+
+  .scene-vignette {
+    z-index: 4 !important;
+  }
+
+  .viewport {
+    z-index: 10 !important;
+  }
+
+  .package-card {
+    transition: box-shadow 220ms ease, border-color 220ms ease, background 220ms ease !important;
+    filter: none !important;
+    text-rendering: geometricPrecision;
+    -webkit-font-smoothing: antialiased;
+    transform: translateZ(0);
+  }
+
+  .package-card,
+  .package-card * {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .package-card.is-active {
+    opacity: 1 !important;
+  }
+
+  .package-card .package-name,
+  .package-card .package-sub,
+  .package-card .summary-box,
+  .package-card .price-panel,
+  .package-card .rank-name,
+  .package-card .price,
+  .package-card .apply-button,
+  .package-card .service-chip {
+    filter: none !important;
+    text-shadow: none;
+  }
+
+  .package-card .price {
+    text-shadow: 0 0 12px rgba(255, 63, 114, 0.18) !important;
+  }
+
+  .package-card .package-name {
+    text-shadow: 0 12px 34px rgba(0,0,0,0.42) !important;
+  }
+
+  .package-card::after {
+    opacity: 0.16 !important;
+  }
+
+
+  /* ===== final tier icon tweak: 티어 이미지 살짝 확대 ===== */
+  .package-card .rank-icon {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .package-card .price-row {
+    grid-template-columns: 42px 1fr auto !important;
+    min-height: 46px !important;
+  }
+
+  .calc-tier-card img {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+
+  /* ===== final sharp fix: 카드 중앙 복귀 시 모자이크/흐림 제거 ===== */
+  .scene-noise,
+  .noise {
+    opacity: 0.008 !important;
+    mix-blend-mode: normal !important;
+  }
+
+  .package-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    image-rendering: auto !important;
+    transition:
+      border-color 220ms ease,
+      box-shadow 220ms ease,
+      background 220ms ease !important;
+  }
+
+  .package-card,
+  .package-card * {
+    -webkit-font-smoothing: antialiased !important;
+    text-rendering: optimizeLegibility !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+  }
+
+  .package-card.front-locked {
+    opacity: 1 !important;
+    filter: none !important;
+    transform-style: flat !important;
+    box-shadow:
+      0 44px 110px rgba(0,0,0,0.64),
+      0 0 30px rgba(255,63,114,0.09),
+      inset 0 1px 0 rgba(255,255,255,0.11) !important;
+  }
+
+  .package-card.front-locked,
+  .package-card.front-locked * {
+    filter: none !important;
+    text-shadow: none !important;
+  }
+
+  .package-card.front-locked .package-name {
+    text-shadow: 0 10px 28px rgba(0,0,0,0.42) !important;
+  }
+
+  .package-card.front-locked .price {
+    text-shadow: 0 0 10px rgba(255, 63, 114, 0.18) !important;
+  }
+
+  .package-card::after {
+    opacity: 0.08 !important;
+  }
+
+  .package-card.front-locked::after {
+    opacity: 0.04 !important;
   }
 
 </style> </head> <body>
@@ -758,7 +980,7 @@
     </div>
   </aside>
 
-</main> <script> const TIER_UUID = "03621f52-342b-cf4e-4f86-9350a49c6d04"; const TIER_BASE = `https://media.valorant-api.com/competitivetiers/${TIER_UUID}`; const rankIcon = (tier) => `${TIER_BASE}/${tier}/largeicon.png`; const winLow = [ { tier: 5, name: "IRON 아이언", sub: "1승당", price: "3,000원" }, { tier: 8, name: "BRONZE 브론즈", sub: "1승당", price: "4,000원" }, { tier: 11, name: "SILVER 실버", sub: "1승당", price: "5,000원" }, { tier: 14, name: "GOLD 골드", sub: "1승당", price: "6,000원" }, { tier: 17, name: "PLATINUM 플래티넘", sub: "1승당", price: "8,000원" }, { tier: 20, name: "DIAMOND 다이아", sub: "1승당", price: "10,000원" } ]; const winHigh = [ { tier: 21, name: "ASCENDANT 초월자 1", sub: "1승당", price: "14,000원" }, { tier: 22, name: "ASCENDANT 초월자 2", sub: "1승당", price: "16,000원" }, { tier: 23, name: "ASCENDANT 초월자 3", sub: "1승당", price: "18,000원" }, { tier: 24, name: "IMMORTAL 불멸 1", sub: "1승당", price: "25,000원" }, { tier: 25, name: "IMMORTAL 불멸 2", sub: "1승당", price: "30,000원" }, { tier: 26, name: "IMMORTAL 불멸 3", sub: "1승당", price: "35,000원" }, { tier: 27, name: "RADIANT 레디언트", sub: "상담 필요", price: "문의", ask: true } ]; const upLow = [ { tier: 5, name: "IRON 아이언", sub: "한 티어 승급", price: "9,000원" }, { tier: 8, name: "BRONZE 브론즈", sub: "한 티어 승급", price: "12,000원" }, { tier: 11, name: "SILVER 실버", sub: "한 티어 승급", price: "15,000원" }, { tier: 14, name: "GOLD 골드", sub: "한 티어 승급", price: "18,000원" }, { tier: 17, name: "PLATINUM 플래티넘", sub: "한 티어 승급", price: "24,000원" }, { tier: 20, name: "DIAMOND 다이아", sub: "한 티어 승급", price: "30,000원" } ]; const upHigh = [ { tier: 21, name: "ASCENDANT 초월자 1", sub: "한 티어 승급", price: "42,000원" }, { tier: 22, name: "ASCENDANT 초월자 2", sub: "한 티어 승급", price: "48,000원" }, { tier: 23, name: "ASCENDANT 초월자 3", sub: "한 티어 승급", price: "54,000원" }, { tier: 24, name: "IMMORTAL 불멸 1", sub: "한 티어 승급", price: "75,000원" }, { tier: 25, name: "IMMORTAL 불멸 2", sub: "한 티어 승급", price: "85,000원" }, { tier: 26, name: "IMMORTAL 불멸 3", sub: "한 티어 승급", price: "95,000원" }, { tier: 27, name: "RADIANT 레디언트", sub: "상담 필요", price: "문의", ask: true } ]; const carousel = document.getElementById("carousel"); const scene = document.getElementById("packageScene"); const dots = [...document.querySelectorAll("#navDots button")]; const activeHud = document.getElementById("activeHud"); function rowTemplate(row) { return ` <div class="price-row"> <img class="rank-icon" src="${rankIcon(row.tier)}" alt="${row.name}" loading="eager" decoding="async" /> <div class="rank-name">${row.name}<small>${row.sub}</small></div> <div class="price ${row.ask ? "ask" : ""}">${row.price}</div> </div> `; } function panelTemplate(title, subtitle, rows) { return ` <div class="price-panel"> <div class="price-panel-head"> <h3>${title}</h3> <span>${subtitle}</span> </div> <div class="price-list"> ${rows.map(rowTemplate).join("")} </div> </div> `; } function packageTemplate(data) { return ` <article class="package-card" data-index="${data.index}" data-name="${data.hud}"> <div class="card-accent"></div> <header class="package-head"> <div> <div class="package-chip">${data.chip}</div> <h2 class="package-name">${data.name}</h2> <p class="package-sub">${data.desc}</p> </div> <div class="package-summary"> ${data.summary.map(item => ` <div class="summary-box"> <strong>${item.label}</strong> <span class="${item.gold ? "gold" : ""}">${item.value}</span> </div> `).join("")} </div> </header> <section class="package-body"> ${panelTemplate(data.leftTitle, data.leftSub, data.leftRows)} ${panelTemplate(data.rightTitle, data.rightSub, data.rightRows)} </section> <div class="card-bottom"> <div class="service-chips"> ${data.chips.map(chip => `<span class="service-chip">${chip}</span>`).join("")} </div> <button class="apply-button">신청하기</button> </div> <div class="watermark">${data.mark}</div> </article> `; } function duoTemplate() { return ` <article class="package-card" data-index="2" data-name="DUO"> <div class="card-accent"></div> <header class="package-head"> <div> <div class="package-chip">듀오제 패키지</div> <h2 class="package-name">듀오제</h2> <p class="package-sub"> 고객 계정으로 직접 플레이하며 기사와 함께 진행하는 동행형 패키지입니다. 화면공유, 피드백, 구간별 맞춤 운영을 원하는 경우에 적합합니다. </p> </div> <div class="package-summary"> <div class="summary-box"> <strong>방식</strong> <span>함께 진행</span> </div> <div class="summary-box"> <strong>추천 대상</strong> <span class="gold">피드백 희망</span> </div> <div class="summary-box"> <strong>가격</strong> <span>상담 후 확정</span> </div> <div class="summary-box"> <strong>진행</strong> <span>예약제 가능</span> </div> </div> </header> <section class="package-body duo-layout"> <div class="duo-panel"> <div class="duo-feature"> <h3>듀오제 구성</h3> <ul> <li>기사와 함께 큐를 잡고 실시간으로 구간을 진행합니다.</li> <li>포지션, 요원, 맵 숙련도에 맞춰 진행 방식을 조율합니다.</li> <li>화면공유가 가능한 기사와 매칭 시 플레이 피드백을 받을 수 있습니다.</li> <li>단순 승리 목적뿐 아니라 실력 향상 목적의 진행도 가능합니다.</li> <li>고티어 구간은 기사 스케줄에 따라 예약제로 운영됩니다.</li> </ul> </div> <div class="duo-quote"> <div class="quote-box"> <strong>Recommended</strong> <span>승당제 기준 + 듀오 옵션</span> <p>현재 티어, 목표 티어, 시간대, 화면공유 여부에 따라 견적이 달라집니다.</p> </div> <div class="quote-box"> <strong>Premium Duo</strong> <span>강의형 진행 가능</span> <p>고티어 기사와 함께 플레이하면서 운영, 교전, 요원 선택까지 피드백 받을 수 있습니다.</p> </div> <div class="quote-box"> <strong>Contact</strong> <span>상담 후 가격 확정</span> <p>정확한 금액은 가격표 탭에서 확인하고, 이 영역은 패키지 선택 유도용으로 쓰면 됩니다.</p> </div> </div> </div> </section> <div class="card-bottom"> <div class="service-chips"> <span class="service-chip">실시간 동행</span> <span class="service-chip">피드백 가능</span> <span class="service-chip">예약제</span> <span class="service-chip">화면공유</span> </div> <button class="apply-button">상담하기</button> </div> <div class="watermark">DUO</div> </article> `; } const packages = [ { index: 0, hud: "PER-WIN", chip: "승당제 패키지", name: "승당제", desc: "2승 1패 = 1승 기준으로 계산되는 단기형 패키지입니다. 필요한 구간만 빠르게 진행하고 싶을 때 적합합니다.", summary: [ { label: "기준", value: "2승 1패 = 1승" }, { label: "저티어 시작", value: "3,000원", gold: true }, { label: "고티어 시작", value: "14,000원", gold: true }, { label: "레디언트", value: "문의" } ], leftTitle: "저티어 구간", leftSub: "아이언부터 다이아까지", leftRows: winLow, rightTitle: "고티어 구간", rightSub: "초월자부터 레디언트까지", rightRows: winHigh, chips: ["단기 진행", "1승 기준", "빠른 견적"], mark: "WIN" }, { index: 1, hud: "PROMOTION", chip: "승급제 패키지", name: "승급제", desc: "기준 MMR 슬롯 20점 기준, 한 티어 승급 단위로 진행되는 패키지입니다. 목표 티어까지 안정적으로 올리고 싶을 때 적합합니다.", summary: [ { label: "기준", value: "한 티어 승급" }, { label: "저티어 시작", value: "9,000원", gold: true }, { label: "고티어 시작", value: "42,000원", gold: true }, { label: "레디언트", value: "문의" } ], leftTitle: "저티어 구간", leftSub: "아이언부터 다이아까지", leftRows: upLow, rightTitle: "고티어 구간", rightSub: "초월자부터 레디언트까지", rightRows: upHigh, chips: ["목표 티어", "승급 단위", "안정 진행"], mark: "UP" } ]; carousel.innerHTML = packages.map(packageTemplate).join("") + duoTemplate(); const cards = [...document.querySelectorAll(".package-card")]; const imageUrls = [ ...new Set( [...winLow, ...winHigh, ...upLow, ...upHigh].map(row => rankIcon(row.tier)) ) ]; imageUrls.forEach(src => { const img = new Image(); img.src = src; }); const STATE = { rotation: 0, target: null, autoDegreesPerSecond: 7.5, radius: 690, isDragging: false, startX: 0, startRotation: 0, lastInteract: performance.now(), activeIndex: 0, lastTime: performance.now() }; const labels = ["PER-WIN", "PROMOTION", "DUO"]; function normalizeAngle(deg) { return ((deg % 360) + 360) % 360; } function getActiveIndex(rotation) { const normalized = normalizeAngle(-rotation); return Math.round(normalized / 120) % 3; } function closestTargetForIndex(index, fromRotation) { const base = -index * 120; const k = Math.round((fromRotation - base) / 360); return base + k * 360; } function goTo(index) { STATE.target = closestTargetForIndex(index, STATE.rotation); STATE.lastInteract = performance.now(); } function updateCardTransforms() { cards.forEach((card, index) => { const cardAngle = index * 120 + STATE.rotation; const rad = cardAngle * Math.PI / 180; const front = Math.cos(rad); const visible = Math.max(front, 0); const side = Math.abs(Math.sin(rad)); const opacity = 0.12 + visible * 0.88; const scale = 0.86 + visible * 0.12; const lift = visible * 42; const dim = 0.54 + visible * 0.46; card.style.transform = ` translate3d(-50%, -50%, 0) rotateY(${cardAngle}deg) translateZ(${STATE.radius + lift}px) scale(${scale}) `; card.style.opacity = opacity; card.style.pointerEvents = front > 0.78 ? "auto" : "none"; card.style.setProperty("--dim", dim); if (front > 0.78) { card.classList.add("is-active"); } else { card.classList.remove("is-active"); } }); const activeIndex = getActiveIndex(STATE.rotation); if (activeIndex !== STATE.activeIndex) { STATE.activeIndex = activeIndex; dots.forEach((dot, index) => { dot.classList.toggle("is-active", index === activeIndex); }); activeHud.textContent = labels[activeIndex]; } } function render(now) { const delta = Math.min((now - STATE.lastTime) / 1000, 0.033); STATE.lastTime = now; const idle = now - STATE.lastInteract; if (!STATE.isDragging && STATE.target === null && idle > 1400) { STATE.rotation -= STATE.autoDegreesPerSecond * delta; } if (STATE.target !== null && !STATE.isDragging) { const diff = STATE.target - STATE.rotation; const ease = 1 - Math.pow(0.0008, delta); STATE.rotation += diff * ease; if (Math.abs(diff) < 0.03) { STATE.rotation = STATE.target; STATE.target = null; } } updateCardTransforms(); requestAnimationFrame(render); } function onPointerDown(event) { if (event.target.closest('.price-calculator')) return; STATE.isDragging = true; STATE.target = null; STATE.startX = event.clientX; STATE.startRotation = STATE.rotation; STATE.lastInteract = performance.now(); document.body.classList.add("dragging"); scene.setPointerCapture?.(event.pointerId); } function onPointerMove(event) { if (!STATE.isDragging) return; const diffX = event.clientX - STATE.startX; STATE.rotation = STATE.startRotation + diffX * 0.28; STATE.lastInteract = performance.now(); } function onPointerUp(event) { if (!STATE.isDragging) return; STATE.isDragging = false; STATE.lastInteract = performance.now(); document.body.classList.remove("dragging"); const active = getActiveIndex(STATE.rotation); goTo(active); scene.releasePointerCapture?.(event.pointerId); } scene.addEventListener("pointerdown", onPointerDown); scene.addEventListener("pointermove", onPointerMove); scene.addEventListener("pointerup", onPointerUp); scene.addEventListener("pointercancel", onPointerUp); scene.addEventListener("mouseleave", onPointerUp); dots.forEach(dot => { dot.addEventListener("click", () => { goTo(Number(dot.dataset.go)); }); }); updateCardTransforms(); requestAnimationFrame(render); 
+</main> <script> const TIER_UUID = "03621f52-342b-cf4e-4f86-9350a49c6d04"; const TIER_BASE = `https://media.valorant-api.com/competitivetiers/${TIER_UUID}`; const rankIcon = (tier) => `${TIER_BASE}/${tier}/largeicon.png`; const winLow = [ { tier: 5, name: "IRON 아이언", sub: "1승당", price: "3,000원" }, { tier: 8, name: "BRONZE 브론즈", sub: "1승당", price: "4,000원" }, { tier: 11, name: "SILVER 실버", sub: "1승당", price: "5,000원" }, { tier: 14, name: "GOLD 골드", sub: "1승당", price: "6,000원" }, { tier: 17, name: "PLATINUM 플래티넘", sub: "1승당", price: "8,000원" }, { tier: 20, name: "DIAMOND 다이아", sub: "1승당", price: "10,000원" } ]; const winHigh = [ { tier: 21, name: "ASCENDANT 초월자 1", sub: "1승당", price: "14,000원" }, { tier: 22, name: "ASCENDANT 초월자 2", sub: "1승당", price: "16,000원" }, { tier: 23, name: "ASCENDANT 초월자 3", sub: "1승당", price: "18,000원" }, { tier: 24, name: "IMMORTAL 불멸 1", sub: "1승당", price: "25,000원" }, { tier: 25, name: "IMMORTAL 불멸 2", sub: "1승당", price: "30,000원" }, { tier: 26, name: "IMMORTAL 불멸 3", sub: "1승당", price: "35,000원" }, { tier: 27, name: "RADIANT 레디언트", sub: "상담 필요", price: "문의", ask: true } ]; const upLow = [ { tier: 5, name: "IRON 아이언", sub: "한 티어 승급", price: "9,000원" }, { tier: 8, name: "BRONZE 브론즈", sub: "한 티어 승급", price: "12,000원" }, { tier: 11, name: "SILVER 실버", sub: "한 티어 승급", price: "15,000원" }, { tier: 14, name: "GOLD 골드", sub: "한 티어 승급", price: "18,000원" }, { tier: 17, name: "PLATINUM 플래티넘", sub: "한 티어 승급", price: "24,000원" }, { tier: 20, name: "DIAMOND 다이아", sub: "한 티어 승급", price: "30,000원" } ]; const upHigh = [ { tier: 21, name: "ASCENDANT 초월자 1", sub: "한 티어 승급", price: "42,000원" }, { tier: 22, name: "ASCENDANT 초월자 2", sub: "한 티어 승급", price: "48,000원" }, { tier: 23, name: "ASCENDANT 초월자 3", sub: "한 티어 승급", price: "54,000원" }, { tier: 24, name: "IMMORTAL 불멸 1", sub: "한 티어 승급", price: "75,000원" }, { tier: 25, name: "IMMORTAL 불멸 2", sub: "한 티어 승급", price: "85,000원" }, { tier: 26, name: "IMMORTAL 불멸 3", sub: "한 티어 승급", price: "95,000원" }, { tier: 27, name: "RADIANT 레디언트", sub: "상담 필요", price: "문의", ask: true } ]; const carousel = document.getElementById("carousel"); const scene = document.getElementById("packageScene"); const dots = [...document.querySelectorAll("#navDots button")]; const activeHud = document.getElementById("activeHud"); function rowTemplate(row) { return ` <div class="price-row"> <img class="rank-icon" src="${rankIcon(row.tier)}" alt="${row.name}" loading="eager" decoding="async" /> <div class="rank-name">${row.name}<small>${row.sub}</small></div> <div class="price ${row.ask ? "ask" : ""}">${row.price}</div> </div> `; } function panelTemplate(title, subtitle, rows) { return ` <div class="price-panel"> <div class="price-panel-head"> <h3>${title}</h3> <span>${subtitle}</span> </div> <div class="price-list"> ${rows.map(rowTemplate).join("")} </div> </div> `; } function packageTemplate(data) { return ` <article class="package-card" data-index="${data.index}" data-name="${data.hud}"> <div class="card-accent"></div> <header class="package-head"> <div> <div class="package-chip">${data.chip}</div> <h2 class="package-name">${data.name}</h2> <p class="package-sub">${data.desc}</p> </div> <div class="package-summary"> ${data.summary.map(item => ` <div class="summary-box"> <strong>${item.label}</strong> <span class="${item.gold ? "gold" : ""}">${item.value}</span> </div> `).join("")} </div> </header> <section class="package-body"> ${panelTemplate(data.leftTitle, data.leftSub, data.leftRows)} ${panelTemplate(data.rightTitle, data.rightSub, data.rightRows)} </section> <div class="card-bottom"> <div class="service-chips"> ${data.chips.map(chip => `<span class="service-chip">${chip}</span>`).join("")} </div> <button class="apply-button">신청하기</button> </div> <div class="watermark">${data.mark}</div> </article> `; } function duoTemplate() { return ` <article class="package-card" data-index="2" data-name="DUO"> <div class="card-accent"></div> <header class="package-head"> <div> <div class="package-chip">듀오제 패키지</div> <h2 class="package-name">듀오제</h2> <p class="package-sub"> 고객 계정으로 직접 플레이하며 기사와 함께 진행하는 동행형 패키지입니다. 화면공유, 피드백, 구간별 맞춤 운영을 원하는 경우에 적합합니다. </p> </div> <div class="package-summary"> <div class="summary-box"> <strong>방식</strong> <span>함께 진행</span> </div> <div class="summary-box"> <strong>추천 대상</strong> <span class="gold">피드백 희망</span> </div> <div class="summary-box"> <strong>가격</strong> <span>상담 후 확정</span> </div> <div class="summary-box"> <strong>진행</strong> <span>예약제 가능</span> </div> </div> </header> <section class="package-body duo-layout"> <div class="duo-panel"> <div class="duo-feature"> <h3>듀오제 구성</h3> <ul> <li>기사와 함께 큐를 잡고 실시간으로 구간을 진행합니다.</li> <li>포지션, 요원, 맵 숙련도에 맞춰 진행 방식을 조율합니다.</li> <li>화면공유가 가능한 기사와 매칭 시 플레이 피드백을 받을 수 있습니다.</li> <li>단순 승리 목적뿐 아니라 실력 향상 목적의 진행도 가능합니다.</li> <li>고티어 구간은 기사 스케줄에 따라 예약제로 운영됩니다.</li> </ul> </div> <div class="duo-quote"> <div class="quote-box"> <strong>Recommended</strong> <span>승당제 기준 + 듀오 옵션</span> <p>현재 티어, 목표 티어, 시간대, 화면공유 여부에 따라 견적이 달라집니다.</p> </div> <div class="quote-box"> <strong>Premium Duo</strong> <span>강의형 진행 가능</span> <p>고티어 기사와 함께 플레이하면서 운영, 교전, 요원 선택까지 피드백 받을 수 있습니다.</p> </div> <div class="quote-box"> <strong>Contact</strong> <span>상담 후 가격 확정</span> <p>정확한 금액은 가격표 탭에서 확인하고, 이 영역은 패키지 선택 유도용으로 쓰면 됩니다.</p> </div> </div> </div> </section> <div class="card-bottom"> <div class="service-chips"> <span class="service-chip">실시간 동행</span> <span class="service-chip">피드백 가능</span> <span class="service-chip">예약제</span> <span class="service-chip">화면공유</span> </div> <button class="apply-button">상담하기</button> </div> <div class="watermark">DUO</div> </article> `; } const packages = [ { index: 0, hud: "PER-WIN", chip: "승당제 패키지", name: "승당제", desc: "2승 1패 = 1승 기준으로 계산되는 단기형 패키지입니다. 필요한 구간만 빠르게 진행하고 싶을 때 적합합니다.", summary: [ { label: "기준", value: "2승 1패 = 1승" }, { label: "저티어 시작", value: "3,000원", gold: true }, { label: "고티어 시작", value: "14,000원", gold: true }, { label: "레디언트", value: "문의" } ], leftTitle: "저티어 구간", leftSub: "아이언부터 다이아까지", leftRows: winLow, rightTitle: "고티어 구간", rightSub: "초월자부터 레디언트까지", rightRows: winHigh, chips: ["단기 진행", "1승 기준", "빠른 견적"], mark: "WIN" }, { index: 1, hud: "PROMOTION", chip: "승급제 패키지", name: "승급제", desc: "기준 MMR 슬롯 20점 기준, 한 티어 승급 단위로 진행되는 패키지입니다. 목표 티어까지 안정적으로 올리고 싶을 때 적합합니다.", summary: [ { label: "기준", value: "한 티어 승급" }, { label: "저티어 시작", value: "9,000원", gold: true }, { label: "고티어 시작", value: "42,000원", gold: true }, { label: "레디언트", value: "문의" } ], leftTitle: "저티어 구간", leftSub: "아이언부터 다이아까지", leftRows: upLow, rightTitle: "고티어 구간", rightSub: "초월자부터 레디언트까지", rightRows: upHigh, chips: ["목표 티어", "승급 단위", "안정 진행"], mark: "UP" } ]; carousel.innerHTML = packages.map(packageTemplate).join("") + duoTemplate(); const cards = [...document.querySelectorAll(".package-card")]; const imageUrls = [ ...new Set( [...winLow, ...winHigh, ...upLow, ...upHigh].map(row => rankIcon(row.tier)) ) ]; imageUrls.forEach(src => { const img = new Image(); img.src = src; }); const STATE = { rotation: 0, target: null, autoDegreesPerSecond: 7.5, radius: 690, isDragging: false, startX: 0, startRotation: 0, lastInteract: performance.now(), activeIndex: 0, lastTime: performance.now() }; const labels = ["PER-WIN", "PROMOTION", "DUO"]; function normalizeAngle(deg) { return ((deg % 360) + 360) % 360; } function getActiveIndex(rotation) { const normalized = normalizeAngle(-rotation); return Math.round(normalized / 120) % 3; } function closestTargetForIndex(index, fromRotation) { const base = -index * 120; const k = Math.round((fromRotation - base) / 360); return base + k * 360; } function goTo(index) { STATE.target = closestTargetForIndex(index, STATE.rotation); STATE.lastInteract = performance.now(); } function updateCardTransforms() { cards.forEach((card, index) => { const cardAngle = index * 120 + STATE.rotation; const rad = cardAngle * Math.PI / 180; const front = Math.cos(rad); const visible = Math.max(front, 0); const side = Math.abs(Math.sin(rad)); const opacity = front > 0.06 ? 1 : 0; const scale = 0.86 + visible * 0.12; const lift = visible * 42; const dim = 0.54 + visible * 0.46; card.style.transform = ` translate3d(-50%, -50%, 0) rotateY(${cardAngle}deg) translateZ(${STATE.radius + lift}px) scale(${scale}) `; card.style.opacity = opacity; card.style.pointerEvents = front > 0.45 ? "auto" : "none"; card.style.setProperty("--dim", dim); if (front > 0.45) { card.classList.add("is-active"); } else { card.classList.remove("is-active"); } }); const activeIndex = getActiveIndex(STATE.rotation); if (activeIndex !== STATE.activeIndex) { STATE.activeIndex = activeIndex; dots.forEach((dot, index) => { dot.classList.toggle("is-active", index === activeIndex); }); activeHud.textContent = labels[activeIndex]; } } function render(now) { const delta = Math.min((now - STATE.lastTime) / 1000, 0.033); STATE.lastTime = now; const idle = now - STATE.lastInteract; if (!STATE.isDragging && STATE.target === null && idle > 1400) { STATE.rotation -= STATE.autoDegreesPerSecond * delta; } if (STATE.target !== null && !STATE.isDragging) { const diff = STATE.target - STATE.rotation; const ease = 1 - Math.pow(0.0008, delta); STATE.rotation += diff * ease; if (Math.abs(diff) < 0.03) { STATE.rotation = STATE.target; STATE.target = null; } } updateCardTransforms(); requestAnimationFrame(render); } function onPointerDown(event) { if (event.target.closest('.price-calculator')) return; STATE.isDragging = true; STATE.target = null; STATE.startX = event.clientX; STATE.startRotation = STATE.rotation; STATE.lastInteract = performance.now(); document.body.classList.add("dragging"); scene.setPointerCapture?.(event.pointerId); } function onPointerMove(event) { if (!STATE.isDragging) return; const diffX = event.clientX - STATE.startX; STATE.rotation = STATE.startRotation + diffX * 0.28; STATE.lastInteract = performance.now(); } function onPointerUp(event) { if (!STATE.isDragging) return; STATE.isDragging = false; STATE.lastInteract = performance.now(); document.body.classList.remove("dragging"); const active = getActiveIndex(STATE.rotation); goTo(active); scene.releasePointerCapture?.(event.pointerId); } scene.addEventListener("pointerdown", onPointerDown); scene.addEventListener("pointermove", onPointerMove); scene.addEventListener("pointerup", onPointerUp); scene.addEventListener("pointercancel", onPointerUp); scene.addEventListener("mouseleave", onPointerUp); dots.forEach(dot => { dot.addEventListener("click", () => { goTo(Number(dot.dataset.go)); }); }); updateCardTransforms(); requestAnimationFrame(render); 
   /* ===== 독립 계산기 JS: 기존 3D 카드 JS는 건드리지 않음 ===== */
   const CALC_WIN_ROWS = [
     { tier: 5,  name: "IRON 아이언", price: 3000 },
