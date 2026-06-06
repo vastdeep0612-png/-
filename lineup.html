@@ -1054,12 +1054,8 @@
             width: calc(var(--bh-logo-width) * 3) !important;
             height: var(--bh-logo-height) !important;
             transform: translate3d(0, 0, 0);
-            transition: transform 760ms cubic-bezier(0.22, 1, 0.36, 1), filter 760ms cubic-bezier(0.22, 1, 0.36, 1) !important;
-            will-change: transform, filter !important;
-        }
-
-        .bh-logo-slider.is-switching .bh-logo-track {
-            filter: blur(0.8px) !important;
+            transition: transform 760ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+            will-change: transform !important;
         }
 
         .bh-logo-item {
@@ -1117,7 +1113,133 @@
             }
         }
 
-    </style>
+
+    /* ===== final: 카테고리/로고/메인문구 폰트 최종 통일 ===== */
+    @font-face {
+      font-family: 'NanumSquareRound';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+      font-weight: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'BookkMyungjo';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    :root {
+      --logo-premium-blue: #2f6dff;
+      --logo-premium-blue-glow: rgba(47, 109, 255, 0.30);
+    }
+
+    /* 상단 카테고리 탭 글씨체 전체 통일 */
+    header nav,
+    header nav ul,
+    header nav li,
+    header nav a,
+    header .site-nav,
+    header .site-nav ul,
+    header .site-nav li,
+    header .site-nav a,
+    header .nav-link,
+    header .nav-price-trigger,
+    header .nav-driver-trigger,
+    header .site-nav-trigger,
+    header .price-dropdown a,
+    header .driver-dropdown a,
+    header .site-dropdown a {
+      font-family: 'NanumSquareRound', 'Pretendard', 'Noto Sans KR', system-ui, sans-serif !important;
+      font-weight: normal !important;
+      letter-spacing: -0.015em !important;
+    }
+
+    header nav a,
+    header .site-nav a,
+    header .nav-link,
+    header .nav-price-trigger,
+    header .nav-driver-trigger,
+    header .site-nav-trigger {
+      font-size: 15px !important;
+      line-height: 1 !important;
+    }
+
+    header .price-dropdown a,
+    header .driver-dropdown a,
+    header .site-dropdown a {
+      font-size: 15px !important;
+      line-height: 1.2 !important;
+    }
+
+    /* 왼쪽 로고: VLRT 제거 후 1oohyunTeam만 고급 파란색 */
+    .logo-main,
+    .logo-main span,
+    .site-logo-main,
+    .site-logo-main span,
+    .bh-logo-item,
+    .bh-logo-item span {
+      color: var(--logo-premium-blue) !important;
+      text-shadow:
+        0 0 16px var(--logo-premium-blue-glow),
+        0 0 34px rgba(47, 109, 255, 0.12) !important;
+    }
+
+    .bh-logo-item:not(.bh-logo-korean),
+    .logo-main,
+    .site-logo-main {
+      font-family: 'BookkMyungjo', serif !important;
+      font-weight: 700 !important;
+    }
+
+    /* 로비 메인 중앙 문구: 발로란트 대리 백현팀 */
+    .hero-text-box h1 {
+      font-family: 'BookkMyungjo', serif !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.035em !important;
+    }
+
+    /* 백현팀 이용 TIP 섹션 */
+    .section-tips,
+    .section-tips * {
+      font-family: 'NanumSquareRound', 'Pretendard', 'Noto Sans KR', system-ui, sans-serif !important;
+      font-weight: normal !important;
+    }
+
+    .tips-heading h2 {
+      font-family: 'NanumSquareRound', 'Pretendard', 'Noto Sans KR', system-ui, sans-serif !important;
+      font-weight: normal !important;
+      letter-spacing: -0.035em !important;
+    }
+
+
+    /* ===== final: 로고 전환 블러 완전 제거 ===== */
+    .bh-logo-slider,
+    .bh-logo-track,
+    .bh-logo-item,
+    .bh-logo-item span,
+    .logo-main,
+    .logo-main span,
+    .site-logo-main,
+    .site-logo-main span {
+      filter: none !important;
+      -webkit-filter: none !important;
+      text-rendering: geometricPrecision !important;
+      -webkit-font-smoothing: antialiased !important;
+      transform-style: flat !important;
+    }
+
+    .bh-logo-track {
+      transition: transform 760ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+      will-change: transform !important;
+    }
+
+    .bh-logo-slider.is-switching .bh-logo-track {
+      filter: none !important;
+      -webkit-filter: none !important;
+    }
+
+</style>
 </head>
 
 <body>
@@ -1127,15 +1249,15 @@
 
         <div class="site-logo-sub">대리 문의는?</div>
 
-        <div class="site-logo-main bh-logo-slider" data-bh-logo-slider aria-label="VLRT 1oohyunTeam 또는 발로란트 신속대리">
+        <div class="site-logo-main bh-logo-slider" data-bh-logo-slider aria-label="1oohyunTeam 또는 발로란트 신속대리">
 
             <div class="bh-logo-track">
 
-                <div class="bh-logo-item">VLRT <span>1oohyunTeam</span></div>
+                <div class="bh-logo-item"><span>1oohyunTeam</span></div>
 
                 <div class="bh-logo-item bh-logo-korean">발로란트 <span>신속대리</span></div>
 
-                <div class="bh-logo-item" aria-hidden="true">VLRT <span>1oohyunTeam</span></div>
+                <div class="bh-logo-item" aria-hidden="true"><span>1oohyunTeam</span></div>
 
             </div>
 
@@ -1827,7 +1949,7 @@
                     track.style.setProperty(
                         "transition",
                         animated
-                            ? `transform ${MOVE_MS}ms cubic-bezier(0.22, 1, 0.36, 1), filter ${MOVE_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`
+                            ? `transform ${MOVE_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`
                             : "none",
                         "important"
                     );
