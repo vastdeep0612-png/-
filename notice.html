@@ -1,1 +1,1034 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>공지사항 | 백현팀</title>
+  <style>
 
+    @font-face {
+      font-family: 'NanumSquareRound';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+      font-weight: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'BookkMyungjo';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #000000;
+      --panel: #ffffff;
+      --line: rgba(255,255,255,0.10);
+      --text: #f5f7ff;
+      --muted: rgba(235,241,255,0.55);
+      --ink: #07080d;
+      --ink-soft: rgba(7,8,13,0.58);
+      --row-line: rgba(0,0,0,0.08);
+      --blue: #2f6dff;
+      --ruby: #ff2f63;
+      --green: #17bb72;
+      --gold: #d8b572;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: #000;
+      color: var(--text);
+      font-family: 'NanumSquareRound', 'Pretendard', 'Noto Sans KR', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 1000;
+      height: 82px;
+      padding: 0 56px;
+      display: grid;
+      grid-template-columns: minmax(240px, 1fr) auto minmax(240px, 1fr);
+      align-items: center;
+      background: rgba(4, 5, 10, 0.90);
+      border-bottom: 1px solid rgba(255,255,255,0.075);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .logo {
+      justify-self: start;
+      min-width: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.1;
+      outline: none;
+    }
+
+    .logo-sub {
+      margin-bottom: 5px;
+      color: rgba(236, 241, 250, 0.54);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .logo-main {
+      position: relative;
+      width: 260px;
+      height: 30px;
+      overflow: hidden;
+      color: var(--blue);
+      font-family: 'BookkMyungjo', serif;
+      font-size: 22px;
+      font-weight: 700;
+      white-space: nowrap;
+      text-shadow: 0 0 18px rgba(47, 109, 255, 0.26);
+      filter: none !important;
+    }
+
+    .bh-logo-track {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      width: 780px;
+      height: 30px;
+      transform: translate3d(0, 0, 0);
+      transition: transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+      filter: none !important;
+    }
+
+    .bh-logo-item {
+      flex: 0 0 260px;
+      width: 260px;
+      height: 30px;
+      line-height: 30px;
+      color: var(--blue);
+      font-family: 'BookkMyungjo', serif;
+      font-size: 22px;
+      font-weight: 700;
+      white-space: nowrap;
+      filter: none !important;
+    }
+
+    .bh-logo-item span { color: inherit; font: inherit; filter: none !important; }
+
+    nav { justify-self: center; }
+
+    nav ul {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 38px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    nav li {
+      position: relative;
+      height: 82px;
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      color: rgba(236, 241, 250, 0.68);
+      font-size: 15px;
+      letter-spacing: -0.015em;
+      transition: color 180ms ease;
+    }
+
+    nav a:hover, nav a.is-active { color: #fff; }
+
+    .nav-price-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .nav-price-trigger::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
+      opacity: 0.72;
+    }
+
+    .price-dropdown {
+      position: absolute;
+      top: calc(100% - 2px);
+      left: 50%;
+      min-width: 210px;
+      padding: 10px;
+      transform: translateX(-50%) translateY(10px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      border: 1px solid rgba(47, 109, 255, 0.24);
+      border-radius: 14px;
+      background: rgba(7, 10, 20, 0.96);
+      box-shadow: 0 20px 42px rgba(0, 0, 0, 0.46);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+    }
+
+    .price-dropdown::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -12px;
+      height: 12px;
+    }
+
+    .price-dropdown a {
+      min-height: 42px;
+      padding: 0 12px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: rgba(236, 241, 250, 0.78);
+      font-size: 15px;
+    }
+
+    .price-dropdown a::after {
+      content: '›';
+      color: var(--blue);
+      font-size: 18px;
+    }
+
+    .price-dropdown a:hover {
+      color: #fff;
+      background: rgba(47, 109, 255, 0.12);
+    }
+
+    .nav-price-menu:hover .price-dropdown,
+    .nav-price-menu:focus-within .price-dropdown {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .btn-customer {
+      justify-self: end;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 10px 18px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(255,255,255,0.035);
+      font-size: 13px;
+    }
+
+    main {
+      width: min(1200px, calc(100vw - 48px));
+      margin: 0 auto;
+      padding: 112px 0 86px;
+    }
+
+    .page-hero {
+      position: relative;
+      height: 255px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.16) 42%, rgba(0,0,0,0.76) 100%),
+        url('va.gif') center center / cover no-repeat;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.38;
+      background:
+        radial-gradient(circle at 48% 48%, rgba(130, 90, 255, 0.28), transparent 34%),
+        linear-gradient(90deg, rgba(0,0,0,0.52), transparent 36%, rgba(0,0,0,0.48));
+      pointer-events: none;
+    }
+
+    .page-hero::after {
+      content: 'VALORANT';
+      position: absolute;
+      left: -18px;
+      bottom: -40px;
+      color: rgba(255,255,255,0.075);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 150px;
+      font-weight: 900;
+      letter-spacing: -0.08em;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .hero-title-box {
+      position: absolute;
+      right: 58px;
+      top: 45px;
+      text-align: right;
+      z-index: 2;
+    }
+
+    .hero-team {
+      display: block;
+      margin-bottom: 6px;
+      color: #00f5cc;
+      font-size: 18px;
+      font-weight: 700;
+      text-shadow: 0 0 20px rgba(0,245,204,0.36);
+    }
+
+    .hero-title-box h1 {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(42px, 5vw, 72px);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+      font-family: 'NanumSquareRound', 'Pretendard', sans-serif;
+      font-weight: normal;
+      text-shadow: 0 0 34px rgba(255,255,255,0.34);
+    }
+
+    .board-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 0 0 94px;
+      color: rgba(163, 174, 201, 0.76);
+      font-size: 12px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .search-box,
+    .admin-add {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px;
+      border: 0;
+      background: #fff;
+      color: #111;
+      cursor: pointer;
+    }
+
+    .search-box {
+      width: 40px;
+      color: #a7a7a7;
+    }
+
+    .search-box svg { width: 18px; height: 18px; }
+
+    .admin-add {
+      min-width: 86px;
+      padding: 0 14px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .board-card {
+      overflow: hidden;
+      border-radius: 20px;
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 30px 72px rgba(0,0,0,0.38);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    thead th {
+      height: 55px;
+      color: #111;
+      font-size: 13px;
+      font-weight: normal;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    tbody td {
+      height: 60px;
+      padding: 0 12px;
+      color: #111;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(0,0,0,0.075);
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr.notice-pin { background: #fff4f8; }
+    tbody tr:hover { background: #f7f9ff; }
+
+    .col-num { width: 70px; }
+    .col-title { width: auto; }
+    .col-writer { width: 120px; }
+    .col-view { width: 80px; }
+    .col-date { width: 86px; }
+    .col-admin { width: 122px; }
+
+    .title-cell {
+      text-align: left;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+
+    .title-cell:hover { text-decoration: underline; }
+
+    .pin-label {
+      margin-right: 10px;
+      color: var(--ruby);
+      font-weight: 700;
+    }
+
+    .heart { color: #ff1d35; margin-left: 4px; }
+
+    .admin-actions {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .mini-btn {
+      height: 28px;
+      padding: 0 9px;
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 8px;
+      background: #fff;
+      color: #111;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .mini-btn:hover { background: #f2f4f8; }
+    .mini-btn.delete { color: #e9194f; }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 74px;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .status-chip.ready { background: #7d8799; }
+    .status-chip.active { background: #2f6dff; }
+    .status-chip.done { background: #17bb72; }
+    .status-chip.wait { background: #d8a236; color: #111; }
+
+    .progress-wrap { display: grid; gap: 6px; }
+    .progress-line {
+      height: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e9edf5;
+    }
+
+    .progress-line i {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2f6dff, #ff2f63);
+    }
+
+    .progress-text {
+      color: rgba(7,8,13,0.58);
+      font-size: 11px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(0,0,0,0.68);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .modal.is-open { display: flex; }
+
+    .modal-card {
+      width: min(720px, calc(100vw - 32px));
+      max-height: calc(100vh - 48px);
+      overflow: auto;
+      border-radius: 22px;
+      background: #fff;
+      color: #111;
+      box-shadow: 0 28px 90px rgba(0,0,0,0.50);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      padding: 22px 24px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .modal-head h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: -0.04em;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: #f2f4f8;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .detail-chip {
+      display: inline-flex;
+      align-items: center;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: #f0f3f8;
+      color: rgba(7,8,13,0.70);
+      font-size: 12px;
+    }
+
+    .detail-content {
+      color: rgba(7,8,13,0.76);
+      font-size: 14px;
+      line-height: 1.8;
+      white-space: pre-line;
+      word-break: keep-all;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field label {
+      font-size: 12px;
+      color: rgba(7,8,13,0.62);
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 12px;
+      padding: 12px 13px;
+      background: #fff;
+      color: #111;
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 160px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .action-btn {
+      height: 40px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+    }
+
+    .action-btn.secondary {
+      background: #eef1f6;
+      color: #111;
+    }
+
+    .action-btn.danger {
+      background: #ff2f63;
+      color: #fff;
+    }
+
+    @media (max-width: 920px) {
+      .site-header {
+        height: 74px;
+        padding: 0 22px;
+        grid-template-columns: 1fr auto;
+      }
+
+      nav { display: none; }
+
+      main {
+        width: min(100vw - 24px, 760px);
+        padding-top: 96px;
+      }
+
+      .page-hero { height: 210px; }
+      .hero-title-box { right: 28px; top: 44px; }
+      .board-top { margin-bottom: 28px; }
+
+      .board-card { overflow-x: auto; }
+      table { min-width: 980px; }
+    }
+
+    @media (max-width: 560px) {
+      .btn-customer { display: none; }
+      .page-hero::after { font-size: 92px; }
+      .hero-title-box h1 { font-size: 42px; }
+    }
+
+  </style>
+</head>
+<body data-page="notice">
+
+  <header class="site-header">
+    <a class="logo bh-logo" href="index.html" aria-label="홈으로 이동">
+      <div class="logo-sub">대리 문의는?</div>
+      <div class="logo-main" data-bh-logo-slider aria-label="1oohyunTeam 또는 발로란트 신속대리">
+        <div class="bh-logo-track">
+          <div class="bh-logo-item"><span>1oohyunTeam</span></div>
+          <div class="bh-logo-item bh-logo-korean">발로란트 신속대리</div>
+          <div class="bh-logo-item" aria-hidden="true"><span>1oohyunTeam</span></div>
+        </div>
+      </div>
+    </a>
+
+    <nav aria-label="메인 카테고리">
+      <ul>
+        <li><a class="nav-notice is-active" href="notice.html">공지사항</a></li>
+        <li class="nav-price-menu">
+          <a class="nav-price-trigger" href="price.html">가격표</a>
+          <div class="price-dropdown">
+            <a href="price.html">승당제</a>
+            <a href="price.html">승급제</a>
+            <a href="price.html">듀오제</a>
+            <a href="price.html">강의 가격표</a>
+          </div>
+        </li>
+        <li><a href="lineup.html">기사 라인업</a></li>
+        <li><a class="nav-status" href="status.html">작업현황</a></li>
+        <li><a href="index.html#faq">자주 묻는 질문</a></li>
+      </ul>
+    </nav>
+
+    <a class="btn-customer" href="index.html#contact">고객센터</a>
+  </header>
+
+
+  <main>
+    <section class="page-hero">
+      <div class="hero-title-box">
+        <span class="hero-team">발로란트 백현팀</span>
+        <h1>공지,안내 사항</h1>
+      </div>
+    </section>
+
+    <div class="board-top">
+      <span id="totalText">Total 6건 1 페이지</span>
+      <div class="top-actions">
+        <button class="admin-add" type="button" data-admin-add>글쓰기</button>
+        <button class="search-box" type="button" aria-label="검색">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.6 18.2a7.6 7.6 0 1 1 0-15.2 7.6 7.6 0 0 1 0 15.2Z" stroke="currentColor" stroke-width="2"/>
+            <path d="m16.2 16.2 4.4 4.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <section class="board-card" aria-label="공지사항 게시판">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-num">번호</th>
+            <th class="col-title">제목</th>
+            <th class="col-writer">글쓴이</th>
+            <th class="col-view">조회</th>
+            <th class="col-date">날짜</th>
+            <th class="col-admin">관리</th>
+          </tr>
+        </thead>
+        <tbody id="boardBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="detailTitle">제목</h2>
+        <button class="modal-close" type="button" data-close>×</button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-meta" id="detailMeta"></div>
+        <div class="detail-content" id="detailContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="editModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="editTitle">공지 수정</h2>
+        <button class="modal-close" type="button" data-close>×</button>
+      </div>
+      <div class="modal-body">
+        <form class="form-grid" id="editForm">
+          <input type="hidden" id="editId" />
+          <div class="field">
+            <label>번호</label>
+            <input id="editNo" placeholder="예: 공지 또는 1" />
+          </div>
+          <div class="field">
+            <label>제목</label>
+            <input id="editPostTitle" required />
+          </div>
+          <div class="field">
+            <label>내용</label>
+            <textarea id="editContent" required></textarea>
+          </div>
+          <div class="field">
+            <label>글쓴이</label>
+            <input id="editWriter" value="최고관리자" />
+          </div>
+          <div class="field">
+            <label>조회</label>
+            <input id="editViews" type="number" min="0" />
+          </div>
+          <div class="field">
+            <label>날짜</label>
+            <input id="editDate" placeholder="예: 06-06" />
+          </div>
+          <div class="field">
+            <label>상단 고정</label>
+            <select id="editPinned">
+              <option value="false">아니오</option>
+              <option value="true">예</option>
+            </select>
+          </div>
+          <div class="modal-actions">
+            <button class="action-btn secondary" type="button" data-close>취소</button>
+            <button class="action-btn" type="submit">저장</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+  (() => {
+    const initLogoSlider = () => {
+      document.querySelectorAll("[data-bh-logo-slider]").forEach((slider) => {
+        if (slider.dataset.ready === "1") return;
+        slider.dataset.ready = "1";
+
+        const track = slider.querySelector(".bh-logo-track");
+        if (!track) return;
+
+        let index = 0;
+        let locked = false;
+        const HOLD_MS = 2300;
+        const MOVE_MS = 760;
+
+        const moveTo = (nextIndex, animated) => {
+          const width = slider.getBoundingClientRect().width || 260;
+          track.style.transition = animated ? `transform ${MOVE_MS}ms cubic-bezier(0.22, 1, 0.36, 1)` : "none";
+          track.style.transform = `translate3d(${-width * nextIndex}px, 0, 0)`;
+        };
+
+        const next = () => {
+          if (locked) return;
+          locked = true;
+          index += 1;
+          moveTo(index, true);
+
+          window.setTimeout(() => {
+            if (index >= 2) {
+              index = 0;
+              moveTo(0, false);
+              void track.offsetWidth;
+            }
+            locked = false;
+          }, MOVE_MS + 40);
+        };
+
+        moveTo(0, false);
+        window.setInterval(next, HOLD_MS);
+        window.addEventListener("resize", () => moveTo(index, false));
+      });
+    };
+
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initLogoSlider);
+    else initLogoSlider();
+  })();
+</script>
+
+
+<script>
+  const ADMIN_PASSWORD = "vd0612";
+  const STORAGE_KEY = "baekhyeon_notice_posts_v1";
+
+  const defaultItems = [
+    {
+      id: "n0",
+      no: "공지",
+      title: "백현팀 레디언트 이상 기사님 모집중",
+      content: "백현팀에서 레디언트 이상 기사님을 모집합니다.\n\n지원 조건은 레디언트 이상 인증 가능, 기본적인 상담 예절, 작업 시간 조율 가능 여부입니다.\n\n지원 문의는 고객센터 또는 카카오톡 상담으로 남겨주세요.",
+      writer: "최고관리자",
+      views: 9423,
+      date: "09-06",
+      pinned: true
+    },
+    {
+      id: "n5",
+      no: "5",
+      title: "자주 여쭤보시는 질문 정리",
+      content: "Q. 작업은 언제 시작되나요?\nA. 상담 후 기사 배정이 완료되면 시작됩니다.\n\nQ. 가격은 고정인가요?\nA. 기본 가격표 기준이지만 MMR, 시간대, 요청 방식에 따라 상담 후 조정될 수 있습니다.\n\nQ. 듀오제와 강의제도 가능한가요?\nA. 가능합니다. 가격표에서 듀오제와 강의제 카드 확인 후 상담주세요.",
+      writer: "최고관리자",
+      views: 9961,
+      date: "09-02",
+      pinned: false
+    },
+    {
+      id: "n4",
+      no: "4",
+      title: "환불 규정에 관한 안내",
+      content: "작업 시작 전에는 상담 내용에 따라 취소 및 환불 안내가 가능합니다.\n\n작업이 이미 시작된 경우 진행된 구간, 기사 배정 상태, 예약 시간에 따라 환불 가능 여부가 달라집니다.\n\n정확한 환불 기준은 상담 시 다시 안내드립니다.",
+      writer: "최고관리자",
+      views: 8151,
+      date: "09-02",
+      pinned: false
+    },
+    {
+      id: "n3",
+      no: "3",
+      title: "계좌이체 / 카카오페이 / 문화권 / 카드결제 / 문상결제 가능",
+      content: "백현팀은 여러 결제 방식을 지원합니다.\n\n가능 방식: 계좌이체, 카카오페이, 문화상품권, 카드결제, 문상결제\n\n결제 방식에 따라 확인 시간이 조금 달라질 수 있으니 상담 시 원하는 결제 방식을 말씀해주세요.",
+      writer: "최고관리자",
+      views: 9109,
+      date: "09-02",
+      pinned: false
+    },
+    {
+      id: "n2",
+      no: "2",
+      title: "[이벤트] 듀오제강의 15+1판 서비스",
+      content: "듀오제 강의 15판 진행 시 1판 서비스를 제공하는 이벤트입니다.\n\n플레이 피드백, 포지션 피드백, 맵별 운영 피드백이 필요한 분들에게 추천드립니다.",
+      writer: "최고관리자",
+      views: 7741,
+      date: "09-02",
+      pinned: false
+    },
+    {
+      id: "n1",
+      no: "1",
+      title: "[이벤트] 승당제강의 15+1승 서비스 진행",
+      content: "승당제 또는 강의제 패키지 이용 고객 대상으로 15+1 이벤트를 진행합니다.\n\n구간, 시간대, 기사 스케줄에 따라 적용 가능 여부가 달라질 수 있으니 상담 시 이벤트 적용 가능 여부를 확인해주세요.",
+      writer: "최고관리자",
+      views: 7455,
+      date: "09-02",
+      pinned: false
+    }
+  ];
+
+  let items = loadItems();
+
+  function loadItems() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch (error) {}
+    return defaultItems;
+  }
+
+  function saveItems() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }
+
+  function requireAdmin() {
+    const input = window.prompt("관리자 비밀번호를 입력하세요.");
+    return input === ADMIN_PASSWORD;
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (char) => {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char];
+    });
+  }
+
+  function render() {
+    const body = document.getElementById("boardBody");
+    const sorted = [...items].sort((a, b) => Number(b.pinned) - Number(a.pinned));
+    document.getElementById("totalText").textContent = `Total ${items.length}건 1 페이지`;
+
+    body.innerHTML = sorted.map((item) => `
+      <tr class="${item.pinned ? "notice-pin" : ""}">
+        <td class="col-num">${item.pinned ? '<span class="pin-label">공지</span>' : escapeHtml(item.no)}</td>
+        <td class="title-cell" data-view="${item.id}">${escapeHtml(item.title)}<span class="heart">♥</span></td>
+        <td>${escapeHtml(item.writer)}</td>
+        <td>${Number(item.views || 0).toLocaleString("ko-KR")}</td>
+        <td>${escapeHtml(item.date)}</td>
+        <td>
+          <div class="admin-actions">
+            <button class="mini-btn" type="button" data-edit="${item.id}">수정</button>
+            <button class="mini-btn delete" type="button" data-delete="${item.id}">삭제</button>
+          </div>
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  function openDetail(id) {
+    const item = items.find((entry) => entry.id === id);
+    if (!item) return;
+
+    document.getElementById("detailTitle").textContent = item.title;
+    document.getElementById("detailMeta").innerHTML = `
+      <span class="detail-chip">번호 ${escapeHtml(item.no)}</span>
+      <span class="detail-chip">글쓴이 ${escapeHtml(item.writer)}</span>
+      <span class="detail-chip">조회 ${Number(item.views || 0).toLocaleString("ko-KR")}</span>
+      <span class="detail-chip">날짜 ${escapeHtml(item.date)}</span>
+    `;
+    document.getElementById("detailContent").textContent = item.content;
+    openModal("detailModal");
+  }
+
+  function openEditor(id = null) {
+    if (!requireAdmin()) {
+      alert("비밀번호가 틀렸습니다.");
+      return;
+    }
+
+    const item = id ? items.find((entry) => entry.id === id) : null;
+    document.getElementById("editTitle").textContent = item ? "공지 수정" : "공지 작성";
+    document.getElementById("editId").value = item?.id || "";
+    document.getElementById("editNo").value = item?.no || String(items.length + 1);
+    document.getElementById("editPostTitle").value = item?.title || "";
+    document.getElementById("editContent").value = item?.content || "";
+    document.getElementById("editWriter").value = item?.writer || "최고관리자";
+    document.getElementById("editViews").value = item?.views ?? 0;
+    document.getElementById("editDate").value = item?.date || new Date().toISOString().slice(5, 10).replace("-", "-");
+    document.getElementById("editPinned").value = String(Boolean(item?.pinned));
+    openModal("editModal");
+  }
+
+  function deleteItem(id) {
+    if (!requireAdmin()) {
+      alert("비밀번호가 틀렸습니다.");
+      return;
+    }
+
+    if (!confirm("정말 삭제할까요?")) return;
+    items = items.filter((entry) => entry.id !== id);
+    saveItems();
+    render();
+  }
+
+  function openModal(id) {
+    document.getElementById(id).classList.add("is-open");
+  }
+
+  function closeModals() {
+    document.querySelectorAll(".modal").forEach((modal) => modal.classList.remove("is-open"));
+  }
+
+  document.addEventListener("click", (event) => {
+    const viewId = event.target.closest("[data-view]")?.dataset.view;
+    const editId = event.target.closest("[data-edit]")?.dataset.edit;
+    const deleteId = event.target.closest("[data-delete]")?.dataset.delete;
+
+    if (viewId) openDetail(viewId);
+    if (editId) openEditor(editId);
+    if (deleteId) deleteItem(deleteId);
+    if (event.target.closest("[data-admin-add]")) openEditor(null);
+    if (event.target.closest("[data-close]") || event.target.classList.contains("modal")) closeModals();
+  });
+
+  document.getElementById("editForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const id = document.getElementById("editId").value || `notice-${Date.now()}`;
+    const next = {
+      id,
+      no: document.getElementById("editNo").value.trim() || "공지",
+      title: document.getElementById("editPostTitle").value.trim(),
+      content: document.getElementById("editContent").value.trim(),
+      writer: document.getElementById("editWriter").value.trim() || "최고관리자",
+      views: Number(document.getElementById("editViews").value || 0),
+      date: document.getElementById("editDate").value.trim() || "06-06",
+      pinned: document.getElementById("editPinned").value === "true"
+    };
+
+    const index = items.findIndex((entry) => entry.id === id);
+    if (index >= 0) items[index] = next;
+    else items.unshift(next);
+
+    saveItems();
+    closeModals();
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>
