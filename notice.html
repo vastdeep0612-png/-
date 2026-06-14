@@ -825,210 +825,25 @@
 
 
 <script>
-  const ADMIN_PASSWORD = "vd0612";
-  const STORAGE_KEY = "baekhyeon_notice_posts_v1";
 
-  const defaultItems = [
-    {
-      id: "n0",
-      no: "공지",
-      title: "백현팀 레디언트 이상 기사님 모집중",
-      content: "백현팀에서 레디언트 이상 기사님을 모집합니다.\n\n지원 조건은 레디언트 이상 인증 가능, 기본적인 상담 예절, 작업 시간 조율 가능 여부입니다.\n\n지원 문의는 고객센터 또는 카카오톡 상담으로 남겨주세요.",
-      writer: "최고관리자",
-      views: 9423,
-      date: "09-06",
-      pinned: true
-    },
-    {
-      id: "n5",
-      no: "5",
-      title: "자주 여쭤보시는 질문 정리",
-      content: "Q. 작업은 언제 시작되나요?\nA. 상담 후 기사 배정이 완료되면 시작됩니다.\n\nQ. 가격은 고정인가요?\nA. 기본 가격표 기준이지만 MMR, 시간대, 요청 방식에 따라 상담 후 조정될 수 있습니다.\n\nQ. 듀오제와 강의제도 가능한가요?\nA. 가능합니다. 가격표에서 듀오제와 강의제 카드 확인 후 상담주세요.",
-      writer: "최고관리자",
-      views: 9961,
-      date: "09-02",
-      pinned: false
-    },
-    {
-      id: "n4",
-      no: "4",
-      title: "환불 규정에 관한 안내",
-      content: "작업 시작 전에는 상담 내용에 따라 취소 및 환불 안내가 가능합니다.\n\n작업이 이미 시작된 경우 진행된 구간, 기사 배정 상태, 예약 시간에 따라 환불 가능 여부가 달라집니다.\n\n정확한 환불 기준은 상담 시 다시 안내드립니다.",
-      writer: "최고관리자",
-      views: 8151,
-      date: "09-02",
-      pinned: false
-    },
-    {
-      id: "n3",
-      no: "3",
-      title: "계좌이체 / 카카오페이 / 문화권 / 카드결제 / 문상결제 가능",
-      content: "백현팀은 여러 결제 방식을 지원합니다.\n\n가능 방식: 계좌이체, 카카오페이, 문화상품권, 카드결제, 문상결제\n\n결제 방식에 따라 확인 시간이 조금 달라질 수 있으니 상담 시 원하는 결제 방식을 말씀해주세요.",
-      writer: "최고관리자",
-      views: 9109,
-      date: "09-02",
-      pinned: false
-    },
-    {
-      id: "n2",
-      no: "2",
-      title: "[이벤트] 듀오제강의 15+1판 서비스",
-      content: "듀오제 강의 15판 진행 시 1판 서비스를 제공하는 이벤트입니다.\n\n플레이 피드백, 포지션 피드백, 맵별 운영 피드백이 필요한 분들에게 추천드립니다.",
-      writer: "최고관리자",
-      views: 7741,
-      date: "09-02",
-      pinned: false
-    },
-    {
-      id: "n1",
-      no: "1",
-      title: "[이벤트] 승당제강의 15+1승 서비스 진행",
-      content: "승당제 또는 강의제 패키지 이용 고객 대상으로 15+1 이벤트를 진행합니다.\n\n구간, 시간대, 기사 스케줄에 따라 적용 가능 여부가 달라질 수 있으니 상담 시 이벤트 적용 가능 여부를 확인해주세요.",
-      writer: "최고관리자",
-      views: 7455,
-      date: "09-02",
-      pinned: false
-    }
-  ];
+const API_URL = "https://script.google.com/macros/s/AKfycbwu-qf_92PgcOhpyBqd8GZQUTKquS9j6GWoDlixli_h8VECd0GxQHzpM-NpgL-lD4DS/exec";
+let adminPassword = "";
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
+async function apiGet(type){if(API_URL.includes('APP_SCRIPT')) throw new Error('HTML 안의 API_URL에 Apps Script 웹앱 URL을 넣어야 합니다.'); const r=await fetch(API_URL+'?'+new URLSearchParams({action:'list',type,t:Date.now()})); return await r.json();}
+async function apiPost(payload){if(API_URL.includes('APP_SCRIPT')) throw new Error('HTML 안의 API_URL에 Apps Script 웹앱 URL을 넣어야 합니다.'); const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}); return await r.json();}
+function needPass(){if(adminPassword)return true; const p=prompt('관리자 비밀번호를 입력하세요.'); if(!p)return false; adminPassword=p; return true;}
+function openModal(id){document.getElementById(id).classList.add('is-open');}
+function closeModals(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('is-open'));}
 
-  let items = loadItems();
-
-  function loadItems() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
-    } catch (error) {}
-    return defaultItems;
-  }
-
-  function saveItems() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }
-
-  function requireAdmin() {
-    const input = window.prompt("관리자 비밀번호를 입력하세요.");
-    return input === ADMIN_PASSWORD;
-  }
-
-  function escapeHtml(value) {
-    return String(value ?? "").replace(/[&<>"']/g, (char) => {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char];
-    });
-  }
-
-  function render() {
-    const body = document.getElementById("boardBody");
-    const sorted = [...items].sort((a, b) => Number(b.pinned) - Number(a.pinned));
-    document.getElementById("totalText").textContent = `Total ${items.length}건 1 페이지`;
-
-    body.innerHTML = sorted.map((item) => `
-      <tr class="${item.pinned ? "notice-pin" : ""}">
-        <td class="col-num">${item.pinned ? '<span class="pin-label">공지</span>' : escapeHtml(item.no)}</td>
-        <td class="title-cell" data-view="${item.id}">${escapeHtml(item.title)}<span class="heart">♥</span></td>
-        <td>${escapeHtml(item.writer)}</td>
-        <td>${Number(item.views || 0).toLocaleString("ko-KR")}</td>
-        <td>${escapeHtml(item.date)}</td>
-        <td>
-          <div class="admin-actions">
-            <button class="mini-btn" type="button" data-edit="${item.id}">수정</button>
-            <button class="mini-btn delete" type="button" data-delete="${item.id}">삭제</button>
-          </div>
-        </td>
-      </tr>
-    `).join("");
-  }
-
-  function openDetail(id) {
-    const item = items.find((entry) => entry.id === id);
-    if (!item) return;
-
-    document.getElementById("detailTitle").textContent = item.title;
-    document.getElementById("detailMeta").innerHTML = `
-      <span class="detail-chip">번호 ${escapeHtml(item.no)}</span>
-      <span class="detail-chip">글쓴이 ${escapeHtml(item.writer)}</span>
-      <span class="detail-chip">조회 ${Number(item.views || 0).toLocaleString("ko-KR")}</span>
-      <span class="detail-chip">날짜 ${escapeHtml(item.date)}</span>
-    `;
-    document.getElementById("detailContent").textContent = item.content;
-    openModal("detailModal");
-  }
-
-  function openEditor(id = null) {
-    if (!requireAdmin()) {
-      alert("비밀번호가 틀렸습니다.");
-      return;
-    }
-
-    const item = id ? items.find((entry) => entry.id === id) : null;
-    document.getElementById("editTitle").textContent = item ? "공지 수정" : "공지 작성";
-    document.getElementById("editId").value = item?.id || "";
-    document.getElementById("editNo").value = item?.no || String(items.length + 1);
-    document.getElementById("editPostTitle").value = item?.title || "";
-    document.getElementById("editContent").value = item?.content || "";
-    document.getElementById("editWriter").value = item?.writer || "최고관리자";
-    document.getElementById("editViews").value = item?.views ?? 0;
-    document.getElementById("editDate").value = item?.date || new Date().toISOString().slice(5, 10).replace("-", "-");
-    document.getElementById("editPinned").value = String(Boolean(item?.pinned));
-    openModal("editModal");
-  }
-
-  function deleteItem(id) {
-    if (!requireAdmin()) {
-      alert("비밀번호가 틀렸습니다.");
-      return;
-    }
-
-    if (!confirm("정말 삭제할까요?")) return;
-    items = items.filter((entry) => entry.id !== id);
-    saveItems();
-    render();
-  }
-
-  function openModal(id) {
-    document.getElementById(id).classList.add("is-open");
-  }
-
-  function closeModals() {
-    document.querySelectorAll(".modal").forEach((modal) => modal.classList.remove("is-open"));
-  }
-
-  document.addEventListener("click", (event) => {
-    const viewId = event.target.closest("[data-view]")?.dataset.view;
-    const editId = event.target.closest("[data-edit]")?.dataset.edit;
-    const deleteId = event.target.closest("[data-delete]")?.dataset.delete;
-
-    if (viewId) openDetail(viewId);
-    if (editId) openEditor(editId);
-    if (deleteId) deleteItem(deleteId);
-    if (event.target.closest("[data-admin-add]")) openEditor(null);
-    if (event.target.closest("[data-close]") || event.target.classList.contains("modal")) closeModals();
-  });
-
-  document.getElementById("editForm").addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const id = document.getElementById("editId").value || `notice-${Date.now()}`;
-    const next = {
-      id,
-      no: document.getElementById("editNo").value.trim() || "공지",
-      title: document.getElementById("editPostTitle").value.trim(),
-      content: document.getElementById("editContent").value.trim(),
-      writer: document.getElementById("editWriter").value.trim() || "최고관리자",
-      views: Number(document.getElementById("editViews").value || 0),
-      date: document.getElementById("editDate").value.trim() || "06-06",
-      pinned: document.getElementById("editPinned").value === "true"
-    };
-
-    const index = items.findIndex((entry) => entry.id === id);
-    if (index >= 0) items[index] = next;
-    else items.unshift(next);
-
-    saveItems();
-    closeModals();
-    render();
-  });
-
-  render();
+const TYPE='notice'; let items=[];
+async function loadItems(){try{const d=await apiGet(TYPE); if(!d.ok)throw new Error(d.message||'불러오기 실패'); items=d.items||[]; render();}catch(e){alert(e.message||e);}}
+function render(){const body=document.getElementById('boardBody'); document.getElementById('totalText').textContent=`Total ${items.length}건 1 페이지`; body.innerHTML=items.map(item=>`<tr class="${item.pinned?'notice-pin':''}"><td class="col-num">${item.pinned?'<span class="pin-label">공지</span>':esc(item.no)}</td><td class="title-cell" data-view="${item.id}">${esc(item.title)}<span class="heart">♥</span></td><td>${esc(item.writer)}</td><td>${Number(item.views||0).toLocaleString('ko-KR')}</td><td>${esc(item.date)}</td><td><div class="admin-actions"><button class="mini-btn" data-edit="${item.id}">수정</button><button class="mini-btn delete" data-delete="${item.id}">삭제</button></div></td></tr>`).join('');}
+function openDetail(id){const item=items.find(x=>x.id===id); if(!item)return; detailTitle.textContent=item.title; detailMeta.innerHTML=`<span class="detail-chip">번호 ${esc(item.no)}</span><span class="detail-chip">글쓴이 ${esc(item.writer)}</span><span class="detail-chip">조회 ${Number(item.views||0).toLocaleString('ko-KR')}</span><span class="detail-chip">날짜 ${esc(item.date)}</span>`; detailContent.textContent=item.content; openModal('detailModal');}
+function openEditor(id=null){if(!needPass())return; const item=id?items.find(x=>x.id===id):null; editTitle.textContent=item?'공지 수정':'공지 작성'; editId.value=item?.id||''; editNo.value=item?.no||String(Math.max(0,...items.map(x=>Number(x.no)||0))+1); editPostTitle.value=item?.title||''; editContent.value=item?.content||''; editWriter.value=item?.writer||'최고관리자'; editViews.value=item?.views??0; editDate.value=item?.date||new Date().toISOString().slice(5,10); editPinned.value=String(Boolean(item?.pinned)); openModal('editModal');}
+async function del(id){if(!needPass())return; if(!confirm('정말 삭제할까요?'))return; const r=await apiPost({action:'delete',type:TYPE,password:adminPassword,id}); if(!r.ok){adminPassword=''; alert(r.message||'삭제 실패'); return;} loadItems();}
+document.addEventListener('click',e=>{const v=e.target.closest('[data-view]')?.dataset.view, ed=e.target.closest('[data-edit]')?.dataset.edit, de=e.target.closest('[data-delete]')?.dataset.delete; if(v)openDetail(v); if(ed)openEditor(ed); if(de)del(de); if(e.target.closest('[data-admin-add]'))openEditor(null); if(e.target.closest('[data-close]')||e.target.classList.contains('modal'))closeModals();});
+editForm.addEventListener('submit',async e=>{e.preventDefault(); if(!needPass())return; const item={id:editId.value,no:editNo.value.trim(),title:editPostTitle.value.trim(),content:editContent.value.trim(),writer:editWriter.value.trim()||'최고관리자',views:Number(editViews.value||0),date:editDate.value.trim()||'06-06',pinned:editPinned.value==='true'}; const r=await apiPost({action:'save',type:TYPE,password:adminPassword,item}); if(!r.ok){adminPassword=''; alert(r.message||'저장 실패'); return;} closeModals(); loadItems();});
+loadItems();
 </script>
 </body>
 </html>
