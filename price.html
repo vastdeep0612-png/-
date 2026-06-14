@@ -1784,6 +1784,7 @@
           <a href="price.html#per-win">승당제</a>
           <a href="price.html#promotion">승급제</a>
           <a href="price.html#duo">듀오제</a>
+                        <a href="price.html#coach">강의제</a>
         </div>
       </li>
 
@@ -2058,6 +2059,32 @@ function duoTemplate() { return ` <article class="package-card" data-index="2" d
   });
 
   const activeIndex = getActiveIndex(STATE.rotation); if (activeIndex !== STATE.activeIndex) { STATE.activeIndex = activeIndex; dots.forEach((dot, index) => { dot.classList.toggle("is-active", index === activeIndex); }); activeHud.textContent = labels[activeIndex]; } } function render(now) { const delta = Math.min((now - STATE.lastTime) / 1000, 0.033); STATE.lastTime = now; const idle = now - STATE.lastInteract; if (!STATE.isDragging && STATE.target === null && idle > 6000) { STATE.rotation -= STATE.autoDegreesPerSecond * delta; } if (STATE.target !== null && !STATE.isDragging) { const diff = STATE.target - STATE.rotation; const ease = 1 - Math.pow(0.0008, delta); STATE.rotation += diff * ease; if (Math.abs(diff) < 0.03) { STATE.rotation = STATE.target; STATE.target = null; } } updateCardTransforms(); requestAnimationFrame(render); } function onPointerDown(event) { if (event.target.closest('.price-calculator') || event.target.closest('.carousel-arrow')) return; STATE.isDragging = true; STATE.target = null; STATE.startX = event.clientX; STATE.startRotation = STATE.rotation; STATE.lastInteract = performance.now(); document.body.classList.add("dragging"); scene.setPointerCapture?.(event.pointerId); } function onPointerMove(event) { if (!STATE.isDragging) return; const diffX = event.clientX - STATE.startX; STATE.rotation = STATE.startRotation + diffX * 0.28; STATE.lastInteract = performance.now(); } function onPointerUp(event) { if (!STATE.isDragging) return; STATE.isDragging = false; STATE.lastInteract = performance.now(); document.body.classList.remove("dragging"); const active = getActiveIndex(STATE.rotation); goTo(active); scene.releasePointerCapture?.(event.pointerId); } scene.addEventListener("pointerdown", onPointerDown); scene.addEventListener("pointermove", onPointerMove); scene.addEventListener("pointerup", onPointerUp); scene.addEventListener("pointercancel", onPointerUp); scene.addEventListener("mouseleave", onPointerUp); dots.forEach(dot => { dot.addEventListener("click", () => { goTo(Number(dot.dataset.go)); }); }); 
+function getTargetIndexFromHash() {
+  const hash = String(location.hash || "").replace("#", "").toLowerCase();
+  const map = {
+    "per-win": 0,
+    "win": 0,
+    "promotion": 1,
+    "up": 1,
+    "duo": 2,
+    "coach": 3,
+    "lesson": 3,
+    "class": 3
+  };
+  return Object.prototype.hasOwnProperty.call(map, hash) ? map[hash] : null;
+}
+
+const hashTargetIndex = getTargetIndexFromHash();
+if (hashTargetIndex !== null) {
+  requestAnimationFrame(() => goTo(hashTargetIndex));
+}
+
+window.addEventListener("hashchange", () => {
+  const nextIndex = getTargetIndexFromHash();
+  if (nextIndex !== null) goTo(nextIndex);
+});
+
+
 arrowButtons.forEach((button) => {
   button.addEventListener("click", (event) => {
     event.preventDefault();
