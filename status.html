@@ -95,7 +95,7 @@
       filter: none !important;
     }
 
-    .bh-logo-track {
+    .acps-logo-track {
       position: absolute;
       left: 0;
       top: 0;
@@ -108,7 +108,7 @@
       filter: none !important;
     }
 
-    .bh-logo-item {
+    .acps-logo-item {
       flex: 0 0 260px;
       width: 260px;
       height: 30px;
@@ -121,7 +121,7 @@
       filter: none !important;
     }
 
-    .bh-logo-item span { color: inherit; font: inherit; filter: none !important; }
+    .acps-logo-item span { color: inherit; font: inherit; filter: none !important; }
 
     nav { justify-self: center; }
 
@@ -981,13 +981,13 @@
 <body class="status-page">
 
   <header class="site-header">
-    <a class="logo bh-logo" href="#" aria-disabled="true" onclick="return false;" aria-label="홈으로 이동" target="_blank" rel="noopener noreferrer">
+    <a class="logo acps-logo" href="#" aria-disabled="true" onclick="return false;" aria-label="홈으로 이동" target="_blank" rel="noopener noreferrer">
       <div class="logo-sub">대리 문의는?</div>
-      <div class="logo-main" data-bh-logo-slider aria-label="ACPS 또는 발로란트 신속대리">
-        <div class="bh-logo-track">
-          <div class="bh-logo-item"><span>ACPS</span></div>
-          <div class="bh-logo-item bh-logo-korean">발로란트 신속대리</div>
-          <div class="bh-logo-item" aria-hidden="true"><span>ACPS</span></div>
+      <div class="logo-main" data-acps-logo-slider aria-label="ACPS 또는 발로란트 신속대리">
+        <div class="acps-logo-track">
+          <div class="acps-logo-item"><span>ACPS</span></div>
+          <div class="acps-logo-item acps-logo-korean">발로란트 신속대리</div>
+          <div class="acps-logo-item" aria-hidden="true"><span>ACPS</span></div>
         </div>
       </div>
     </a>
@@ -1161,11 +1161,11 @@
 <script>
   (() => {
     const initLogoSlider = () => {
-      document.querySelectorAll("[data-bh-logo-slider]").forEach((slider) => {
+      document.querySelectorAll("[data-acps-logo-slider]").forEach((slider) => {
         if (slider.dataset.ready === "1") return;
         slider.dataset.ready = "1";
 
-        const track = slider.querySelector(".bh-logo-track");
+        const track = slider.querySelector(".acps-logo-track");
         if (!track) return;
 
         let index = 0;
