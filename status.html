@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>작업현황 | 399팀</title>
+  <title>작업현황 | ACPS</title>
   <style>
 
     @font-face {
@@ -983,11 +983,11 @@
   <header class="site-header">
     <a class="logo bh-logo" href="#" aria-disabled="true" onclick="return false;" aria-label="홈으로 이동" target="_blank" rel="noopener noreferrer">
       <div class="logo-sub">대리 문의는?</div>
-      <div class="logo-main" data-bh-logo-slider aria-label="1oohyunTeam 또는 발로란트 신속대리">
+      <div class="logo-main" data-bh-logo-slider aria-label="ACPS 또는 발로란트 신속대리">
         <div class="bh-logo-track">
-          <div class="bh-logo-item"><span>1oohyunTeam</span></div>
+          <div class="bh-logo-item"><span>ACPS</span></div>
           <div class="bh-logo-item bh-logo-korean">발로란트 신속대리</div>
-          <div class="bh-logo-item" aria-hidden="true"><span>1oohyunTeam</span></div>
+          <div class="bh-logo-item" aria-hidden="true"><span>ACPS</span></div>
         </div>
       </div>
     </a>
@@ -1017,7 +1017,7 @@
   <button class="mobile-menu-btn" type="button" aria-label="모바일 메뉴 열기" data-mobile-menu-toggle><span></span></button>
   <div class="mobile-drawer" data-mobile-drawer>
     <div class="mobile-panel" role="dialog" aria-label="모바일 카테고리 메뉴">
-      <p class="mobile-menu-title">BAEKHYEON TEAM</p>
+      <p class="mobile-menu-title">ACPS</p>
       <div class="mobile-menu-list">
         <a href="notice.html">공지사항</a>
         <a href="price.html">가격표</a>
@@ -1048,7 +1048,7 @@
   <main>
     <section class="page-hero">
       <div class="hero-title-box">
-        <span class="hero-team">발로란트 399팀</span>
+        <span class="hero-team">발로란트 ACPS</span>
         <h1>작업현황</h1>
       </div>
     </section>
@@ -1131,7 +1131,7 @@
           </div>
           <div class="field">
             <label>담당</label>
-            <input id="editWriter" value="399팀" />
+            <input id="editWriter" value="ACPS" />
           </div>
           <div class="field">
             <label>진행률</label>
@@ -1224,10 +1224,10 @@ function statusClass(s){return s==='진행중'?'active':s==='완료'?'done':s===
 function renderPagination(total){const p=document.getElementById('pagination'); if(!p)return; let b=[`<button class="page-btn" data-page-prev ${currentPage<=1?'disabled':''}>‹</button>`], start=Math.max(1,currentPage-2), end=Math.min(total,currentPage+2); if(start>1){b.push(`<button class="page-btn" data-page-number="1">1</button>`); if(start>2)b.push(`<button class="page-btn" disabled>...</button>`);} for(let page=start;page<=end;page++) b.push(`<button class="page-btn ${page===currentPage?'is-active':''}" data-page-number="${page}">${page}</button>`); if(end<total){if(end<total-1)b.push(`<button class="page-btn" disabled>...</button>`); b.push(`<button class="page-btn" data-page-number="${total}">${total}</button>`);} b.push(`<button class="page-btn" data-page-next ${currentPage>=total?'disabled':''}>›</button>`); p.innerHTML=b.join('');}
 function render(){if(!Number.isFinite(currentPage)||currentPage<1)currentPage=1; const total=Math.max(1,Math.ceil(items.length/PAGE_SIZE)); currentPage=Math.min(currentPage,total); const pageItems=items.slice((currentPage-1)*PAGE_SIZE,(currentPage-1)*PAGE_SIZE+PAGE_SIZE); totalText.textContent=`Total ${items.length}건 ${currentPage}/${total} 페이지`; boardBody.innerHTML=pageItems.map(item=>`<tr class="${item.pinned?'notice-pin':''}"><td class="col-num">${item.pinned?'<span class="pin-label">공지</span>':esc(item.no)}</td><td class="title-cell" data-view="${item.id}">${esc(item.title)}<span class="heart">♥</span></td><td><span class="status-chip ${statusClass(item.status)}">${esc(item.status)}</span></td><td>${esc(item.writer)}</td><td><div class="progress-wrap"><div class="progress-line"><i style="width:${Number(item.progress||0)}%"></i></div><div class="progress-text">${Number(item.progress||0)}%</div></div></td><td>${esc(item.date)}</td><td><div class="admin-actions"><button class="mini-btn" data-edit="${item.id}">수정</button><button class="mini-btn delete" data-delete="${item.id}">삭제</button></div></td></tr>`).join(''); renderPagination(total);}
 function openDetail(id){const item=items.find(x=>x.id===id); if(!item)return; detailTitle.textContent=item.title; detailMeta.innerHTML=`<span class="detail-chip">번호 ${esc(item.no)}</span><span class="detail-chip">상태 ${esc(item.status)}</span><span class="detail-chip">담당 ${esc(item.writer)}</span><span class="detail-chip">진행률 ${Number(item.progress||0)}%</span><span class="detail-chip">날짜 ${esc(item.date)}</span>`; detailContent.textContent=item.content; openModal('detailModal');}
-function openEditor(id=null){if(!needPass())return; const item=id?items.find(x=>x.id===id):null; editTitle.textContent=item?'작업 수정':'작업 추가'; editId.value=item?.id||''; editNo.value=item?.no||String(Math.max(0,...items.map(x=>Number(x.no)||0))+1); editPostTitle.value=item?.title||''; editContent.value=item?.content||''; editStatus.value=item?.status||'접수완료'; editWriter.value=item?.writer||'399팀'; editProgress.value=item?.progress??0; editDate.value=item?.date||new Date().toISOString().slice(5,10); editPinned.value=String(Boolean(item?.pinned)); openModal('editModal');}
+function openEditor(id=null){if(!needPass())return; const item=id?items.find(x=>x.id===id):null; editTitle.textContent=item?'작업 수정':'작업 추가'; editId.value=item?.id||''; editNo.value=item?.no||String(Math.max(0,...items.map(x=>Number(x.no)||0))+1); editPostTitle.value=item?.title||''; editContent.value=item?.content||''; editStatus.value=item?.status||'접수완료'; editWriter.value=item?.writer||'ACPS'; editProgress.value=item?.progress??0; editDate.value=item?.date||new Date().toISOString().slice(5,10); editPinned.value=String(Boolean(item?.pinned)); openModal('editModal');}
 async function del(id){if(!needPass())return; if(!confirm('정말 삭제할까요?'))return; const r=await apiPost({action:'delete',type:TYPE,password:adminPassword,id}); if(!r.ok){adminPassword=''; alert(r.message||'삭제 실패'); return;} loadItems();}
 document.addEventListener('click',e=>{const pb=e.target.closest('[data-page-number]'); if(pb){currentPage=Number(pb.dataset.pageNumber); render(); return;} if(e.target.closest('[data-page-prev]')){currentPage=Math.max(1,currentPage-1); render(); return;} if(e.target.closest('[data-page-next]')){currentPage++; render(); return;} const v=e.target.closest('[data-view]')?.dataset.view, ed=e.target.closest('[data-edit]')?.dataset.edit, de=e.target.closest('[data-delete]')?.dataset.delete; if(v)openDetail(v); if(ed)openEditor(ed); if(de)del(de); if(e.target.closest('[data-admin-add]'))openEditor(null); if(e.target.closest('[data-close]')||e.target.classList.contains('modal'))closeModals();});
-editForm.addEventListener('submit',async e=>{e.preventDefault(); if(!needPass())return; const item={id:editId.value,no:editNo.value.trim(),title:editPostTitle.value.trim(),content:editContent.value.trim(),status:editStatus.value,writer:editWriter.value.trim()||'399팀',progress:Math.max(0,Math.min(100,Number(editProgress.value||0))),date:editDate.value.trim()||'06-06',pinned:editPinned.value==='true'}; const r=await apiPost({action:'save',type:TYPE,password:adminPassword,item}); if(!r.ok){adminPassword=''; alert(r.message||'저장 실패'); return;} closeModals(); loadItems();});
+editForm.addEventListener('submit',async e=>{e.preventDefault(); if(!needPass())return; const item={id:editId.value,no:editNo.value.trim(),title:editPostTitle.value.trim(),content:editContent.value.trim(),status:editStatus.value,writer:editWriter.value.trim()||'ACPS',progress:Math.max(0,Math.min(100,Number(editProgress.value||0))),date:editDate.value.trim()||'06-06',pinned:editPinned.value==='true'}; const r=await apiPost({action:'save',type:TYPE,password:adminPassword,item}); if(!r.ok){adminPassword=''; alert(r.message||'저장 실패'); return;} closeModals(); loadItems();});
 loadItems();
 </script>
 
