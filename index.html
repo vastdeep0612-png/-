@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACPS</title>
+    <title>ACPS | 발로란트 대리·배치·듀오</title>
     <meta name="description" content="발로란트 대리, 발로 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 ACPS 공식 사이트입니다.">
     <link rel="canonical" href="https://1oohyun.store/">
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
     <meta property="og:site_name" content="ACPS">
     <meta property="og:url" content="https://1oohyun.store/">
-    <meta property="og:title" content="ACPS">
+    <meta property="og:title" content="ACPS | 발로란트 대리·배치·듀오">
     <meta property="og:description" content="발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 ACPS 공식 사이트입니다.">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="ACPS">
+    <meta name="twitter:title" content="ACPS | 발로란트 대리·배치·듀오">
     <meta name="twitter:description" content="발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 ACPS 공식 사이트입니다.">
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="shortcut icon" href="favicon.ico">
@@ -25,14 +26,31 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "발로란트 대리 ACPS",
-        "alternateName": [
-            "ACPS",
-            "발로 대리 ACPS"
-        ],
-        "url": "https://1oohyun.store/",
-        "description": "발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 ACPS 공식 사이트입니다."
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://1oohyun.store/#website",
+                "url": "https://1oohyun.store/",
+                "name": "ACPS",
+                "alternateName": ["ACPS 공식 사이트", "발로란트 ACPS", "발로 대리 ACPS"],
+                "description": "발로란트 대리, 배치고사, 승당제와 승급제 가격표, 기사 라인업, FAQ, 상담 안내를 제공하는 ACPS 공식 사이트입니다.",
+                "inLanguage": "ko-KR",
+                "publisher": {"@id": "https://1oohyun.store/#organization"}
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://1oohyun.store/#organization",
+                "name": "ACPS",
+                "alternateName": ["ACPS 공식 사이트", "발로란트 ACPS"],
+                "url": "https://1oohyun.store/",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://1oohyun.store/assets/icon-512x512.png",
+                    "width": 512,
+                    "height": 512
+                }
+            }
+        ]
     }
     </script>
     <style>
