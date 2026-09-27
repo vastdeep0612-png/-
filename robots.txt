@@ -1,4 +1,2 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://vastdeep0612-png.github.io/-/sitemap.xml
