@@ -68,7 +68,7 @@
 
   // MODERUN live preview: motion for featured products, separated from CSS hover.
   // Show all content without JavaScript and respect reduced motion unless user opts in.
-  const featuredEls = $('.home-feature-grid .product-reveal');
+  const featuredEls = $$('.home-feature-grid .product-reveal');
   featuredEls.forEach(el => el.removeAttribute('data-reveal'));
   const motionPref = matchMedia('(prefers-reduced-motion: reduce)');
   const replayBtn = $('#motion-replay-button');
