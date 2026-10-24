@@ -66,122 +66,45 @@
     addEventListener('scroll', updateMobileTop, {passive:true});
   }
 
-  // Featured product entrance: begin when products enter the reading area.
-  // ?motion=full is an explicit site-level opt-in and persists between visits.
-  const featuredGrid = $('.home-feature-grid');
-  const featuredCards = $$('.home-feature-grid .product-reveal');
+  // Scroll-linked reveals: progress follows scroll distance, never a wall-clock timer.
+  const featured = Array.from(document.querySelectorAll('.home-feature-grid .product-reveal'));
   const reducedPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   let explicitMotion = false;
   try {
-    const requestedMotion = new URLSearchParams(location.search).get('motion');
-    if (requestedMotion === 'full') localStorage.setItem('moderun-feature-motion', 'full');
-    explicitMotion = requestedMotion === 'full' || localStorage.getItem('moderun-feature-motion') === 'full';
-  } catch (_) {
-    explicitMotion = new URLSearchParams(location.search).get('motion') === 'full';
-  }
-  const movementAllowed = () => !reducedPreference.matches || explicitMotion;
-  const prefersMobile = () => matchMedia('(max-width:700px)').matches;
-  const activeMotion = new Map();
-  const revealed = new WeakSet();
-  let scheduledFrame = false;
-  let entranceCount = 0;
-
-  function finishEntrance(card) {
-    if (revealed.has(card)) return;
-    revealed.add(card);
-    const animation = activeMotion.get(card);
-    activeMotion.delete(card);
-    card.style.opacity = '1';
-    if (animation) { try { animation.cancel(); } catch (_) {} }
-    card.style.removeProperty('opacity');
-    card.style.removeProperty('transform');
-    card.removeAttribute('data-entrance-waiting');
-  }
-
-  function playEntrance(card, position = 0) {
-    if (revealed.has(card) || activeMotion.has(card)) return;
-    if (!card.animate) return finishEntrance(card);
-    const mobile = prefersMobile();
-    const move = movementAllowed();
-    const distance = mobile ? 26 : 44;
-    const frames = move ? [
-      { opacity: 0, transform: 'translate3d(0,' + distance + 'px,0)' },
-      { opacity: 0.40, transform: 'translate3d(0,' + Math.round(distance * 0.55) + 'px,0)', offset: 0.42 },
-      { opacity: 1, transform: 'translate3d(0,0,0)' }
-    ] : [ { opacity: 0 }, { opacity: 1 } ];
-    const duration = move ? (mobile ? 1530 : 1900) : 1000;
-    const delay = mobile ? 0 : position * 280;
-    try {
-      const animation = card.animate(frames, {
-        duration, delay, easing: 'cubic-bezier(.42,0,.28,1)', fill: 'both'
+    const option = new URLSearchParams(location.search).get('motion');
+    if (option === 'full') localStorage.setItem('moderun-feature-motion','full');
+    explicitMotion = option === 'full' || localStorage.getItem('moderun-feature-motion') === 'full';
+  } catch (_) { explicitMotion = new URLSearchParams(location.search).get('motion') === 'full'; }
+  const allowMovement = !reducedPreference.matches || explicitMotion;
+  const supportsScrollTimeline = !!(window.CSS && CSS.supports('animation-timeline: view(block)') && CSS.supports('animation-range: entry 8% entry 54%'));
+  if (featured.length && allowMovement && supportsScrollTimeline) {
+    document.documentElement.classList.add('moderun-scroll-linked');
+  } else if (featured.length && allowMovement && 'IntersectionObserver' in window) {
+    // Fallback for older browsers: stage only offscreen cards, never hide if unsupported.
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fallback-visible');
+          observer.unobserve(entry.target);
+        }
       });
-      activeMotion.set(card, animation);
-      entranceCount++;
-      animation.finished.then(() => finishEntrance(card)).catch(() => finishEntrance(card));
-      setTimeout(() => finishEntrance(card), duration + delay + 600);
-    } catch (_) { finishEntrance(card); }
-  }
-
-  function evaluateFeaturedScroll() {
-    scheduledFrame = false;
-    if (!featuredGrid || featuredCards.every(card => revealed.has(card))) return;
-    const screenHeight = innerHeight || document.documentElement.clientHeight;
-    if (prefersMobile()) {
-      for (const card of featuredCards) {
-        if (revealed.has(card) || activeMotion.has(card)) continue;
-        const rect = card.getBoundingClientRect();
-        if (rect.bottom < 20) finishEntrance(card);
-        else if (rect.top <= screenHeight * 0.68 && rect.bottom > screenHeight * 0.10) playEntrance(card);
+    }, {rootMargin:'0px 0px -32% 0px', threshold:0.08});
+    featured.forEach((card, index) => {
+      const r = card.getBoundingClientRect();
+      if (r.top > innerHeight * .7) {
+        card.style.setProperty('--fallback-index',String(index));
+        card.classList.add('fallback-staged');
+        observer.observe(card);
       }
-    } else {
-      const rect = featuredGrid.getBoundingClientRect();
-      if (rect.bottom <= 20) featuredCards.forEach(finishEntrance);
-      else if (rect.top <= screenHeight * 0.58 && rect.bottom > screenHeight * 0.12) {
-        featuredCards.forEach((card, i) => playEntrance(card, i));
-      }
-    }
-  }
-
-  function scheduleFeaturedScrollCheck() {
-    if (scheduledFrame) return;
-    scheduledFrame = true;
-    requestAnimationFrame(evaluateFeaturedScroll);
-  }
-
-  if (featuredGrid && featuredCards.length) {
-    const vh = innerHeight || document.documentElement.clientHeight;
-    const mobile = prefersMobile();
-    for (const card of featuredCards) {
-      const rect = card.getBoundingClientRect();
-      if (rect.bottom < 1 || rect.top < (mobile ? vh * .65 : vh * .53)) {
-        finishEntrance(card);
-      } else {
-        card.style.opacity = '0';
-        card.setAttribute('data-entrance-waiting', '');
-      }
-    }
-    addEventListener('scroll', scheduleFeaturedScrollCheck, {passive:true});
-    addEventListener('resize', scheduleFeaturedScrollCheck, {passive:true});
-    addEventListener('pageshow', event => {
-      if (event.persisted) featuredCards.forEach(finishEntrance);
     });
-    document.addEventListener('focusin', event => {
-      const card = event.target.closest?.('.home-feature-grid .product-reveal');
-      if (card) finishEntrance(card);
-    });
-    reducedPreference.addEventListener?.('change', () => {
-      activeMotion.forEach((_, card) => finishEntrance(card));
-    });
-    scheduleFeaturedScrollCheck();
   }
-  window.MODERUN_MOTION_DIAGNOSTIC = () => ({
-    systemReduced: reducedPreference.matches,
+  window.MODERUN_MOTION_DIAGNOSTIC=()=>({
+    reducedMotion:reducedPreference.matches,
     explicitMotion,
-    movementAllowed: movementAllowed(),
-    cardCount: featuredCards.length,
-    staged: featuredCards.filter(el => el.hasAttribute('data-entrance-waiting')).length,
-    active: activeMotion.size,
-    started: entranceCount
+    allowed:allowMovement,
+    scrollTimeline:supportsScrollTimeline,
+    cardCount:featured.length,
+    enabled:document.documentElement.classList.contains('moderun-scroll-linked')
   });
 
   // One observer for both legacy reveal blocks and the three feature cards.
