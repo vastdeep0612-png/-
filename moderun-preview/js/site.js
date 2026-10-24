@@ -66,76 +66,113 @@
     addEventListener('scroll', updateMobileTop, {passive:true});
   }
 
-  // MODERUN live preview: motion for featured products, separated from CSS hover.
-  // Show all content without JavaScript and respect reduced motion unless user opts in.
-  const featuredEls = $$('.home-feature-grid .product-reveal');
-  featuredEls.forEach(el => el.removeAttribute('data-reveal'));
-  const motionPref = matchMedia('(prefers-reduced-motion: reduce)');
-  const replayBtn = $('#motion-replay-button');
-  const enableBtn = $('#motion-enable-button');
-  let featureObserver, hasFeaturedPlayed = false, runningAnimations = [];
-  let allowFeatureMotion = false;
-  try { allowFeatureMotion = sessionStorage.getItem('moderun-motion-optin') === 'yes'; } catch (_) {}
-  const motionIsAllowed = () => !motionPref.matches || allowFeatureMotion;
-  function resetFeaturedVisibility() {
-    runningAnimations.forEach(a => { try { a.cancel(); } catch (_) {} });
-    runningAnimations = [];
-    featuredEls.forEach(el => { el.style.opacity = ''; el.style.transform = ''; });
-  }
-  function animateFeatured(force = false) {
-    if (!featuredEls.length || (!force && !motionIsAllowed())) return resetFeaturedVisibility();
-    featureObserver?.disconnect();
-    resetFeaturedVisibility();
-    const small = matchMedia('(max-width:700px)').matches;
-    featuredEls.forEach((el, i) => {
-      if (!el.animate) return;
-      const a = el.animate(
-        [{ opacity: 0, transform: 'translateY(' + (small ? 18 : 30) + 'px)' },
-         { opacity: 1, transform: 'translateY(0)' }],
-        { duration: small ? 570 : 820, delay: small ? 0 : i * 145,
-          easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' }
-      );
-      runningAnimations.push(a);
-      a.finished.then(() => { try { a.cancel(); } catch (_) {} }).catch(() => {});
+  // Featured products: scroll entrance and explicit replay, independent of hover.
+  // Default DOM content remains visible, including when JavaScript is disabled.
+  const featuredCards = $$('.home-feature-grid .feature-product');
+  const motionPref = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const motionEnable = $('#motion-enable-button');
+  const motionReplay = $('#motion-replay-button');
+  const replayLabel = motionReplay?.innerHTML || '';
+  let featureObserver = null;
+  let activeFeatureAnimations = [];
+  let featurePlayed = false;
+  let featureReplayTimeout = null;
+  let motionUserOptIn = false;
+  try { motionUserOptIn = sessionStorage.getItem('moderun-motion-optin') === 'yes'; } catch (_) {}
+  const motionAllowed = () => !motionPref.matches || motionUserOptIn;
+
+  function resetFeatureAnimation() {
+    activeFeatureAnimations.forEach(animation => { try { animation.cancel(); } catch (_) {} });
+    activeFeatureAnimations = [];
+    featuredCards.forEach(card => {
+      card.style.removeProperty('opacity');
+      card.style.removeProperty('transform');
     });
-    hasFeaturedPlayed = true;
+    if (featureReplayTimeout) clearTimeout(featureReplayTimeout);
+    featureReplayTimeout = null;
+    if (motionReplay) {
+      motionReplay.disabled = false;
+      motionReplay.removeAttribute('aria-busy');
+      motionReplay.innerHTML = replayLabel;
+    }
   }
-  function prepareFeaturedEntrance() {
-    if (!featuredEls.length) return;
+
+  function playFeaturedEntrance(manual = false) {
+    if (!featuredCards.length) return;
+    if (!motionAllowed() && !manual) { resetFeatureAnimation(); return; }
+    resetFeatureAnimation();
+    featurePlayed = true;
     featureObserver?.disconnect();
-    resetFeaturedVisibility();
-    if (enableBtn) enableBtn.hidden = motionIsAllowed();
-    if (!motionIsAllowed() || !('IntersectionObserver' in window)) return;
-    if (hasFeaturedPlayed) return;
-    const rect = featuredEls[0].getBoundingClientRect();
-    if (rect.top < innerHeight - 50 && rect.bottom > 0) return; // avoid first-frame flashes
-    featuredEls.forEach(el => el.style.opacity = '0');
-    featureObserver = new IntersectionObserver(entries => {
-      if (entries.some(e => e.isIntersecting) && !hasFeaturedPlayed) {
-        animateFeatured();
-      }
-    }, { rootMargin: '0px 0px -56px 0px', threshold: 0.10 });
-    featureObserver.observe(featuredEls[0]);
+    const compact = window.matchMedia('(max-width: 700px)').matches;
+    if (motionReplay && manual) {
+      motionReplay.disabled = true;
+      motionReplay.setAttribute('aria-busy', 'true');
+      motionReplay.textContent = '카드 등장 효과 재생 중…';
+    }
+    featuredCards.forEach((card, index) => {
+      if (typeof card.animate !== 'function') return;
+      const delay = index * (compact ? 140 : 190);
+      const animation = card.animate([
+        { opacity: 0, transform: 'translate3d(0,' + (compact ? 24 : 44) + 'px,0)' },
+        { opacity: 1, transform: 'translate3d(0,0,0)' }
+      ], {
+        duration: compact ? 720 : 980,
+        delay,
+        easing: 'cubic-bezier(.22,1,.36,1)',
+        fill: 'both'
+      });
+      activeFeatureAnimations.push(animation);
+      animation.finished.then(() => {
+        if (activeFeatureAnimations.includes(animation)) {
+          try { animation.cancel(); } catch (_) {}
+          activeFeatureAnimations = activeFeatureAnimations.filter(a => a !== animation);
+        }
+      }).catch(() => {});
+    });
+    if (manual) {
+      featureReplayTimeout = setTimeout(() => {
+        if (motionReplay) {
+          motionReplay.disabled = false;
+          motionReplay.removeAttribute('aria-busy');
+          motionReplay.innerHTML = replayLabel;
+        }
+        featureReplayTimeout = null;
+      }, (compact ? 720 : 980) + (featuredCards.length - 1) * (compact ? 140 : 190) + 100);
+    }
   }
-  replayBtn?.addEventListener('click', () => {
-    animateFeatured(true);
-    replayBtn.textContent='카드 등장 효과 재생 중…';
-    replayBtn.disabled=true;
-    setTimeout(()=>{
-      replayBtn.disabled=false;
-      replayBtn.textContent='카드 등장 효과 보기 ↻';
-    }, 1400);
-  }); // explicit replay
-  enableBtn?.addEventListener('click', () => {
-    allowFeatureMotion = true;
-    try { sessionStorage.setItem('moderun-motion-optin','yes'); } catch (_) {}
-    enableBtn.hidden = true;
-    animateFeatured(true);
+
+  function initFeaturedObserver() {
+    featureObserver?.disconnect();
+    if (motionEnable) motionEnable.hidden = motionAllowed();
+    if (!featuredCards.length || featurePlayed || !motionAllowed() || !('IntersectionObserver' in window)) return;
+    try {
+      featureObserver = new IntersectionObserver(entries => {
+        if (featurePlayed || !entries.some(entry => entry.isIntersecting)) return;
+        playFeaturedEntrance();
+      }, { threshold: 0.05, rootMargin: '0px 0px -24px 0px' });
+      featureObserver.observe(featuredCards[0]);
+    } catch (_) { /* Leave cards visible on observer failure. */ }
+  }
+
+  motionReplay?.addEventListener('click', () => playFeaturedEntrance(true));
+  motionEnable?.addEventListener('click', () => {
+    motionUserOptIn = true;
+    try { sessionStorage.setItem('moderun-motion-optin', 'yes'); } catch (_) {}
+    motionEnable.hidden = true;
+    playFeaturedEntrance(true);
   });
-  motionPref.addEventListener?.('change', () => { hasFeaturedPlayed = false; prepareFeaturedEntrance(); });
-  addEventListener('pageshow', e => { if (e.persisted) resetFeaturedVisibility(); });
-  prepareFeaturedEntrance();
-  window.MODERUN_MOTION_DIAGNOSTIC = () => ({ reducedMotion: motionPref.matches, optedIn: allowFeatureMotion, observed: !!featureObserver, played: hasFeaturedPlayed });
+  motionPref.addEventListener?.('change', () => {
+    if (motionPref.matches && !motionUserOptIn) resetFeatureAnimation();
+    initFeaturedObserver();
+  });
+  initFeaturedObserver();
+  window.MODERUN_MOTION_DIAGNOSTIC = () => ({
+    reducedMotion: motionPref.matches,
+    optedIn: motionUserOptIn,
+    played: featurePlayed,
+    observed: !!featureObserver,
+    cardCount: featuredCards.length
+  });
 
   // One observer for both legacy reveal blocks and the three feature cards.
   // Never hide content until the observer has been successfully created.
