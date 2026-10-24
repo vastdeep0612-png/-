@@ -117,7 +117,15 @@
     }, { rootMargin: '0px 0px -56px 0px', threshold: 0.10 });
     featureObserver.observe(featuredEls[0]);
   }
-  replayBtn?.addEventListener('click', () => animateFeatured(true)); // explicit replay
+  replayBtn?.addEventListener('click', () => {
+    animateFeatured(true);
+    replayBtn.textContent='카드 등장 효과 재생 중…';
+    replayBtn.disabled=true;
+    setTimeout(()=>{
+      replayBtn.disabled=false;
+      replayBtn.textContent='카드 등장 효과 보기 ↻';
+    }, 1400);
+  }); // explicit replay
   enableBtn?.addEventListener('click', () => {
     allowFeatureMotion = true;
     try { sessionStorage.setItem('moderun-motion-optin','yes'); } catch (_) {}
