@@ -66,114 +66,122 @@
     addEventListener('scroll', updateMobileTop, {passive:true});
   }
 
-  // Home product entrance: runs automatically on scroll, without a manual button.
-  // Stage only offscreen items; remain visible if IO/WAAPI/JS is unavailable.
+  // Featured product entrance: begin when products enter the reading area.
+  // ?motion=full is an explicit site-level opt-in and persists between visits.
   const featuredGrid = $('.home-feature-grid');
-  const featuredWrappers = $$('.home-feature-grid .product-reveal');
-  const featuredMotionPref = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const featuredMobile = () => window.matchMedia('(max-width: 700px)').matches;
-  let featuredObserver = null;
-  const featureAnimations = new Map();
-  const finishedCards = new WeakSet();
+  const featuredCards = $$('.home-feature-grid .product-reveal');
+  const reducedPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let explicitMotion = false;
+  try {
+    const requestedMotion = new URLSearchParams(location.search).get('motion');
+    if (requestedMotion === 'full') localStorage.setItem('moderun-feature-motion', 'full');
+    explicitMotion = requestedMotion === 'full' || localStorage.getItem('moderun-feature-motion') === 'full';
+  } catch (_) {
+    explicitMotion = new URLSearchParams(location.search).get('motion') === 'full';
+  }
+  const movementAllowed = () => !reducedPreference.matches || explicitMotion;
+  const prefersMobile = () => matchMedia('(max-width:700px)').matches;
+  const activeMotion = new Map();
+  const revealed = new WeakSet();
+  let scheduledFrame = false;
+  let entranceCount = 0;
 
-  function finishFeaturedCard(card) {
-    if (finishedCards.has(card)) return;
-    finishedCards.add(card);
-    const current = featureAnimations.get(card);
-    featureAnimations.delete(card);
+  function finishEntrance(card) {
+    if (revealed.has(card)) return;
+    revealed.add(card);
+    const animation = activeMotion.get(card);
+    activeMotion.delete(card);
     card.style.opacity = '1';
-    if (current) { try { current.cancel(); } catch (_) {} }
+    if (animation) { try { animation.cancel(); } catch (_) {} }
     card.style.removeProperty('opacity');
     card.style.removeProperty('transform');
     card.removeAttribute('data-entrance-waiting');
-    featuredObserver?.unobserve(card);
   }
 
-  function playFeaturedCard(card, position = 0) {
-    if (finishedCards.has(card) || featureAnimations.has(card)) return;
-    if (typeof card.animate !== 'function') return finishFeaturedCard(card);
-    const mobile = featuredMobile();
-    const reduced = featuredMotionPref.matches;
-    const keyframes = reduced
-      ? [{ opacity: 0 }, { opacity: 1 }]
-      : [
-          { opacity: 0, transform: 'translate3d(0,' + (mobile ? 22 : 38) + 'px,0)' },
-          { opacity: 0.7, transform: 'translate3d(0,7px,0)', offset: 0.62 },
-          { opacity: 1, transform: 'translate3d(0,0,0)' }
-        ];
-    const duration = reduced ? 620 : (mobile ? 1260 : 1580);
-    const delay = reduced ? position * 75 : (mobile ? 0 : position * 260);
+  function playEntrance(card, position = 0) {
+    if (revealed.has(card) || activeMotion.has(card)) return;
+    if (!card.animate) return finishEntrance(card);
+    const mobile = prefersMobile();
+    const move = movementAllowed();
+    const distance = mobile ? 26 : 44;
+    const frames = move ? [
+      { opacity: 0, transform: 'translate3d(0,' + distance + 'px,0)' },
+      { opacity: 0.40, transform: 'translate3d(0,' + Math.round(distance * 0.55) + 'px,0)', offset: 0.42 },
+      { opacity: 1, transform: 'translate3d(0,0,0)' }
+    ] : [ { opacity: 0 }, { opacity: 1 } ];
+    const duration = move ? (mobile ? 1530 : 1900) : 1000;
+    const delay = mobile ? 0 : position * 280;
     try {
-      const animation = card.animate(keyframes, {
-        duration, delay, easing: 'cubic-bezier(.21,.75,.27,1)', fill: 'both'
+      const animation = card.animate(frames, {
+        duration, delay, easing: 'cubic-bezier(.42,0,.28,1)', fill: 'both'
       });
-      featureAnimations.set(card, animation);
-      animation.finished.then(() => finishFeaturedCard(card)).catch(() => finishFeaturedCard(card));
-      setTimeout(() => finishFeaturedCard(card), duration + delay + 650);
-    } catch (_) { finishFeaturedCard(card); }
+      activeMotion.set(card, animation);
+      entranceCount++;
+      animation.finished.then(() => finishEntrance(card)).catch(() => finishEntrance(card));
+      setTimeout(() => finishEntrance(card), duration + delay + 600);
+    } catch (_) { finishEntrance(card); }
   }
 
-  function initFeaturedEntrance() {
-    if (!featuredGrid || !featuredWrappers.length) return;
-    if (!('IntersectionObserver' in window) || typeof featuredWrappers[0].animate !== 'function') return;
-    const viewportLimit = window.innerHeight - 70;
-    try {
-      featuredObserver = new IntersectionObserver(entries => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          featuredObserver.unobserve(entry.target);
-          if (entry.target === featuredGrid) {
-            featuredWrappers.forEach((card, i) => playFeaturedCard(card, i));
-          } else {
-            playFeaturedCard(entry.target);
-          }
-        }
-      }, { threshold: 0.055, rootMargin: '0px 0px -60px 0px' });
-      if (featuredMobile()) {
-        featuredWrappers.forEach(card => {
-          const rect = card.getBoundingClientRect();
-          if (rect.top < viewportLimit || rect.bottom <= 0) {
-            finishFeaturedCard(card);
-          } else {
-            card.style.opacity = '0';
-            card.setAttribute('data-entrance-waiting', '');
-            featuredObserver.observe(card);
-          }
-        });
-      } else {
-        const rect = featuredGrid.getBoundingClientRect();
-        if (rect.top < viewportLimit || rect.bottom <= 0) {
-          featuredWrappers.forEach(finishFeaturedCard);
-        } else {
-          featuredWrappers.forEach(card => {
-            card.style.opacity = '0';
-            card.setAttribute('data-entrance-waiting', '');
-          });
-          featuredObserver.observe(featuredGrid);
-        }
+  function evaluateFeaturedScroll() {
+    scheduledFrame = false;
+    if (!featuredGrid || featuredCards.every(card => revealed.has(card))) return;
+    const screenHeight = innerHeight || document.documentElement.clientHeight;
+    if (prefersMobile()) {
+      for (const card of featuredCards) {
+        if (revealed.has(card) || activeMotion.has(card)) continue;
+        const rect = card.getBoundingClientRect();
+        if (rect.bottom < 20) finishEntrance(card);
+        else if (rect.top <= screenHeight * 0.68 && rect.bottom > screenHeight * 0.10) playEntrance(card);
       }
-    } catch (_) {
-      featuredWrappers.forEach(finishFeaturedCard);
-      featuredObserver?.disconnect();
+    } else {
+      const rect = featuredGrid.getBoundingClientRect();
+      if (rect.bottom <= 20) featuredCards.forEach(finishEntrance);
+      else if (rect.top <= screenHeight * 0.58 && rect.bottom > screenHeight * 0.12) {
+        featuredCards.forEach((card, i) => playEntrance(card, i));
+      }
     }
   }
-  document.addEventListener('focusin', event => {
-    const card = event.target.closest?.('.home-feature-grid .product-reveal');
-    if (card) finishFeaturedCard(card);
-  });
-  featuredMotionPref.addEventListener?.('change', () => {
-    featureAnimations.forEach((_, card) => finishFeaturedCard(card));
-  });
-  addEventListener('pageshow', event => {
-    if (event.persisted) featuredWrappers.forEach(finishFeaturedCard);
-  });
-  initFeaturedEntrance();
+
+  function scheduleFeaturedScrollCheck() {
+    if (scheduledFrame) return;
+    scheduledFrame = true;
+    requestAnimationFrame(evaluateFeaturedScroll);
+  }
+
+  if (featuredGrid && featuredCards.length) {
+    const vh = innerHeight || document.documentElement.clientHeight;
+    const mobile = prefersMobile();
+    for (const card of featuredCards) {
+      const rect = card.getBoundingClientRect();
+      if (rect.bottom < 1 || rect.top < (mobile ? vh * .65 : vh * .53)) {
+        finishEntrance(card);
+      } else {
+        card.style.opacity = '0';
+        card.setAttribute('data-entrance-waiting', '');
+      }
+    }
+    addEventListener('scroll', scheduleFeaturedScrollCheck, {passive:true});
+    addEventListener('resize', scheduleFeaturedScrollCheck, {passive:true});
+    addEventListener('pageshow', event => {
+      if (event.persisted) featuredCards.forEach(finishEntrance);
+    });
+    document.addEventListener('focusin', event => {
+      const card = event.target.closest?.('.home-feature-grid .product-reveal');
+      if (card) finishEntrance(card);
+    });
+    reducedPreference.addEventListener?.('change', () => {
+      activeMotion.forEach((_, card) => finishEntrance(card));
+    });
+    scheduleFeaturedScrollCheck();
+  }
   window.MODERUN_MOTION_DIAGNOSTIC = () => ({
-    reducedMotion: featuredMotionPref.matches,
-    observed: !!featuredObserver,
-    staged: featuredWrappers.filter(el => el.hasAttribute('data-entrance-waiting')).length,
-    running: featureAnimations.size,
-    total: featuredWrappers.length
+    systemReduced: reducedPreference.matches,
+    explicitMotion,
+    movementAllowed: movementAllowed(),
+    cardCount: featuredCards.length,
+    staged: featuredCards.filter(el => el.hasAttribute('data-entrance-waiting')).length,
+    active: activeMotion.size,
+    started: entranceCount
   });
 
   // One observer for both legacy reveal blocks and the three feature cards.
