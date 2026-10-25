@@ -4,5 +4,7 @@ window.MODERUN_CONFIG = {
   FORM_ENDPOINT: '', // 예: https://formspree.io/f/본인폼ID
   TELEGRAM_URL: '',  // 예: https://t.me/본인아이디
   DISCORD_URL: '',
-  KAKAO_URL: ''
+  KAKAO_URL: '',
+  AUTH_SUPABASE_URL: '', // Supabase URL (public)
+  AUTH_SUPABASE_PUBLISHABLE_KEY: '' // public / anon key only; never a service-role secret
 };
