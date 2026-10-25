@@ -18,7 +18,7 @@ const btns=[...document.querySelectorAll('[data-auth-submit]')];
 function message(s,type=''){if(!status)return;status.textContent=s;status.className='auth-status show '+(type==='error'?'error':type==='success'?'success':'');status.setAttribute('role',type==='error'?'alert':'status')}
 function loading(b){btns.forEach(x=>{if(!x.dataset.default)x.dataset.default=x.textContent;x.disabled=b;x.textContent=b?'처리 중…':x.dataset.default})}
 function noBackend(){if(page){message('인증 서비스 연결 전입니다. 현재 화면을 확인할 수 있지만 실제 계정을 만들거나 로그인할 수는 없습니다.','error');btns.forEach(b=>b.disabled=true)}}
-function loadLib(){if(window.supabase?.createClient)return Promise.resolve(window.supabase);return new Promise((yes,no)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';s.onload=()=>window.supabase?.createClient?yes(window.supabase):no(Error('Auth SDK unavailable'));s.onerror=()=>no(Error('Auth SDK download failed'));document.head.appendChild(s)})}
+function loadLib(){if(window.supabase?.createClient)return Promise.resolve(window.supabase);return new Promise((yes,no)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4';s.onload=()=>window.supabase?.createClient?yes(window.supabase):no(Error('Auth SDK unavailable'));s.onerror=()=>no(Error('Auth SDK download failed'));document.head.appendChild(s)})}
 function updateHeader(user){document.querySelectorAll('[data-auth-nav]').forEach(a=>{a.textContent=user?'내 계정':'로그인';a.href=user?'account.html':'login.html';a.setAttribute('aria-label',user?'내 계정 열기':'로그인 화면 열기')})}
 async function run(){
   if(!ready){noBackend();return}

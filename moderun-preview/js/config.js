@@ -5,6 +5,6 @@ window.MODERUN_CONFIG = {
   TELEGRAM_URL: '',  // 예: https://t.me/본인아이디
   DISCORD_URL: '',
   KAKAO_URL: '',
-  AUTH_SUPABASE_URL: '', // Supabase URL (public)
-  AUTH_SUPABASE_PUBLISHABLE_KEY: '' // public / anon key only; never a service-role secret
+  AUTH_SUPABASE_URL: 'https://ntljcyjhkkboawapxzmz.supabase.co', // Supabase URL (public)
+  AUTH_SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_cjK6WZuS_WAfzxeAs1fC-A_Ye073qmI' // public / anon key only; never a service-role secret
 };
