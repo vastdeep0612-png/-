@@ -1,0 +1,73 @@
+/* MODERUN — member center & online inquiries. Scoped to avoid modifying product cards. */
+.inquiry-account-link{display:inline-flex;margin:7px 0 17px;font-size:13px;font-weight:690;color:#176bf0;text-decoration:underline;text-underline-offset:4px}
+.inquiry-account-link:hover{color:#0c4da6}
+.inquiry-privacy{border-top:1px solid #e4eaf2;padding:14px 0;margin:0 0 20px;font-size:12px;color:#52627a;line-height:1.7}
+.inquiry-privacy summary{font-weight:690;color:#2b466d;cursor:pointer}
+.inquiry-privacy p{padding:7px 0 0;font-size:12px;line-height:1.75}
+.member-profile-form{display:grid;gap:9px;text-align:left;margin-top:18px}
+.member-profile-form label{font-size:12px;color:#e9f0ff}
+.member-profile-form input{width:100%;min-height:45px;border:1px solid #abc8f7;border-radius:10px;background:#ffffff12;color:white;padding:11px 14px}
+.member-profile-form input:focus-visible{outline:2px solid #cce1ff;outline-offset:2px}
+.member-profile-save{justify-self:start;border:0;border-radius:8px;background:#fff;color:#1d3762;padding:10px 17px;font-size:12px;font-weight:700}
+.member-profile-save:disabled{opacity:.65;cursor:wait}
+#member-profile-status{min-height:22px;font-size:12px;color:#e8f4ff;line-height:1.6}
+.member-dashboard{max-width:1040px;margin:50px auto 0;padding:38px 42px;background:#fff;border:1px solid #dae4ee;border-radius:18px;box-shadow:0 12px 38px #0b1d3810}
+.member-dashboard__heading{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.member-dashboard__heading h2{font-size:clamp(25px,2.5vw,34px);margin:9px 0 6px}
+.member-dashboard__heading p{font-size:13px;color:#596d87;line-height:1.7}
+.member-dashboard__heading .eyebrow{font-size:11px}
+.member-new-inquiry{flex:none;white-space:nowrap}
+.member-summary{display:flex;gap:10px;flex-wrap:wrap;margin:23px 0 18px}
+.member-summary span{background:#edf4ff;color:#1a4d8c;border-radius:999px;font-size:12px;font-weight:680;padding:7px 13px}
+.member-toolbar{display:flex;align-items:center;gap:12px;margin:21px 0 9px}
+.member-toolbar label{font-size:12px;font-weight:670;color:#445b7b}
+.member-toolbar select{min-height:38px;min-width:142px;border:1px solid #cbd8e6;border-radius:8px;padding:5px 10px;background:white;color:#253b59}
+.member-toolbar button{min-height:38px;border:1px solid #cbd8e6;border-radius:8px;padding:7px 12px;background:white;color:#253b59;cursor:pointer}
+.member-toolbar button:hover{background:#f1f6fc}
+.member-list-status{font-size:12px;color:#72809a;margin:15px 0;line-height:1.6}
+.member-inquiry-list{display:grid;gap:13px}
+.member-inquiry-card{padding:22px 23px;background:#f8fbff;border:1px solid #dce7f2;border-radius:13px}
+.member-inquiry-head{display:flex;gap:15px;justify-content:space-between;align-items:flex-start}
+.member-inquiry-main{display:grid;gap:6px;min-width:0}
+.member-inquiry-date,.member-inquiry-code{font-size:11px;color:#6b7b91}
+.member-inquiry-head h3{font-size:18px;font-weight:680;color:#193655;letter-spacing:-.025em}
+.member-status{display:inline-flex;align-items:center;justify-content:center;flex:none;border-radius:999px;padding:6px 11px;font-size:11px;font-weight:710;background:#e1efff;color:#215a9a;white-space:nowrap}
+.member-status--reviewing,.member-status--in_progress{background:#e3eaff;color:#3758a7}
+.member-status--quoted{background:#f3eaff;color:#7747a6}
+.member-status--completed{background:#ddf7ed;color:#126e4c}
+.member-status--closed{background:#e8eaed;color:#4d5d71}
+.member-inquiry-meta{margin:14px 0 0;font-size:12px;color:#647792;line-height:1.7}
+.member-inquiry-details{margin-top:17px;border-top:1px solid #dae6f3;padding-top:13px}
+.member-inquiry-details summary{font-size:12px;color:#1e62b3;font-weight:690;cursor:pointer}
+.member-inquiry-message{white-space:pre-wrap;overflow-wrap:anywhere;margin:15px 0;font-size:13px;line-height:1.8;color:#3c526e}
+.member-inquiry-reply{border-left:3px solid #6aa1dc;background:#edf5ff;padding:15px 18px;margin:12px 0 3px;border-radius:0 8px 8px 0}
+.member-inquiry-reply strong{font-size:12px;color:#1d4c87}
+.member-inquiry-reply p{font-size:13px;color:#335678;white-space:pre-wrap;overflow-wrap:anywhere;margin:7px 0 0;line-height:1.75}
+.member-empty{padding:35px 20px;border:1px dashed #bbcadd;border-radius:12px;text-align:center;color:#60718a;font-size:13px}
+.member-data-note{font-size:11.5px;color:#72839b;margin:21px 0 0;line-height:1.7}
+html[data-theme="dark"] .inquiry-account-link{color:#9ec9ff}
+html[data-theme="dark"] .inquiry-privacy{border-color:#405572;color:#b8cbe3}
+html[data-theme="dark"] .inquiry-privacy summary{color:#d0e6ff}
+html[data-theme="dark"] .member-dashboard{background:#111f34;color:#eff5ff;border-color:#354b69;box-shadow:0 12px 30px #0003}
+html[data-theme="dark"] .member-dashboard__heading p,
+html[data-theme="dark"] .member-list-status,
+html[data-theme="dark"] .member-toolbar label,
+html[data-theme="dark"] .member-data-note{color:#b2c7e2}
+html[data-theme="dark"] .member-summary span{background:#1a3658;color:#d2eaff}
+html[data-theme="dark"] .member-toolbar select,
+html[data-theme="dark"] .member-toolbar button{background:#1a304a;color:#f0f6ff;border-color:#456383}
+html[data-theme="dark"] .member-toolbar button:hover{background:#264663}
+html[data-theme="dark"] .member-inquiry-card{background:#172940;border-color:#3a5270}
+html[data-theme="dark"] .member-inquiry-head h3{color:#f0f6ff}
+html[data-theme="dark"] .member-inquiry-date,
+html[data-theme="dark"] .member-inquiry-code,
+html[data-theme="dark"] .member-inquiry-meta{color:#b5c7e0}
+html[data-theme="dark"] .member-inquiry-details{border-color:#3b5472}
+html[data-theme="dark"] .member-inquiry-details summary{color:#96c6ff}
+html[data-theme="dark"] .member-inquiry-message{color:#dae7f6}
+html[data-theme="dark"] .member-inquiry-reply{background:#1d3b60;border-color:#78b2ef}
+html[data-theme="dark"] .member-inquiry-reply strong,
+html[data-theme="dark"] .member-inquiry-reply p{color:#d2e7ff}
+html[data-theme="dark"] .member-empty{color:#bbcee4;border-color:#4b6687}
+@media(max-width:760px){.member-dashboard{padding:24px 19px;margin-top:26px}.member-dashboard__heading{align-items:stretch;flex-direction:column}.member-new-inquiry{align-self:flex-start}.member-inquiry-card{padding:17px}.member-inquiry-head h3{font-size:16px}}
+@media(max-width:420px){.member-inquiry-head{gap:8px}.member-status{font-size:10px;padding:5px 9px}.member-toolbar{flex-wrap:wrap}}
