@@ -1,0 +1,17 @@
+/* MODERUN's own deployed site as a verifiable in-house implementation example. */
+.studio-live-proof{background:#f4f7fb}
+.studio-proof-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.studio-proof-item{padding:24px 23px;background:white;border:1px solid #d9e5f1;border-radius:13px;display:flex;flex-direction:column}
+.studio-proof-item__num{font-size:11px;font-weight:700;letter-spacing:.09em;color:#1969ca;margin-bottom:18px}
+.studio-proof-item h3{font-size:19px;line-height:1.4;color:#162b48;margin:0 0 12px}
+.studio-proof-item p{font-size:13px;line-height:1.85;color:#58708a;flex:1;margin:0 0 23px}
+.studio-proof-item a{align-self:flex-start;font-size:12px;font-weight:690;color:#1663bf;text-underline-offset:4px;text-decoration:underline}
+.studio-proof-note{font-size:12px;color:#61748c;margin:23px 0 0;line-height:1.8}
+html[data-theme="dark"] .studio-live-proof{background:#0f2036}
+html[data-theme="dark"] .studio-proof-item{background:#162a43;border-color:#3b5270}
+html[data-theme="dark"] .studio-proof-item h3{color:#f0f6ff}
+html[data-theme="dark"] .studio-proof-item p,
+html[data-theme="dark"] .studio-proof-note{color:#bdcfe5}
+html[data-theme="dark"] .studio-proof-item a,
+html[data-theme="dark"] .studio-proof-item__num{color:#93c4ff}
+@media(max-width:780px){.studio-proof-list{grid-template-columns:1fr}.studio-proof-item{padding:20px}}
