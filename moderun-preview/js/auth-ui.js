@@ -36,7 +36,7 @@ async function run(){
   const state=await auth.auth.getSession();
   updateHeader(state.data?.session?.user||null);
   if(!page)return;
-  if(page==='login'&&state.data?.session){location.replace(path('account.html'));return}
+  if(page==='login'&&state.data?.session){const next=new URLSearchParams(location.search).get('next');location.replace(path(next==='contact.html'?'contact.html':'account.html'));return}
   if(page==='login'&&new URLSearchParams(location.search).has('verified'))message('이메일 인증을 완료했다면 로그인해 주세요.');
   if(page==='account'){
     const {data,error}=await auth.auth.getUser();
@@ -67,7 +67,8 @@ async function run(){
         if(f.has('remember'))sessionStorage.removeItem(sessionFlag);else sessionStorage.setItem(sessionFlag,'yes');
         store.removeItem(storageKey);
         const {error}=await auth.auth.signInWithPassword({email,password});if(error)throw error;
-        location.assign(path('account.html'));
+        const next=new URLSearchParams(location.search).get('next');
+        location.assign(path(next==='contact.html'?'contact.html':'account.html'));
       }else if(form.dataset.authAction==='signup'){
         if(password.length<8)throw Error('비밀번호는 8자 이상이어야 합니다.');
         if(password!==String(f.get('confirm')||''))throw Error('비밀번호 확인이 일치하지 않습니다.');
