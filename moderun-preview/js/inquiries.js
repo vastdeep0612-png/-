@@ -9,6 +9,9 @@
   const submit=document.getElementById('inquiry-submit');
   const status=document.getElementById('form-message');
   let client=null,member=null,sending=false;
+  const guest=document.getElementById('inquiry-guest-entry');
+  const emailForm=document.getElementById('inquiry-email-form');
+  const emailStatus=document.getElementById('inquiry-email-status');
   const message=(msg,error=false)=>{
     if(!status)return;
     status.textContent=msg;
@@ -18,13 +21,14 @@
   };
   const update=()=>{
     const online=!!member;
+    if(guest)guest.hidden=online;
     form.dataset.onlineInquiry=online?'enabled':'offline';
     if(banner)banner.textContent=online
       ?'로그인한 회원으로 온라인 접수가 가능합니다. 전송하면 MODERUN 문의함에 안전하게 저장되며, 내 계정에서 진행 상태를 볼 수 있습니다.'
-      :'온라인 문의를 보내려면 먼저 로그인하세요. 로그인 없이 작성한 문의는 아래 버튼으로 파일에 저장할 수 있으며 자동으로 접수되지 않습니다.';
+      :'이메일 확인 링크로 비밀번호 없이 접수할 수 있습니다. 이메일 확인 전에는 문의 내용을 파일에 저장할 수 있습니다.';
     if(note)note.textContent=online
       ?'접수 후 내 계정에서 문의 내용을 확인할 수 있습니다. 답변은 운영자가 등록한 뒤 표시됩니다.'
-      :'작성 내용을 파일로 저장할 수 있습니다. 실제 접수하려면 로그인한 뒤 다시 제출하세요.';
+      :'아래에서 이메일 확인을 먼저 진행하세요. 이메일 링크로 돌아온 뒤 온라인 접수 버튼을 사용할 수 있습니다.';
     if(submit)submit.textContent=online?'온라인 문의 접수하기 →':'문의 내용 파일로 저장 ↓';
     const login=document.getElementById('inquiry-account-link');
     if(login){login.textContent=online?'내 문의 내역 보기 ↗':'로그인하고 온라인 접수하기 ↗';login.href=online?'account.html':'login.html?next=contact.html';}
@@ -53,6 +57,27 @@
     window.addEventListener('moderun:auth-ready',initialize,{once:true});
     window.addEventListener('moderun:auth-unavailable',update,{once:true});
   }
+  emailForm?.addEventListener('submit',async event=>{
+    event.preventDefault();
+    if(!emailForm.reportValidity()||!client)return;
+    const btn=emailForm.querySelector('[type="submit"]');
+    const email=String(new FormData(emailForm).get('email')||'').trim();
+    btn.disabled=true;
+    btn.textContent='발송 중…';
+    try{
+      const redirect=new URL('contact.html?continue=inquiry',location.href).href;
+      const {error}=await client.auth.signInWithOtp({
+        email,
+        options:{shouldCreateUser:true,emailRedirectTo:redirect}
+      });
+      if(error)throw error;
+      if(emailStatus){emailStatus.textContent='이메일 인증 링크를 보냈습니다. 메일에서 링크를 열어 이 페이지로 돌아온 뒤 문의를 작성하세요. 링크 전송 횟수에 제한이 있을 수 있습니다.';emailStatus.setAttribute('role','status')}
+    }catch(_){
+      if(emailStatus){emailStatus.textContent='인증 메일을 보내지 못했습니다. 잠시 후 다시 시도하거나 일반 로그인 기능을 사용해 주세요.';emailStatus.setAttribute('role','alert')}
+    }finally{
+      btn.disabled=false;btn.textContent='이메일 인증 링크 받기 →';
+    }
+  });
   form.addEventListener('submit',async event=>{
     if(form.dataset.onlineInquiry!=='enabled')return;
     event.preventDefault();
@@ -77,6 +102,13 @@
         details:String(data.get('message')||'').trim(),
         consent:data.has('consent')
       };
+      // Attribution is only attached to a deliberately submitted inquiry.
+      try{
+        const campaign=JSON.parse(sessionStorage.getItem('moderun-campaign')||'{}');
+        for(const key of ['utm_source','utm_medium','utm_campaign','landing_page']){
+          if(typeof campaign[key]==='string')payload[key]=campaign[key];
+        }
+      }catch(_){}
       const {data:saved,error}=await client.from('moderun_inquiries')
         .insert(payload).select('id,created_at').single();
       if(error)throw error;
