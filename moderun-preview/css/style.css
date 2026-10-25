@@ -230,3 +230,13 @@ h1 { letter-spacing:-.03em; }
 .motion-ready.motion-armed.reveal{transition:opacity .72s cubic-bezier(.22,1,.36,1),transform .72s cubic-bezier(.22,1,.36,1)}
 .motion-ready.reveal.is-visible{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.motion-ready.reveal{opacity:1;transform:none;transition:none}}
+
+/* MODERUN account nav global */
+.header-actions .auth-nav-link{display:inline-flex;align-items:center;justify-content:center;min-height:39px;
+  border:1px solid #dce5ef;border-radius:10px;padding:8px 12px;flex:none;white-space:nowrap;
+  color:#263a5b;font-size:13px;font-weight:630;letter-spacing:-.01em;transition:background-color .22s,border-color .22s}
+.header-actions .auth-nav-link:hover{background:#eff4fb;border-color:#c7d5e9}
+@media(min-width:801px) and (max-width:1050px){
+  .header-inner{gap:14px}.header-nav{gap:9px}.header-actions .auth-nav-link{padding:8px 9px;font-size:12px}
+}
+@media(max-width:800px){.header-actions .auth-nav-link{display:none!important}}
