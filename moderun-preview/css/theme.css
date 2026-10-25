@@ -1,27 +1,34 @@
 /* MODERUN Light/Dark theme switch inspired by Uiverse.io / vinodjangid07 */
 /* Color tokens and surface overrides are scoped to data-theme; no content or motion is hidden. */
 :root{color-scheme:light}
-.theme-control{display:inline-flex;align-items:center;justify-content:center;flex:none;margin:0 1px}
+.theme-control{display:inline-flex;align-items:center;justify-content:center;flex:none;margin:0 1px;padding:6px 1px}
 .theme-control__input{
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;
   overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0
 }
 .theme-control__switch{
   position:relative;display:inline-flex;align-items:center;justify-content:center;
-  width:80px;height:40px;border-radius:20px;
-  background:#c7c7c7;cursor:pointer;flex:none;
-  transition:background-color .3s ease,box-shadow .2s ease;
+  width:60px;height:30px;border-radius:999px; flex:none;
+  background:#cbd1d9;cursor:pointer;
+  box-shadow:inset 0 1px 3px rgba(27,45,74,.15);
+  transition:background-color .4s ease,box-shadow .4s ease;
 }
 .theme-control__switch:after{
-  content:"";position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;
-  background:conic-gradient(#686868,#fff,#686868,#fff,#686868);
-  box-shadow:5px 2px 7px rgba(8,8,8,.30);
-  transform:translateX(0);
-  transition:transform .3s ease;
+  content:"";position:absolute;left:1px;top:1px;
+  height:28px;width:28px;border-radius:50%;
+  background:conic-gradient(#888e98,#fff,#adb3be,#fff,#888e98);
+  box-shadow:0 2px 6px rgba(17,33,57,.21);
+  transform:translate3d(0,0,0);
+  transition:transform .46s cubic-bezier(.22,1,.36,1),box-shadow .4s ease;
+  will-change:transform;
 }
-.theme-control__input:checked+.theme-control__switch{background:#326cca}
-.theme-control__input:checked+.theme-control__switch:after{transform:translateX(100%)}
-.theme-control__input:focus-visible+.theme-control__switch{outline:3px solid #4a95ff;outline-offset:4px}
+.theme-control__input:checked+.theme-control__switch{
+  background:#407cbd;box-shadow:inset 0 1px 3px rgba(9,27,58,.25)
+}
+.theme-control__input:checked+.theme-control__switch:after{
+  transform:translate3d(30px,0,0);box-shadow:0 2px 8px rgba(8,29,61,.3)
+}
+.theme-control__input:focus-visible+.theme-control__switch{outline:3px solid #4a95ff;outline-offset:3px}
 .theme-control__input:disabled+.theme-control__switch{opacity:.5;cursor:default}
 
 /* Primary contrast palette */
@@ -221,7 +228,33 @@ html[data-theme="dark"] .demo-site-body p{color:#c6d6ea}
 /* Social tiles intentionally stay white to match the supplied Uiverse artwork. */
 html[data-theme="dark"] .contact-panel .moderun-social-tile{color:var(--tile-accent)}
 html[data-theme="dark"] .contact-panel .moderun-social-tile:is(:hover,:focus-visible){color:#fff}
-@media(max-width:1180px){.theme-control__switch{width:68px;height:34px;border-radius:17px}.theme-control__switch:after{width:34px;height:34px}.theme-control__input:checked+.theme-control__switch:after{transform:translateX(34px)}}
-@media(max-width:800px){.header-inner{gap:9px}.header-actions{gap:7px}.theme-control__switch{width:62px;height:32px;border-radius:16px}.theme-control__switch:after{width:32px;height:32px}.theme-control__input:checked+.theme-control__switch:after{transform:translateX(30px)}.brand{width:150px}.brand img{width:145px}}
-@media(max-width:410px){.brand{width:126px}.brand img{width:126px}.theme-control__switch{width:56px;height:30px;border-radius:15px}.theme-control__switch:after{width:30px;height:30px}.theme-control__input:checked+.theme-control__switch:after{transform:translateX(26px)}.header-actions{gap:5px}}
-@media(prefers-reduced-motion:reduce){.theme-control__switch,.theme-control__switch:after{transition:none}}
+/* The selected theme also eases between surfaces; existing scroll/hover transforms are untouched. */
+body,.site-header,.page-hero,.section-soft,.contact-form,.auth-page,
+.home-v4 .hero--refined,.home-featured,.home-showcase,.home-studio,.home-route-panel{
+  transition:background-color .42s ease,border-color .42s ease,color .42s ease
+}
+h1,h2,h3,p{transition:color .36s ease}
+@media(max-width:1180px){
+  .theme-control__switch{width:56px;height:28px}
+  .theme-control__switch:after{width:26px;height:26px}
+  .theme-control__input:checked+.theme-control__switch:after{transform:translate3d(28px,0,0)}
+}
+@media(max-width:800px){
+  .header-inner{gap:9px}.header-actions{gap:7px}
+  .theme-control__switch{width:54px;height:28px}
+  .theme-control__switch:after{width:26px;height:26px}
+  .theme-control__input:checked+.theme-control__switch:after{transform:translate3d(26px,0,0)}
+  .brand{width:150px}.brand img{width:145px}
+}
+@media(max-width:410px){
+  .brand{width:126px}.brand img{width:126px}.header-actions{gap:5px}
+  .theme-control__switch{width:50px;height:26px}
+  .theme-control__switch:after{width:24px;height:24px}
+  .theme-control__input:checked+.theme-control__switch:after{transform:translate3d(24px,0,0)}
+}
+@media(prefers-reduced-motion:reduce){
+  .theme-control__switch,.theme-control__switch:after,
+  body,.site-header,.page-hero,.section-soft,.contact-form,.auth-page,
+  .home-v4 .hero--refined,.home-featured,.home-showcase,.home-studio,.home-route-panel,
+  h1,h2,h3,p{transition:none}
+}
