@@ -390,6 +390,8 @@
       return ['MODERUN 맞춤 견적 문의','',`작성일: ${new Date().toLocaleString('ko-KR')}`,'',`문의 상품: ${d.product || '-'}`,`문의 구성: ${d.plan || '-'}`,`닉네임: ${d.nickname || '-'}`,`연락 수단: ${d.contactType || '-'}`,`연락처/ID: ${d.contactId || '-'}`,`예산: ${d.budget || '-'}`,`참고 링크: ${d.reference || '-'}`,'','요청 내용',d.message || '-', '', '※ 파일 저장은 온라인 문의 접수가 아닙니다. 운영자의 상담 채널이 개설되면 직접 전달해 주세요.'].join('\n');
     }
     form.addEventListener('submit', async e => {
+      // Member submissions are handled by inquiries.js; guests keep draft export.
+      if (form.dataset.onlineInquiry === 'enabled') return;
       e.preventDefault();
       if (!form.reportValidity()) return;
       const d=readForm();

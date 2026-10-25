@@ -21,12 +21,14 @@ function noBackend(){if(page){message('인증 서비스 연결 전입니다. 현
 function loadLib(){if(window.supabase?.createClient)return Promise.resolve(window.supabase);return new Promise((yes,no)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4';s.onload=()=>window.supabase?.createClient?yes(window.supabase):no(Error('Auth SDK unavailable'));s.onerror=()=>no(Error('Auth SDK download failed'));document.head.appendChild(s)})}
 function updateHeader(user){document.querySelectorAll('[data-auth-nav]').forEach(a=>{a.textContent=user?'내 계정':'로그인';a.href=user?'account.html':'login.html';a.setAttribute('aria-label',user?'내 계정 열기':'로그인 화면 열기')})}
 async function run(){
-  if(!ready){noBackend();return}
+  if(!ready){noBackend();window.dispatchEvent(new Event('moderun:auth-unavailable'));return}
   let auth;
   try{
     const lib=await loadLib();
     auth=lib.createClient(url,key,{auth:{storageKey,storage:store,persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-  }catch(_){if(page)message('인증 서비스 연결에 실패했습니다. 나중에 다시 시도해 주세요.','error');return}
+    window.MODERUN_AUTH_CLIENT=auth;
+    window.dispatchEvent(new Event('moderun:auth-ready'));
+  }catch(_){if(page)message('인증 서비스 연결에 실패했습니다. 나중에 다시 시도해 주세요.','error');window.dispatchEvent(new Event('moderun:auth-unavailable'));return}
   auth.auth.onAuthStateChange((event,session)=>{
     updateHeader(session?.user||null);
     if(page==='reset'&&event==='PASSWORD_RECOVERY'){document.getElementById('password-request')?.setAttribute('hidden','');document.getElementById('password-update')?.removeAttribute('hidden');message('새 비밀번호를 입력해 주세요.')}
