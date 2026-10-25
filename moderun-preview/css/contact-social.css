@@ -1,91 +1,25 @@
-/* MODERUN / Contact channels — adapted from Uiverse.io / Praashoo7.
-   Scoped to the contact page so product cards and navigation remain unchanged. */
-.contact-panel .moderun-social-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 11px;
-  width: min(100%, 346px);
-  margin: 30px auto 0;
-}
-.contact-panel .moderun-social-tile {
-  --tile-accent: #217ad9;
-  position: relative;
-  min-width: 0;
-  min-height: 146px;
-  padding: 28px 8px 17px;
-  background: #fff;
-  border: 1px solid rgba(216,228,243,.97);
-  box-shadow: 0 6px 18px rgba(3,13,33,.16), 0 2px 5px rgba(3,13,33,.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  text-align: center;
-  color: var(--tile-accent);
-  text-decoration: none;
-  cursor: pointer;
-  transform: translate3d(0,0,0) scale(1);
-  transition: transform .34s cubic-bezier(.22,1,.36,1), background-color .32s ease, box-shadow .34s ease, border-color .32s ease, color .25s ease;
-  isolation: isolate;
-}
-.contact-panel .moderun-social-tile--telegram { --tile-accent:#229ed9; border-radius: 85px 9px 9px 9px; }
-.contact-panel .moderun-social-tile--discord { --tile-accent:#5865f2; border-radius: 9px 85px 9px 9px; }
-.contact-panel .moderun-social-tile--kakao { --tile-accent:#49321a; border-radius: 9px 9px 9px 85px; }
-.contact-panel .moderun-social-tile--form { --tile-accent:#2269ca; border-radius: 9px 9px 85px 9px; }
-.contact-panel .moderun-social-tile[aria-disabled="true"] { cursor: default; }
-.contact-panel .moderun-social-tile__icon {
-  display: block;
-  width: 33px;
-  height: 33px;
-  flex: none;
-  line-height: 0;
-  margin-top: 3px;
-  color: inherit;
-}
-.contact-panel .moderun-social-tile__icon svg { display: block; width: 100%; height: 100%; }
-.contact-panel .moderun-social-tile__label {
-  color: #17223b;
-  font-size: 13px;
-  font-weight: 680;
-  line-height: 1.4;
-  white-space: normal;
-}
-.contact-panel .moderun-social-tile__hint {
-  color: #59677a;
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1.35;
-}
-.contact-panel .moderun-social-tile:hover,
-.contact-panel .moderun-social-tile:focus-visible {
-  background: var(--tile-accent);
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 16px 30px rgba(0, 0, 0, .22);
-  transform: translate3d(0,-4px,0) scale(1.055);
-  z-index: 2;
-}
-.contact-panel .moderun-social-tile:hover .moderun-social-tile__label,
-.contact-panel .moderun-social-tile:hover .moderun-social-tile__hint,
-.contact-panel .moderun-social-tile:focus-visible .moderun-social-tile__label,
-.contact-panel .moderun-social-tile:focus-visible .moderun-social-tile__hint {color:#fff}
-.contact-panel .moderun-social-tile:focus-visible {outline: 3px solid #9ac8ff;outline-offset:3px}
-.contact-panel .moderun-social-tile:active {transform:translateY(-1px) scale(1.015)}
-.contact-panel .moderun-social-grid + .tiny {margin-top:28px;font-size:12px;line-height:1.75;color:#c0d0e7}
-@media(max-width:1100px) {
-  .contact-panel .moderun-social-grid{gap:9px}
-  .contact-panel .moderun-social-tile {min-height:132px}
-  .contact-panel .moderun-social-tile__label{font-size:12px}
-}
-@media(max-width:480px){
-  .contact-panel .moderun-social-grid { width:min(100%,320px); gap:9px}
-  .contact-panel .moderun-social-tile {min-height:128px;padding:23px 7px 15px}
-  .contact-panel .moderun-social-tile__icon{width:30px;height:30px}
-  .contact-panel .moderun-social-tile__hint{font-size:10px}
-}
-@media(prefers-reduced-motion:reduce){
-  .contact-panel .moderun-social-tile {transition:none}
-  .contact-panel .moderun-social-tile:hover,
-  .contact-panel .moderun-social-tile:focus-visible {transform:none}
-}
+/* MODERUN social tiles — closer to Uiverse.io / Praashoo7 original */
+.contact-panel .moderun-social-grid{display:grid;grid-template-columns:repeat(2,90px);gap:8px;width:max-content;max-width:100%;margin:31px auto 0;overflow:visible}
+.contact-panel .moderun-social-tile{--tile-accent:#229ed9;width:90px;height:90px;min-width:0;min-height:0;padding:0;display:flex;justify-content:center;align-items:center;
+ position:relative;background:#fff;color:var(--tile-accent);border:0;cursor:pointer;
+ box-shadow:rgba(50,50,93,.25) 0 2px 5px -1px,rgba(0,0,0,.3) 0 1px 3px -1px;
+ transform:scale(1);transition:transform .2s ease-in-out,background .2s ease-in-out,color .2s ease-in-out,box-shadow .2s ease-in-out;isolation:isolate}
+.contact-panel .moderun-social-tile--telegram{border-radius:90px 5px 5px 5px;--tile-accent:#229ed9}
+.contact-panel .moderun-social-tile--discord{border-radius:5px 90px 5px 5px;--tile-accent:#5865f2}
+.contact-panel .moderun-social-tile--kakao{border-radius:5px 5px 5px 90px;--tile-accent:#423429}
+.contact-panel .moderun-social-tile--form{border-radius:5px 5px 90px 5px;--tile-accent:#176bf0}
+.contact-panel .moderun-social-tile__icon{display:block;width:30px;height:30px;flex:0 0 30px;margin:0;line-height:0;color:inherit}
+.contact-panel .moderun-social-tile__icon svg{display:block;width:30px;height:30px}
+.contact-panel .moderun-social-tile--telegram .moderun-social-tile__icon{transform:translate(11px,12px)}
+.contact-panel .moderun-social-tile--discord .moderun-social-tile__icon{transform:translate(-11px,12px)}
+.contact-panel .moderun-social-tile--kakao .moderun-social-tile__icon{transform:translate(11px,-11px)}
+.contact-panel .moderun-social-tile--form .moderun-social-tile__icon{transform:translate(-11px,-11px)}
+.contact-panel .moderun-social-tile__label,.contact-panel .moderun-social-tile__hint{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.contact-panel .moderun-social-tile:hover,.contact-panel .moderun-social-tile:focus-visible{background:var(--tile-accent);color:white;transform:scale(1.1);box-shadow:0 10px 24px rgba(0,0,0,.22);z-index:2}
+.contact-panel .moderun-social-tile:focus-visible{outline:3px solid #a4caff;outline-offset:3px}
+.contact-panel .moderun-social-tile[aria-disabled="true"]{cursor:default}
+.contact-panel .moderun-social-tile:active{transform:scale(1.025)}
+.contact-panel .moderun-social-legend{text-align:center;color:#d6e3f6;font-size:11px;line-height:1.7;margin:20px 0 0}
+.contact-panel .moderun-social-legend~.tiny{margin-top:21px;font-size:12px;line-height:1.75;color:#c0cee1}
+@media(max-width:480px){.contact-panel .moderun-social-grid{grid-template-columns:repeat(2,86px);gap:7px}.contact-panel .moderun-social-tile{width:86px;height:86px}}
+@media(prefers-reduced-motion:reduce){.contact-panel .moderun-social-tile{transition:none}.contact-panel .moderun-social-tile:hover{transform:none}}
