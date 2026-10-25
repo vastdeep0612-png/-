@@ -327,6 +327,9 @@
       el.target='_blank';
       el.rel='noopener noreferrer';
       el.removeAttribute('aria-disabled');
+      const channelNames = {telegram:'텔레그램',discord:'디스코드',kakao:'카카오톡'};
+      el.setAttribute('aria-label', (channelNames[name] || name) + ' 상담 채널 열기');
+      el.removeAttribute('title');
       const hint = el.querySelector('[data-channel-hint]');
       if (hint) hint.textContent='상담 채널 열기 ↗';
     } else {
