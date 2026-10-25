@@ -111,7 +111,7 @@
           for (const entry of entries) {
             if (entry.isIntersecting) markFeaturedVisible(entry.target);
           }
-        }, {threshold:0.06, rootMargin:'0px 0px -33% 0px'});
+        }, {threshold:0, rootMargin:'0px 0px -23% 0px'});
         // Paint the hidden state first; then arm the transition.
         requestAnimationFrame(() => requestAnimationFrame(() => {
           stagedCards.forEach(card => {
@@ -127,6 +127,25 @@
       featuredCards.forEach(resetCardStyles);
     }
   }
+  // Backup: scroll-position check for cases where IO never meets its threshold.
+  // This changes visibility at the correct position; CSS controls the animation.
+  let featureScrollQueued = false;
+  function checkFeaturedScroll() {
+    featureScrollQueued = false;
+    const line = window.innerHeight * 0.77;
+    stagedCards.forEach(card => {
+      if (card.dataset.featureReveal !== 'waiting' || !card.classList.contains('is-reveal-armed')) return;
+      const rect = card.getBoundingClientRect();
+      if (rect.top <= line && rect.bottom > 0) markFeaturedVisible(card);
+    });
+  }
+  function scheduleFeaturedCheck() {
+    if (featureScrollQueued || !stagedCards.length) return;
+    featureScrollQueued = true;
+    requestAnimationFrame(checkFeaturedScroll);
+  }
+  window.addEventListener('scroll', scheduleFeaturedCheck, {passive:true});
+  window.addEventListener('resize', scheduleFeaturedCheck, {passive:true});
   // Keyboard focus and browser history should never leave cards hidden.
   document.addEventListener('focusin', event => {
     const card = event.target.closest?.('.home-feature-grid .product-reveal.is-reveal-pending');
